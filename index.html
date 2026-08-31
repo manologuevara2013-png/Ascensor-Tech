@@ -518,7 +518,7 @@ const ROLE_CHIP={tecnico:'chip-blue',jefe_tecnico:'chip-green',admin_general:'ch
 const ELV_STATUS={operativo:{label:'Operativo',chip:'chip-green'},en_reparacion:{label:'En reparación',chip:'chip-amber'},fuera_servicio:{label:'Fuera de servicio',chip:'chip-red'}};
 const OT_STATUS={active:{label:'Activa',chip:'chip-blue'},in_progress:{label:'En curso',chip:'chip-amber'},done:{label:'Finalizada',chip:'chip-green'},cancelled:{label:'Cancelada',chip:'chip-red'}};
 const INV_STATUS={pending:{label:'Pendiente',chip:'chip-amber'},paid:{label:'Pagada',chip:'chip-green'},overdue:{label:'Vencida',chip:'chip-red'}};
-const PR_STATUS={solicitado:{label:'Solicitado',chip:'chip-grey'},en_deposito:{label:'En depósito',chip:'chip-blue'},en_compras:{label:'En compras',chip:'chip-amber'},entregado:{label:'Entregado',chip:'chip-green'}};
+const PR_STATUS={pendiente_aprobacion:{label:'Pend. aprobación',chip:'chip-amber'},aprobado_jefe:{label:'Aprobado JT',chip:'chip-blue'},solicitado:{label:'Solicitado',chip:'chip-grey'},en_deposito:{label:'En depósito',chip:'chip-blue'},en_compras:{label:'En compras',chip:'chip-amber'},presupuesto_enviado:{label:'Presup. enviado',chip:'chip-amber'},presupuesto_aprobado:{label:'Presup. aprobado',chip:'chip-green'},presupuesto_rechazado:{label:'Presup. rechazado',chip:'chip-red'},entregado:{label:'Entregado',chip:'chip-green'}};
 const LOG_TYPE={preventivo:'Preventivo',correctivo:'Correctivo',inspeccion:'Inspección',emergencia:'Emergencia'};
 
 function wfSteps(status){
@@ -557,7 +557,7 @@ function NAV_JEFE(){return [
   {id:'edificios',label:'Edificios',icon:'building'},
   {id:'contratos',label:'Contratos',icon:'file'},
   {id:'deposito',label:'Stock',icon:'box',section:'Depósito'},
-  {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck'},
+  {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'r',badgeVal:()=>S.data.parts_requests.filter(p=>p.status==='pendiente_aprobacion').length},
   {id:'reportes',label:'Reportes',icon:'trend',section:'Reportes'},
 ];}
 function NAV_TECNICO(){return [
@@ -566,12 +566,12 @@ function NAV_TECNICO(){return [
   {id:'historial',label:'Historial',icon:'clock'},
   {id:'turnos',label:'Turnos',icon:'calendar'},
   {id:'edificios',label:'Edificios',icon:'building'},
-  {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck'},
+  {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'a',badgeVal:()=>S.data.parts_requests.filter(p=>!['entregado','presupuesto_rechazado'].includes(p.status)).length},
 ];}
 function NAV_CLIENT(){return [
   {id:'portal',label:'Mi Edificio',icon:'building',section:'Principal'},
   {id:'portal_contrato',label:'Mi Contrato',icon:'file'},
-  {id:'portal_solicitudes',label:'Solicitudes',icon:'send',badge:'g',badgeVal:()=>S.data.requests.filter(r=>r.building_id===S.clientBid&&r.status==='budget_sent').length},
+  {id:'portal_solicitudes',label:'Solicitudes',icon:'send',badge:'g',badgeVal:()=>S.data.requests.filter(r=>r.building_id===S.clientBid&&(r.status==='budget_sent')).length},
   {id:'presupuestos',label:'Presupuestos',icon:'check'},
   {id:'portal_cuenta',label:'Facturas',icon:'receipt',section:'Cuenta'},
 ];}
@@ -839,18 +839,26 @@ function viewDashboard(){
   const max=Math.max(...vals);
   const bars=months.map((m,i)=>`<div class="chart-group"><div class="chart-bar-wrap"><div class="chart-bar" style="height:${(vals[i]/max*100)}%;background:var(--primary)"></div></div><div class="chart-val">$${vals[i]}M</div><div class="chart-lbl">${m}</div></div>`).join('');
 
+  // Jefe técnico dashboard extras
+  const pendingParts=d.parts_requests.filter(p=>p.status==='pendiente_aprobacion').length;
+  const awaitingClient=d.parts_requests.filter(p=>p.status==='presupuesto_enviado').length;
+  const clientApproved=d.parts_requests.filter(p=>p.status==='presupuesto_aprobado').length;
+  const isJefe=S.role==='jefe_tecnico';
+
   return `
   <div class="kpi-grid">
     <div class="kpi"><div class="kpi-top"><div class="kpi-label">Edificios</div><div class="kpi-icon" style="background:var(--info-s);color:var(--info)">${I.building}</div></div><div class="kpi-value">${totalB}</div><div class="kpi-sub">${totalE} ascensores</div></div>
     <div class="kpi"><div class="kpi-top"><div class="kpi-label">Solicitudes abiertas</div><div class="kpi-icon" style="background:var(--warning-s);color:var(--warning)">${I.inbox}</div></div><div class="kpi-value">${openReqs}</div><div class="kpi-sub">En proceso</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Facturación mensual</div><div class="kpi-icon" style="background:var(--success-s);color:var(--success)">${I.dollar}</div></div><div class="kpi-value" style="font-size:20px">${fmt(monthlyBilling)}</div><div class="kpi-delta delta-up">Abonos activos</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Morosos</div><div class="kpi-icon" style="background:var(--danger-s);color:var(--danger)">${I.alert}</div></div><div class="kpi-value" style="color:var(--danger)">${debtors}</div><div class="kpi-sub">${d.clients.filter(c=>c.status==='critical').length} en estado crítico</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">${isJefe?'Repuestos pend. aprob.':'Facturación mensual'}</div><div class="kpi-icon" style="background:${isJefe?'var(--warning-s)':'var(--success-s)'};color:${isJefe?'var(--warning)':'var(--success)'}">${isJefe?I.truck:I.dollar}</div></div><div class="kpi-value" style="${isJefe&&pendingParts?'color:var(--warning)':'font-size:20px'}">${isJefe?pendingParts:fmt(monthlyBilling)}</div><div class="kpi-${isJefe?'sub':'delta delta-up'}">${isJefe?(pendingParts?'Requieren su aprobación':'Todo aprobado'):'Abonos activos'}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">${isJefe?'Aprobaciones cliente':'Morosos'}</div><div class="kpi-icon" style="background:${isJefe?'var(--success-s)':'var(--danger-s)'};color:${isJefe?'var(--success)':'var(--danger)'}">${isJefe?I.check:I.alert}</div></div><div class="kpi-value" style="${!isJefe?'color:var(--danger)':''}">${isJefe?clientApproved:debtors}</div><div class="kpi-sub">${isJefe?(awaitingClient?awaitingClient+' esperando respuesta':'Sin pendientes'):d.clients.filter(c=>c.status==='critical').length+' en estado crítico'}</div></div>
   </div>
+  ${isJefe&&pendingParts?`<div class="notice notice-warning" style="cursor:pointer" onclick="go('pedidos')"><strong>${pendingParts} pedido${pendingParts>1?'s':''} de repuestos esperan su aprobación.</strong> Haga clic para revisarlos.</div>`:''}
+  ${isJefe&&clientApproved?`<div class="notice notice-success"><strong>${clientApproved} presupuesto${clientApproved>1?'s':''} aprobado${clientApproved>1?'s':''} por clientes.</strong> Puede proceder con las órdenes de trabajo.</div>`:''}
   <div class="grid2">
     <div class="card"><div class="card-header"><span class="card-title">Solicitudes recientes</span><button class="btn btn-secondary btn-sm" onclick="go('recepcion')">Ver todas</button></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Edificio</th><th>Urgencia</th><th>Estado</th></tr></thead><tbody>${recentReqs||'<tr><td colspan="4" style="text-align:center;color:var(--text-3);padding:20px">Sin solicitudes</td></tr>'}</tbody></table></div></div>
     <div class="card"><div class="card-header"><span class="card-title">Alertas</span><span class="chip chip-red">${d.alerts.length}</span></div>${alertRows}</div>
   </div>
-  <div class="card"><div class="card-header"><span class="card-title">Facturación últimos 6 meses</span></div><div class="card-body"><div class="chart-bars">${bars}</div></div></div>
+  ${!isJefe?`<div class="card"><div class="card-header"><span class="card-title">Facturación últimos 6 meses</span></div><div class="card-body"><div class="chart-bars">${bars}</div></div></div>`:''}
   `;
 }
 
@@ -1329,9 +1337,11 @@ function submitTechReport(id){
   const tr={id:S.data.nextIds.report++,request_id:id,repair_type:document.getElementById('tr_repair').value||'Reparación general',hours:+document.getElementById('tr_hours').value||0,rate:+document.getElementById('tr_rate').value||0,observations:document.getElementById('tr_obs').value,parts,photos:S.tab.photoBuf||[]};
   S.data.tech_reports.push(tr);
   r.status='reported';
-  // create parts request if there are parts
+  // create parts request if there are parts — goes to jefe_tecnico for approval
   if(parts.length){
-    S.data.parts_requests.push({id:S.data.nextIds.partsreq++,request_id:id,tech_report_id:tr.id,items:parts.map(p=>({description:p.description,quantity:p.quantity,source: (S.data.inventory.find(i=>i.name===p.description&&i.quantity>=p.quantity)?'deposito':'compras'),status:'solicitado'})),status:'solicitado',created_at:new Date().toISOString().slice(0,10)});
+    const prId=S.data.nextIds.partsreq++;
+    S.data.parts_requests.push({id:prId,request_id:id,tech_report_id:tr.id,items:parts.map(p=>({description:p.description,quantity:p.quantity,unit_price:p.unit_price,source:null,status:'pendiente_aprobacion'})),status:'pendiente_aprobacion',created_at:new Date().toISOString().slice(0,10)});
+    S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'warning',title:'Nuevo pedido de repuestos requiere aprobación',description:`Pedido #${prId} — ${r.display_id} · ${bld(r.building_id).name} — ${parts.length} ítem(s)`,time_label:'Ahora'});
   }
   S.data.maintenance_log.push({id:S.data.nextIds.log++,elevator_id:r.elevator_id,request_id:r.id,tech_id:r.assigned_tech_id,log_date:new Date().toISOString().slice(0,10),log_type:'correctivo',description:tr.repair_type,equipment_status:'en_reparacion',observations:tr.observations});
   S.tab.techDetail=null; S.tab.partsBuf=null; S.tab.photoBuf=null;
@@ -1466,6 +1476,18 @@ function sendBudget(id){
 }
 function clientDecision(id,approved){
   const r=req(id); r.status=approved?'approved':'rejected';
+  // Connect to parts request flow
+  const pr=S.data.parts_requests.find(p=>p.request_id===id);
+  if(pr){
+    if(approved){
+      pr.status='presupuesto_aprobado';
+      S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Cliente aprobó presupuesto',description:`${r.display_id} · ${bld(r.building_id).name} — Pedido #${pr.id} aprobado`,time_label:'Ahora'});
+    } else {
+      pr.status='presupuesto_rechazado';
+      pr.items.forEach(it=>{ it.status='presupuesto_rechazado'; });
+      S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'danger',title:'Cliente rechazó presupuesto',description:`${r.display_id} · ${bld(r.building_id).name} — Pedido #${pr.id} rechazado`,time_label:'Ahora'});
+    }
+  }
   closeModal(); persist(); renderApp(); toast(approved?'Presupuesto aprobado':'Presupuesto rechazado');
 }
 function createWorkOrder(id){
@@ -1581,32 +1603,54 @@ function saveMovement(invId){
 
 /* ═══════════════ VIEW: PEDIDOS DE REPUESTOS ═══════════════ */
 function viewPedidosRepuestos(){
-  const list=S.data.parts_requests.slice().sort((a,b)=>b.id-a.id);
-  return `
-  <div class="card">
-    <div class="card-header"><span class="card-title">Pedidos de Repuestos (${list.length})</span></div>
-    ${list.map(pr=>{
-      const r=req(pr.request_id);
-      return `<div class="alert-row" style="align-items:stretch">
-        <div class="alert-ico" style="background:var(--surface2)">${I.truck}</div>
-        <div class="alert-body">
-          <div class="flex items-center gap-2"><span class="alert-title">Pedido #${pr.id} — ${r?r.display_id:'—'} · ${r?bld(r.building_id).name:''}</span><span class="chip ${PR_STATUS[pr.status]?.chip}">${PR_STATUS[pr.status]?.label}</span>${pr.status==='entregado'?`<button class="btn btn-secondary btn-sm" onclick="printReport('remito',${pr.id})" title="Imprimir remito">${I.file} Remito</button>`:''}</div>
-          <div class="table-wrap" style="margin-top:8px"><table><thead><tr><th>Repuesto</th><th>Cant.</th><th>Origen</th><th>Estado</th>${S.role!=='tecnico'?'<th></th>':''}</tr></thead><tbody>
-          ${pr.items.map((it,i)=>`<tr>
-            <td>${it.description}</td><td>${it.quantity}</td>
-            <td><span class="chip ${it.source==='deposito'?'chip-blue':'chip-amber'}">${it.source}</span></td>
-            <td><span class="chip ${PR_STATUS[it.status]?.chip}">${PR_STATUS[it.status]?.label}</span></td>
-            ${S.role!=='tecnico'?`<td><select class="form-select" style="font-size:11px;padding:4px 8px" onchange="updatePartsItemStatus(${pr.id},${i},this.value)">
-              ${Object.keys(PR_STATUS).map(s=>`<option value="${s}" ${it.status===s?'selected':''}>${PR_STATUS[s].label}</option>`).join('')}
-            </select></td>`:''}
-          </tr>`).join('')}
-          </tbody></table></div>
+  const all=S.data.parts_requests.slice().sort((a,b)=>b.id-a.id);
+  const isTech=S.role==='tecnico';
+  const isJefe=S.role==='jefe_tecnico';
+  const pendingApproval=all.filter(p=>p.status==='pendiente_aprobacion');
+  const active=all.filter(p=>!['pendiente_aprobacion','entregado','presupuesto_rechazado'].includes(p.status));
+  const completed=all.filter(p=>['entregado','presupuesto_rechazado'].includes(p.status));
+
+  function renderPrCard(pr){
+    const r=req(pr.request_id);
+    const isPending=pr.status==='pendiente_aprobacion';
+    const canManageItems=!isTech && !isPending;
+    return `<div class="alert-row" style="align-items:stretch;flex-wrap:wrap">
+      <div class="alert-ico" style="background:var(--surface2)">${I.truck}</div>
+      <div class="alert-body" style="min-width:0">
+        <div class="flex items-center gap-2" style="flex-wrap:wrap"><span class="alert-title">Pedido #${pr.id} — ${r?r.display_id:'—'} · ${r?bld(r.building_id).name:''}</span><span class="chip ${PR_STATUS[pr.status]?.chip||'chip-grey'}">${PR_STATUS[pr.status]?.label||pr.status}</span>
+        ${pr.status==='entregado'?`<button class="btn btn-secondary btn-sm" onclick="printReport('remito',${pr.id})" title="Imprimir remito">${I.file} Remito</button>`:''}
+        ${isPending && isJefe?`<button class="btn btn-success btn-sm" onclick="approvePartsRequest(${pr.id})">Aprobar</button><button class="btn btn-danger btn-sm" onclick="rejectPartsRequest(${pr.id})">Rechazar</button>`:''}
         </div>
-        <div class="alert-time">${fmtDate(pr.created_at)}</div>
-      </div>`;
-    }).join('')}
-    ${list.length===0?'<div class="card-body" style="text-align:center;color:var(--text-3);padding:32px">Sin pedidos de repuestos.</div>':''}
-  </div>`;
+        <div class="table-wrap" style="margin-top:8px"><table><thead><tr><th>Repuesto</th><th>Cant.</th><th>Origen</th><th>Estado</th>${canManageItems?'<th></th>':''}</tr></thead><tbody>
+        ${pr.items.map((it,i)=>`<tr>
+          <td>${it.description}</td><td>${it.quantity}</td>
+          <td>${it.source?`<span class="chip ${it.source==='deposito'?'chip-blue':'chip-amber'}">${it.source}</span>`:'<span class="text-xs text-muted">Pendiente</span>'}</td>
+          <td><span class="chip ${PR_STATUS[it.status]?.chip||'chip-grey'}">${PR_STATUS[it.status]?.label||it.status}</span></td>
+          ${canManageItems?`<td><select class="form-select" style="font-size:11px;padding:4px 8px" onchange="updatePartsItemStatus(${pr.id},${i},this.value)">
+            ${Object.keys(PR_STATUS).map(s=>`<option value="${s}" ${it.status===s?'selected':''}>${PR_STATUS[s].label}</option>`).join('')}
+          </select></td>`:''}
+        </tr>`).join('')}
+        </tbody></table></div>
+        ${r?`<details style="margin-top:8px"><summary style="font-size:11px;font-weight:600;color:var(--primary);cursor:pointer">Ver timeline de intervención</summary>${renderInterventionTimeline(r.id)}</details>`:''}
+      </div>
+      <div class="alert-time">${fmtDate(pr.created_at)}</div>
+    </div>`;
+  }
+
+  return `
+  ${pendingApproval.length?`<div class="card" style="border-left:4px solid var(--warning)">
+    <div class="card-header"><span class="card-title">Pendientes de aprobación (${pendingApproval.length})</span><span class="chip chip-amber">${pendingApproval.length}</span></div>
+    ${pendingApproval.map(renderPrCard).join('')}
+  </div>`:''}
+  ${active.length?`<div class="card">
+    <div class="card-header"><span class="card-title">En proceso (${active.length})</span></div>
+    ${active.map(renderPrCard).join('')}
+  </div>`:''}
+  ${completed.length?`<div class="card">
+    <div class="card-header"><span class="card-title">Finalizados (${completed.length})</span></div>
+    ${completed.map(renderPrCard).join('')}
+  </div>`:''}
+  ${all.length===0?'<div class="card"><div class="card-body" style="text-align:center;color:var(--text-3);padding:32px">Sin pedidos de repuestos.</div></div>':''}`;
 }
 function updatePartsItemStatus(prId,itemIdx,status){
   const pr=S.data.parts_requests.find(x=>x.id===prId);
@@ -1617,8 +1661,141 @@ function updatePartsItemStatus(prId,itemIdx,status){
     const inv=S.data.inventory.find(i=>i.name===item.description);
     if(inv){ inv.quantity=Math.max(0,inv.quantity-item.quantity); S.data.inventory_movements.push({id:S.data.nextIds.mov++,inventory_id:inv.id,type:'salida',quantity:item.quantity,date:new Date().toISOString().slice(0,10),tech_id:null,request_id:pr.request_id,building_id:req(pr.request_id)?.building_id||null,notes:'Entrega de pedido #'+pr.id}); }
   }
-  pr.status = pr.items.every(i=>i.status==='entregado') ? 'entregado' : pr.items.some(i=>i.status==='en_compras')?'en_compras':pr.items.some(i=>i.status==='en_deposito')?'en_deposito':'solicitado';
+  // Derive overall PR status considering new workflow statuses
+  if(pr.items.every(i=>i.status==='entregado')){
+    pr.status = (pr.status==='presupuesto_aprobado'||pr.status==='entregado') ? 'entregado' : 'entregado';
+  } else if(pr.items.some(i=>i.status==='en_compras')){
+    pr.status = pr.status==='presupuesto_aprobado'?'presupuesto_aprobado':'en_compras';
+  } else if(pr.items.some(i=>i.status==='en_deposito')){
+    pr.status = pr.status==='presupuesto_aprobado'?'presupuesto_aprobado':'en_deposito';
+  } else {
+    // keep current higher-level status if applicable
+    if(!['presupuesto_aprobado','presupuesto_enviado','presupuesto_rechazado','aprobado_jefe'].includes(pr.status)){
+      pr.status='solicitado';
+    }
+  }
   persist(); renderApp(); toast('Estado del pedido actualizado');
+}
+
+/* ═══════════════ PARTS REQUEST APPROVAL WORKFLOW ═══════════════ */
+function approvePartsRequest(prId){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  const r=req(pr.request_id);
+  // Check inventory for each item and set source
+  pr.items.forEach(item=>{
+    const inv=S.data.inventory.find(i=>i.name===item.description && i.quantity>=item.quantity);
+    if(inv){
+      item.source='deposito';
+      item.status='en_deposito';
+    } else {
+      item.source='compras';
+      item.status='en_compras';
+    }
+  });
+  pr.status='aprobado_jefe';
+  // Auto-generate budget for the related request
+  if(r && !r.in_abono){
+    const tr=S.data.tech_reports.find(t=>t.request_id===r.id);
+    if(tr){
+      const materials=tr.parts.reduce((a,p)=>a+p.quantity*p.unit_price,0);
+      const labor=tr.hours*tr.rate;
+      r.budget_amount=Math.round((materials+labor)*1.22);
+      r.status='budget_sent';
+      pr.status='presupuesto_enviado';
+    }
+  }
+  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Pedido de repuestos aprobado',description:`Pedido #${prId} aprobado por Jefe Técnico — ${pr.items.filter(i=>i.source==='deposito').length} de depósito, ${pr.items.filter(i=>i.source==='compras').length} a compras${r?' · Presupuesto enviado al cliente':''}`,time_label:'Ahora'});
+  persist(); renderApp(); toast('Pedido aprobado — presupuesto generado y enviado al cliente');
+}
+function rejectPartsRequest(prId){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  pr.status='presupuesto_rechazado';
+  pr.items.forEach(item=>{ item.status='presupuesto_rechazado'; item.source=null; });
+  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'danger',title:'Pedido de repuestos rechazado',description:`Pedido #${prId} rechazado por Jefe Técnico`,time_label:'Ahora'});
+  persist(); renderApp(); toast('Pedido rechazado');
+}
+function clientApproveParts(prId){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  const r=req(pr.request_id);
+  pr.status='presupuesto_aprobado';
+  if(r){ r.status='approved'; }
+  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Cliente aprobó presupuesto de repuestos',description:`Pedido #${prId}${r?' · '+r.display_id+' · '+bld(r.building_id).name:''} — Aprobado por el cliente`,time_label:'Ahora'});
+  persist(); renderApp(); toast('Presupuesto aprobado por el cliente');
+}
+function clientRejectParts(prId){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  const r=req(pr.request_id);
+  pr.status='presupuesto_rechazado';
+  if(r){ r.status='rejected'; }
+  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'danger',title:'Cliente rechazó presupuesto de repuestos',description:`Pedido #${prId}${r?' · '+r.display_id:''} — Rechazado por el cliente`,time_label:'Ahora'});
+  persist(); renderApp(); toast('Presupuesto rechazado por el cliente');
+}
+
+/* ═══════════════ INTERVENTION TIMELINE ═══════════════ */
+function renderInterventionTimeline(requestId){
+  const r=req(requestId);
+  if(!r) return '';
+  const tr=S.data.tech_reports.find(t=>t.request_id===requestId);
+  const pr=S.data.parts_requests.find(p=>p.request_id===requestId);
+  const ot=S.data.work_orders.find(o=>o.request_id===requestId);
+  const steps=[];
+  // 1. Request created
+  steps.push({label:'Solicitud creada',detail:r.display_id+' — '+fmtDate(r.created_at),done:true,icon:I.send});
+  // 2. Classified
+  const classified=['triaged','technical','reported','budgeted','budget_sent','approved','rejected','ot_created','completed'].includes(r.status);
+  steps.push({label:'Clasificado / Triaje',detail:classified?(r.urgency?URG_LABEL[r.urgency]:'Clasificado'):'Pendiente',done:classified,icon:I.inbox});
+  // 3. Tech assigned
+  const techAssigned=!!r.assigned_tech_id;
+  steps.push({label:'Técnico asignado',detail:techAssigned?(staffOf(r.assigned_tech_id)?.full_name||'Asignado'):'Pendiente',done:techAssigned,icon:I.user});
+  // 4. Tech report
+  steps.push({label:'Informe técnico',detail:tr?tr.repair_type:'Pendiente',done:!!tr,icon:I.tool});
+  // 5. Parts requested
+  if(pr){
+    steps.push({label:'Repuestos solicitados',detail:`Pedido #${pr.id} — ${pr.items.length} ítem(s)`,done:true,icon:I.truck});
+    // 6. Jefe approved
+    const jefeApproved=!['pendiente_aprobacion'].includes(pr.status) && pr.status!=='presupuesto_rechazado';
+    steps.push({label:'Aprobación Jefe Técnico',detail:pr.status==='pendiente_aprobacion'?'Pendiente de aprobación':(pr.status==='presupuesto_rechazado'?'Rechazado':'Aprobado'),done:jefeApproved,icon:I.check});
+    // 7. Stock check
+    if(jefeApproved && pr.status!=='presupuesto_rechazado'){
+      const depCount=pr.items.filter(i=>i.source==='deposito').length;
+      const compCount=pr.items.filter(i=>i.source==='compras').length;
+      steps.push({label:'Control de stock',detail:`${depCount} en depósito, ${compCount} a compras`,done:true,icon:I.box});
+    }
+    // 8. Budget sent to client
+    const budgetSent=['presupuesto_enviado','presupuesto_aprobado','entregado'].includes(pr.status)||['budget_sent','approved','ot_created','completed'].includes(r.status);
+    steps.push({label:'Presupuesto enviado al cliente',detail:budgetSent?(r.budget_amount?fmt(r.budget_amount):'Enviado'):'Pendiente',done:budgetSent,icon:I.dollar});
+    // 9. Client decision
+    const clientApproved=['presupuesto_aprobado','entregado'].includes(pr.status)||['approved','ot_created','completed'].includes(r.status);
+    const clientRejected=pr.status==='presupuesto_rechazado'||r.status==='rejected';
+    steps.push({label:'Decisión del cliente',detail:clientApproved?'Aprobado':(clientRejected?'Rechazado':'Esperando respuesta'),done:clientApproved||clientRejected,icon:I.user});
+  } else {
+    // Budget flow without parts
+    const budgeted=['budgeted','budget_sent','approved','rejected','ot_created','completed'].includes(r.status);
+    steps.push({label:'Presupuesto',detail:budgeted?(r.budget_amount?fmt(r.budget_amount):'Generado'):'Pendiente',done:budgeted,icon:I.dollar});
+    const clientDecided=['approved','rejected','ot_created','completed'].includes(r.status);
+    steps.push({label:'Decisión del cliente',detail:r.status==='approved'||r.status==='ot_created'||r.status==='completed'?'Aprobado':(r.status==='rejected'?'Rechazado':'Pendiente'),done:clientDecided,icon:I.user});
+  }
+  // OT
+  steps.push({label:'Orden de trabajo',detail:ot?ot.display_id+' — '+(OT_STATUS[ot.status]?.label||ot.status):'Pendiente',done:!!ot,icon:I.clipboard});
+  // Completed
+  steps.push({label:'Completado',detail:r.status==='completed'?'Finalizado':'Pendiente',done:r.status==='completed',icon:I.check});
+
+  return `<div style="display:flex;flex-direction:column;gap:0;margin:8px 0">
+    ${steps.map((s,i)=>`<div style="display:flex;gap:10px;align-items:flex-start;position:relative">
+      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:28px">
+        <div style="width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:${s.done?'var(--success)':'var(--surface2)'};color:${s.done?'#fff':'var(--text-3)'};border:2px solid ${s.done?'var(--success)':'var(--border)'};flex-shrink:0">${s.icon||''}</div>
+        ${i<steps.length-1?`<div style="width:2px;height:24px;background:${s.done?'var(--success)':'var(--border)'}"></div>`:''}
+      </div>
+      <div style="padding-bottom:${i<steps.length-1?'8px':'0'}">
+        <div style="font-size:12px;font-weight:600;color:${s.done?'var(--text-1)':'var(--text-3)}'}">${s.label}</div>
+        <div style="font-size:11px;color:var(--text-3)">${s.detail}</div>
+      </div>
+    </div>`).join('')}
+  </div>`;
 }
 
 /* ═══════════════ VIEW: FACTURACIÓN ═══════════════ */
@@ -1822,6 +1999,7 @@ function viewPortalSolicitudes(){
   ${myReqs.map(r=>{
     const showApproval=r.status==='budget_sent';
     const tr=S.data.tech_reports.find(t=>t.request_id===r.id);
+    const pr=S.data.parts_requests.find(p=>p.request_id===r.id);
     const amt=r.budget_amount||calcBudget(r);
     return `<div class="card">
       <div class="card-header"><span class="card-title">${r.display_id} — ${TYPE_LABEL[r.type]||r.type}</span>
@@ -1832,13 +2010,20 @@ function viewPortalSolicitudes(){
         <div class="text-sm">${r.description}</div>
         <div class="text-xs text-muted">Fecha: ${fmtDate(r.created_at)} · Contacto: ${r.contact_name}</div>
         ${r.photos&&r.photos.length?`<div class="photo-gallery">${r.photos.map(p=>`<img src="${p}" class="photo-thumb" onclick="window.open(this.src)">`).join('')}</div>`:''}
+        ${pr?`<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div class="flex items-center gap-2" style="margin-bottom:6px"><span class="fw600 text-sm">Estado de repuestos</span><span class="chip ${PR_STATUS[pr.status]?.chip||'chip-grey'}">${PR_STATUS[pr.status]?.label||pr.status}</span></div>
+          <div class="table-wrap"><table style="font-size:12px"><thead><tr><th>Repuesto</th><th>Cant.</th><th>Estado</th></tr></thead><tbody>
+          ${pr.items.map(it=>`<tr><td>${it.description}</td><td>${it.quantity}</td><td><span class="chip ${PR_STATUS[it.status]?.chip||'chip-grey'}">${PR_STATUS[it.status]?.label||it.status}</span></td></tr>`).join('')}
+          </tbody></table></div>
+        </div>`:''}
         ${amt&&!r.in_abono&&['budgeted','budget_sent','approved','rejected','ot_created','completed'].includes(r.status)?`
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
           <div><div class="fw600">Presupuesto: ${fmt(amt)}</div><div class="text-xs text-muted">${tr?.repair_type||'—'}</div></div>
-          ${showApproval?`<div class="flex gap-2"><button class="btn btn-danger btn-sm" onclick="clientDecision(${r.id},false);">Rechazar</button><button class="btn btn-success" onclick="clientDecision(${r.id},true);">Aprobar</button></div>`
+          ${showApproval?`<div class="flex gap-2"><button class="btn btn-danger btn-sm" onclick="clientDecision(${r.id},false);">Rechazar</button><button class="btn btn-success" onclick="clientDecision(${r.id},true);">Aprobar presupuesto</button></div>`
           :`<span class="chip ${r.status==='approved'||r.status==='ot_created'||r.status==='completed'?'chip-green':r.status==='rejected'?'chip-red':'chip-grey'}">${r.status==='rejected'?'Rechazado':(r.status==='approved'||r.status==='ot_created'||r.status==='completed')?'Aprobado':'Procesando'}</span>`}
         </div>`:''}
         ${r.in_abono?`<div class="notice notice-success"><strong>Incluido en su abono mensual.</strong> No requiere aprobación adicional.</div>`:''}
+        <details style="margin-top:4px"><summary style="font-size:11px;font-weight:600;color:var(--primary);cursor:pointer">Ver timeline de intervención</summary>${renderInterventionTimeline(r.id)}</details>
       </div>
     </div>`;
   }).join('')}
