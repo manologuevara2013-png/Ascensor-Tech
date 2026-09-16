@@ -1,0 +1,17 @@
+{
+  "name": "ascensor-tech",
+  "version": "1.0.0",
+  "description": "AscensorTech - Gestión Integral de Servicios de Ascensores",
+  "scripts": {
+    "ofuscar": "node ofuscar.js",
+    "presentacion": "node presentacion.js"
+  },
+  "dependencies": {
+    "clean-css": "^5.3.3",
+    "javascript-obfuscator": "^4.1.1",
+    "pptxgenjs": "^3.12.0"
+  },
+  "author": "AscensorTech",
+  "license": "UNLICENSED",
+  "private": true
+}
