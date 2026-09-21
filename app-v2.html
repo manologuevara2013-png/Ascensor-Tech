@@ -359,6 +359,8 @@ const S = {
       {id:3,full_name:'Martín Alvarez',role:'tecnico',phone:'11-2001-0003',email:'malvarez@ascensortech.com',specialization:'Puertas automáticas',active:true},
       {id:4,full_name:'Lucía Fernández',role:'tecnico',phone:'11-2001-0004',email:'lfernandez@ascensortech.com',specialization:'Sistemas de control / MRL',active:true},
       {id:5,full_name:'Carlos García',role:'administrativo',phone:'11-2001-0005',email:'cgarcia@ascensortech.com',specialization:'Administración general',active:true},
+      {id:6,full_name:'Jorge Méndez',role:'deposito',phone:'11-2001-0006',phone2:'11-5500-1234',email:'jmendez@ascensortech.com',specialization:'Control de inventario y logística',active:true},
+      {id:7,full_name:'Patricia Ruiz',role:'compras',phone:'11-2001-0007',phone2:'11-5500-5678',email:'pruiz@ascensortech.com',specialization:'Compras y proveedores',active:true},
     ],
     shifts:(()=>{
       const out=[]; let id=1;
@@ -395,9 +397,9 @@ const S = {
       {id:5,elevator_id:8,request_id:null,tech_id:3,log_date:'2026-08-25',log_type:'emergencia',description:'Atrapamiento de persona liberado, puerta bloqueada tras el episodio',equipment_status:'fuera_servicio',observations:'Requiere reemplazo de mecanismo de puerta — ver REQ pendiente'},
     ],
     parts_requests:[
-      {id:1,request_id:1,tech_report_id:1,items:[{description:'Riel puerta PB',quantity:1,source:'deposito',status:'entregado'}],status:'entregado',created_at:'2026-08-15'},
-      {id:2,request_id:3,tech_report_id:2,items:[{description:'Kit rodamientos motor',quantity:1,source:'compras',status:'en_compras'},{description:'Aceite especial transmisión',quantity:2,source:'deposito',status:'entregado'}],status:'en_compras',created_at:'2026-08-20'},
-      {id:3,request_id:4,tech_report_id:3,items:[{description:'Módulo LED cabina',quantity:1,source:'deposito',status:'solicitado'},{description:'Botonera piso completa',quantity:1,source:'compras',status:'solicitado'}],status:'solicitado',created_at:'2026-08-22'},
+      {id:1,request_id:1,tech_report_id:1,items:[{description:'Riel puerta PB',quantity:1,unit_price:18000,brand_model:'Otis Gen2',tech_specs:'Riel cabina estándar 1.5m',part_urgency:'normal',supplier:'Cablesur SA',purchase_notes:'',source:'deposito',status:'entregado'}],status:'entregado',created_at:'2026-08-15'},
+      {id:2,request_id:3,tech_report_id:2,items:[{description:'Kit rodamientos motor',quantity:1,unit_price:35000,brand_model:'SKF 6205-2RS',tech_specs:'Rodamiento sellado para motor 5.5kW',part_urgency:'urgente',supplier:'Rodamientos Sur',purchase_notes:'Compatible con motores Sicor y Montanari',source:'compras',status:'en_compras'},{description:'Aceite especial transmisión',quantity:2,unit_price:4200,brand_model:'Shell Omala S2',tech_specs:'Viscosidad ISO 220',part_urgency:'normal',supplier:'Lubricentro Industrial',purchase_notes:'',source:'deposito',status:'entregado'}],status:'en_compras',created_at:'2026-08-20'},
+      {id:3,request_id:4,tech_report_id:3,items:[{description:'Módulo LED cabina',quantity:1,unit_price:12000,brand_model:'',tech_specs:'Panel LED 12V, 40x60cm',part_urgency:'normal',supplier:'',purchase_notes:'',source:null,status:'en_revision_deposito'},{description:'Botonera piso completa',quantity:1,unit_price:6500,brand_model:'ThyssenKrupp',tech_specs:'Botonera estándar 1 botón + indicador',part_urgency:'normal',supplier:'Repuestos TK',purchase_notes:'Verificar compatibilidad con tablero MC2',source:null,status:'en_revision_deposito'}],status:'en_revision_deposito',created_at:'2026-08-22'},
     ],
     inventory:[
       {id:1,code:'CBL-001',name:'Cable de tracción 8mm',category:'Cables',quantity:6,min_stock:4,location:'Depósito A - Estante 1',unit_price:22000,created_at:'2024-01-10'},
@@ -451,7 +453,7 @@ const S = {
       {id:4,type:'info',title:'3 habilitaciones por vencer',description:'Vencen en menos de 60 días',time_label:'Esta sem.'},
       {id:5,type:'warning',title:'Stock crítico — Kit rodamientos motor',description:'0 unidades en depósito, reposición en curso',time_label:'Hace 1 día'},
     ],
-    nextReqId:16, nextOtId:892, nextFacId:1205, nextIds:{elevator:16,contract:4,staff:6,shift:29,report:4,log:6,partsreq:4,inv:13,mov:5},
+    nextReqId:16, nextOtId:892, nextFacId:1205, nextIds:{elevator:16,contract:4,staff:8,shift:29,report:4,log:6,partsreq:4,inv:13,mov:5},
   }
 };
 
@@ -513,12 +515,13 @@ const REQ_STATUS={
 const URG_LABEL={red:'Urgente',yellow:'Media',green:'Baja',null:'Sin clasificar'};
 const URG_CLS={red:'urg-red',yellow:'urg-yellow',green:'urg-green',null:'urg-none'};
 const TYPE_LABEL={parada_servicio:'Parada de servicio',puerta:'Problema de puerta',iluminacion:'Iluminación / Botonera',ruido:'Ruido anormal',preventivo:'Mantenimiento preventivo',otro:'Otro',emergencia_personas:'Persona atrapada'};
-const ROLE_LABEL={tecnico:'Técnico',jefe_tecnico:'Jefe Técnico',admin_general:'Administrador General',administrativo:'Administrativo'};
-const ROLE_CHIP={tecnico:'chip-blue',jefe_tecnico:'chip-green',admin_general:'chip-amber',administrativo:'chip-grey'};
+const ROLE_LABEL={tecnico:'Técnico',supervisor:'Supervisor',jefe_tecnico:'Jefe Técnico',admin_general:'Administrador General',administrativo:'Administrativo',deposito:'Resp. Depósito',compras:'Resp. Compras',dueno:'Dueño'};
+const ROLE_CHIP={tecnico:'chip-blue',supervisor:'chip-blue',jefe_tecnico:'chip-green',admin_general:'chip-amber',administrativo:'chip-grey',deposito:'chip-amber',compras:'chip-amber',dueno:'chip-red'};
+const STAFF_ROLES=['tecnico','supervisor','jefe_tecnico','admin_general','administrativo','deposito','compras'];
 const ELV_STATUS={operativo:{label:'Operativo',chip:'chip-green'},en_reparacion:{label:'En reparación',chip:'chip-amber'},fuera_servicio:{label:'Fuera de servicio',chip:'chip-red'}};
 const OT_STATUS={active:{label:'Activa',chip:'chip-blue'},in_progress:{label:'En curso',chip:'chip-amber'},done:{label:'Finalizada',chip:'chip-green'},cancelled:{label:'Cancelada',chip:'chip-red'}};
 const INV_STATUS={pending:{label:'Pendiente',chip:'chip-amber'},paid:{label:'Pagada',chip:'chip-green'},overdue:{label:'Vencida',chip:'chip-red'}};
-const PR_STATUS={pendiente_aprobacion:{label:'Pend. aprobación',chip:'chip-amber'},aprobado_jefe:{label:'Aprobado JT',chip:'chip-blue'},solicitado:{label:'Solicitado',chip:'chip-grey'},en_deposito:{label:'En depósito',chip:'chip-blue'},en_compras:{label:'En compras',chip:'chip-amber'},presupuesto_enviado:{label:'Presup. enviado',chip:'chip-amber'},presupuesto_aprobado:{label:'Presup. aprobado',chip:'chip-green'},presupuesto_rechazado:{label:'Presup. rechazado',chip:'chip-red'},entregado:{label:'Entregado',chip:'chip-green'}};
+const PR_STATUS={pendiente_aprobacion:{label:'Pend. aprobación',chip:'chip-amber'},aprobado_jefe:{label:'Aprobado JT',chip:'chip-blue'},en_revision_deposito:{label:'Revisión depósito',chip:'chip-blue'},en_deposito:{label:'En depósito',chip:'chip-blue'},derivado_compras:{label:'Derivado a compras',chip:'chip-amber'},en_compras:{label:'En compras',chip:'chip-amber'},comprado:{label:'Comprado',chip:'chip-green'},presupuesto_enviado:{label:'Presup. enviado',chip:'chip-amber'},presupuesto_aprobado:{label:'Presup. aprobado',chip:'chip-green'},presupuesto_rechazado:{label:'Presup. rechazado',chip:'chip-red'},entregado:{label:'Entregado',chip:'chip-green'}};
 const LOG_TYPE={preventivo:'Preventivo',correctivo:'Correctivo',inspeccion:'Inspección',emergencia:'Emergencia'};
 
 function wfSteps(status){
@@ -568,6 +571,25 @@ function NAV_TECNICO(){return [
   {id:'edificios',label:'Edificios',icon:'building'},
   {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'a',badgeVal:()=>S.data.parts_requests.filter(p=>!['entregado','presupuesto_rechazado'].includes(p.status)).length},
 ];}
+function NAV_DUENO(){return [
+  {id:'panel_dueno',label:'Panel Ejecutivo',icon:'grid',section:'Principal'},
+  {id:'personal',label:'Personal',icon:'users',section:'Administración'},
+  {id:'edificios',label:'Edificios',icon:'building'},
+  {id:'contratos',label:'Contratos',icon:'file'},
+  {id:'turnos',label:'Turnos',icon:'calendar'},
+  {id:'recepcion',label:'Recepción',icon:'inbox',section:'Operaciones',badge:'r',badgeVal:()=>S.data.requests.filter(r=>r.status==='new'||r.status==='triaged').length},
+  {id:'ordenes',label:'Órdenes de Trabajo',icon:'clipboard'},
+  {id:'informes',label:'Informes Técnicos',icon:'tool',section:'Técnica',badge:'a',badgeVal:()=>S.data.requests.filter(r=>r.status==='technical').length},
+  {id:'historial',label:'Historial Técnico',icon:'clock'},
+  {id:'deposito',label:'Stock',icon:'box',section:'Depósito'},
+  {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'a',badgeVal:()=>S.data.parts_requests.filter(p=>p.status!=='entregado').length},
+  {id:'presupuestos',label:'Presupuestos',icon:'check',section:'Finanzas'},
+  {id:'facturacion',label:'Facturación',icon:'receipt'},
+  {id:'cobros',label:'Cobros',icon:'wallet'},
+  {id:'indices',label:'Índices',icon:'trend'},
+  {id:'reportes',label:'Reportes',icon:'trend',section:'Reportes'},
+  {id:'alertas',label:'Alertas',icon:'bell',section:'Sistema',badge:'r',badgeVal:()=>S.data.alerts.length},
+];}
 function NAV_CLIENT(){return [
   {id:'portal',label:'Mi Edificio',icon:'building',section:'Principal'},
   {id:'portal_contrato',label:'Mi Contrato',icon:'file'},
@@ -575,13 +597,24 @@ function NAV_CLIENT(){return [
   {id:'presupuestos',label:'Presupuestos',icon:'check'},
   {id:'portal_cuenta',label:'Facturas',icon:'receipt',section:'Cuenta'},
 ];}
+function NAV_DEPOSITO(){return [
+  {id:'deposito',label:'Stock',icon:'box',section:'Depósito'},
+  {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'a',badgeVal:()=>S.data.parts_requests.filter(p=>p.status==='en_revision_deposito').length},
+];}
+function NAV_COMPRAS(){return [
+  {id:'pedidos',label:'Gestión de Compras',icon:'truck',section:'Compras',badge:'a',badgeVal:()=>S.data.parts_requests.filter(p=>p.items.some(it=>['derivado_compras','en_compras'].includes(it.status))).length},
+];}
 function currentNav(){
+  if(S.role==='dueno') return NAV_DUENO();
   if(S.role==='admin') return NAV_ADMIN();
   if(S.role==='jefe_tecnico') return NAV_JEFE();
   if(S.role==='tecnico') return NAV_TECNICO();
+  if(S.role==='deposito') return NAV_DEPOSITO();
+  if(S.role==='compras') return NAV_COMPRAS();
   return NAV_CLIENT();
 }
 const TITLES={
+  panel_dueno:['Panel Ejecutivo','Tablero de control del dueño'],
   dashboard:['Dashboard','Resumen general del sistema'],personal:['Personal','Gestión de técnicos y equipo'],
   edificios:['Edificios','Padrón de edificios y ascensores'],contratos:['Contratos','Contratos de mantenimiento'],
   turnos:['Turnos','Calendario de guardias'],recepcion:['Recepción','Bandeja de solicitudes'],
@@ -596,18 +629,24 @@ const TITLES={
 
 /* ═══════════════ ROLE PERMISSIONS ═══════════════ */
 const ALLOWED_VIEWS={
+  dueno:null,
   admin:null,
   jefe_tecnico:['dashboard','recepcion','informes','historial','ordenes','turnos','edificios','contratos','deposito','pedidos','reportes'],
   tecnico:['recepcion','informes','historial','turnos','edificios','pedidos'],
+  deposito:['deposito','pedidos'],
+  compras:['pedidos'],
   client:['portal','portal_contrato','portal_solicitudes','presupuestos','portal_cuenta'],
 };
-const ROLE_DEFAULT={admin:'dashboard',jefe_tecnico:'dashboard',tecnico:'recepcion',client:'portal'};
+const ROLE_DEFAULT={dueno:'panel_dueno',admin:'dashboard',jefe_tecnico:'dashboard',tecnico:'recepcion',deposito:'deposito',compras:'pedidos',client:'portal'};
 
 function go(view,params){ S.view=view; S.tab={...S.tab,...(params||{})}; persist(); renderApp(); }
 function switchRole(role){
   S.role=role;
   if(role==='client'){ S.view='portal'; }
   else if(role==='tecnico'){ S.view='recepcion'; }
+  else if(role==='dueno'){ S.view='panel_dueno'; }
+  else if(role==='deposito'){ S.view='deposito'; }
+  else if(role==='compras'){ S.view='pedidos'; }
   else { S.view='dashboard'; }
   S.tab={};
   persist(); renderApp();
@@ -626,10 +665,11 @@ function renderNav(){
   document.getElementById('sb-nav').innerHTML=sb;
 
   const roles=[
-    {id:'admin',label:'Admin'},{id:'jefe_tecnico',label:'Jefe Técnico'},
-    {id:'tecnico',label:'Técnico'},{id:'client',label:'Cliente'},
+    {id:'dueno',label:'Dueño'},{id:'admin',label:'Admin'},{id:'jefe_tecnico',label:'Jefe Técnico'},
+    {id:'tecnico',label:'Técnico'},{id:'deposito',label:'Depósito'},{id:'compras',label:'Compras'},{id:'client',label:'Cliente'},
   ];
-  document.getElementById('role-switch').innerHTML=roles.map(r=>
+  const visibleRoles=roles;
+  document.getElementById('role-switch').innerHTML=visibleRoles.map(r=>
     `<button class="role-btn ${S.role===r.id?'active':''}" onclick="switchRole('${r.id}')">${r.label}</button>`).join('');
 
   if(S.role==='client'){
@@ -638,7 +678,7 @@ function renderNav(){
     document.getElementById('sb-uname').textContent=b.admin_name||'Cliente';
     document.getElementById('sb-urole').textContent=b.name||'Edificio';
   } else {
-    const names={admin:['Carlos García','Administrador'],jefe_tecnico:['Roberto Fernández','Jefe Técnico'],tecnico:['Diego Sosa','Técnico']};
+    const names={dueno:['Manolo Guevara','Dueño'],admin:['Carlos García','Administrador'],jefe_tecnico:['Roberto Fernández','Jefe Técnico'],tecnico:['Diego Sosa','Técnico'],deposito:['Jorge Méndez','Resp. Depósito'],compras:['Patricia Ruiz','Resp. Compras']};
     const[n,r]=names[S.role]||names.admin;
     document.getElementById('sb-avatar').textContent=n.split(' ').map(w=>w[0]).slice(0,2).join('');
     document.getElementById('sb-uname').textContent=n;
@@ -788,7 +828,7 @@ function handlePhotoUpload(inputId,callback){
    blocks have executed — referencing them eagerly here would throw a
    ReferenceError since this script block runs first. */
 function VIEWS(){ return {
-  dashboard:viewDashboard, personal:viewPersonal, edificios:viewEdificios, contratos:viewContratos,
+  panel_dueno:viewPanelDueno, dashboard:viewDashboard, personal:viewPersonal, edificios:viewEdificios, contratos:viewContratos,
   turnos:viewTurnos, recepcion:viewRecepcion, ordenes:viewOrdenesT, informes:viewInformesTecnicos,
   historial:viewHistorial, deposito:viewDeposito, pedidos:viewPedidosRepuestos, presupuestos:viewPresupuestos,
   facturacion:viewFacturacion, cobros:viewCobros, indices:viewIndices, alertas:viewAlertas,
@@ -812,6 +852,169 @@ function renderApp(){
 }
 </script>
 <script>
+/* ═══════════════ VIEW: PANEL DUEÑO (EJECUTIVO) ═══════════════ */
+function viewPanelDueno(){
+  const d=S.data;
+  const now=new Date();
+  const hh=now.getHours();
+  const saludo=hh<12?'Buenos días':hh<19?'Buenas tardes':'Buenas noches';
+  const fechaHoy=now.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const horaHoy=now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+
+  // ── FINANCIERO ──
+  const monthlyAbonos=d.buildings.reduce((a,b)=>a+b.abono,0);
+  const totalInvoiced=d.invoices.reduce((a,f)=>a+f.amount,0);
+  const totalPaid=d.invoices.filter(f=>f.status==='paid').reduce((a,f)=>a+f.amount,0);
+  const totalPending=d.invoices.filter(f=>f.status==='pending').reduce((a,f)=>a+f.amount,0);
+  const totalOverdue=d.invoices.filter(f=>f.status==='overdue').reduce((a,f)=>a+f.amount,0);
+  const totalDebt=d.clients.reduce((a,c)=>a+c.debt,0);
+  const morosos=d.clients.filter(c=>c.status==='warning'||c.status==='critical');
+  const cobrado_pct=totalInvoiced>0?Math.round(totalPaid/totalInvoiced*100):0;
+
+  // ── OPERATIVO ──
+  const totalEdificios=d.buildings.length;
+  const totalAscensores=d.elevators.length;
+  const ascOperativos=d.elevators.filter(e=>e.status==='operativo').length;
+  const ascReparacion=d.elevators.filter(e=>e.status==='en_reparacion').length;
+  const ascFuera=d.elevators.filter(e=>e.status==='fuera_servicio').length;
+  const openReqs=d.requests.filter(r=>!['completed','rejected'].includes(r.status)).length;
+  const urgentes=d.requests.filter(r=>r.urgency==='red'&&!['completed','rejected'].includes(r.status)).length;
+  const completadas=d.requests.filter(r=>r.status==='completed').length;
+  const otActivas=d.work_orders.filter(o=>o.status==='active'||o.status==='in_progress').length;
+
+  // ── PRESUPUESTOS ──
+  const presEnviados=d.requests.filter(r=>r.status==='budget_sent').length;
+  const presAprobados=d.requests.filter(r=>r.status==='approved').length;
+  const presRechazados=d.requests.filter(r=>r.status==='rejected').length;
+  const totalPresAprobado=d.requests.filter(r=>r.status==='approved'||r.status==='completed').reduce((a,r)=>a+r.budget_amount,0);
+
+  // ── PERSONAL ──
+  const tecnicosActivos=d.staff.filter(s=>(s.role==='tecnico'||s.role==='jefe_tecnico')&&s.active).length;
+  const todayStr=now.toISOString().slice(0,10);
+  const turnosHoy=d.shifts.filter(s=>s.shift_date===todayStr&&s.shift_type!=='franco');
+  const francoHoy=d.shifts.filter(s=>s.shift_date===todayStr&&s.shift_type==='franco');
+
+  // ── STOCK ──
+  const stockBajo=d.inventory.filter(i=>i.quantity<i.min_stock);
+  const stockAgotado=d.inventory.filter(i=>i.quantity===0);
+  const pedidosPend=d.parts_requests.filter(p=>!['entregado','presupuesto_rechazado'].includes(p.status)).length;
+
+  // ── CHART: facturación por edificio ──
+  const facPorEdif={};
+  d.invoices.forEach(f=>{const n=bld(f.building_id).name||'?';facPorEdif[n]=(facPorEdif[n]||0)+f.amount;});
+  const facEntries=Object.entries(facPorEdif).sort((a,b)=>b[1]-a[1]);
+  const facMax=Math.max(1,...facEntries.map(e=>e[1]));
+  const facBars=facEntries.map(([n,v])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+    <div style="width:120px;font-size:11px;color:var(--text-2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${n}">${n}</div>
+    <div style="flex:1;background:var(--bg-3);border-radius:4px;height:18px;overflow:hidden"><div style="height:100%;width:${Math.round(v/facMax*100)}%;background:var(--primary);border-radius:4px"></div></div>
+    <div style="width:80px;font-size:11px;font-weight:600;color:var(--text-1)">${fmt(v)}</div>
+  </div>`).join('');
+
+  // ── CHART: estado ascensores (donut visual) ──
+  const ascTotal=totalAscensores;
+  const pctOp=Math.round(ascOperativos/ascTotal*100);
+  const pctRep=Math.round(ascReparacion/ascTotal*100);
+  const pctFS=Math.round(ascFuera/ascTotal*100);
+
+  // ── MOROSOS detalle ──
+  const morosoRows=morosos.map(c=>{
+    const b=bld(c.building_id);
+    return `<tr>
+      <td class="fw600">${b.name}</td>
+      <td><span class="chip ${c.status==='critical'?'chip-red':'chip-amber'}">${c.status==='critical'?'Crítico':'En mora'}</span></td>
+      <td class="fw600">${c.mora_days} días</td>
+      <td class="fw600" style="color:var(--danger)">${fmt(c.debt)}</td>
+    </tr>`;
+  }).join('');
+
+  // ── Alertas resumen ──
+  const alertIcons={danger:I.alert,warning:I.alert,info:I.bell};
+  const alertColors={danger:'var(--danger-s)',warning:'var(--warning-s)',info:'var(--info-s)'};
+  const alertTextColors={danger:'var(--danger)',warning:'var(--warning)',info:'var(--info)'};
+  const alertRows=d.alerts.map(a=>`<div class="alert-row"><div class="alert-ico" style="background:${alertColors[a.type]};color:${alertTextColors[a.type]}">${alertIcons[a.type]}</div><div class="alert-body"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.description}</div></div><div class="alert-time">${a.time_label}</div></div>`).join('');
+
+  return `
+  <div style="margin-bottom:20px">
+    <div style="font-size:13px;color:var(--text-3);margin-bottom:2px">${fechaHoy} — ${horaHoy}</div>
+    <div style="font-size:22px;font-weight:700;color:var(--text-1)">${saludo}, Manolo</div>
+    <div style="font-size:13px;color:var(--text-3);margin-top:2px">Resumen ejecutivo de AscensorTech</div>
+  </div>
+
+  <!-- FILA 1: KPIs financieros -->
+  <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px">Finanzas</div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Facturación mensual</div><div class="kpi-icon" style="background:var(--success-s);color:var(--success)">${I.dollar}</div></div><div class="kpi-value" style="font-size:20px">${fmt(monthlyAbonos)}</div><div class="kpi-sub">Abonos activos</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Cobrado</div><div class="kpi-icon" style="background:var(--success-s);color:var(--success)">${I.check}</div></div><div class="kpi-value" style="font-size:20px;color:var(--success)">${fmt(totalPaid)}</div><div class="kpi-delta delta-up">${cobrado_pct}% del total</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Pendiente de cobro</div><div class="kpi-icon" style="background:var(--warning-s);color:var(--warning)">${I.clock}</div></div><div class="kpi-value" style="font-size:20px;color:var(--warning)">${fmt(totalPending)}</div><div class="kpi-sub">Sin vencer</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Deuda total morosos</div><div class="kpi-icon" style="background:var(--danger-s);color:var(--danger)">${I.alert}</div></div><div class="kpi-value" style="font-size:20px;color:var(--danger)">${fmt(totalDebt)}</div><div class="kpi-sub">${morosos.length} edificio${morosos.length!==1?'s':''} en mora</div></div>
+  </div>
+
+  <!-- FILA 2: KPIs operativos -->
+  <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px">Operaciones</div>
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Edificios</div><div class="kpi-icon" style="background:var(--info-s);color:var(--info)">${I.building}</div></div><div class="kpi-value">${totalEdificios}</div><div class="kpi-sub">${totalAscensores} ascensores</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Solicitudes abiertas</div><div class="kpi-icon" style="background:var(--warning-s);color:var(--warning)">${I.inbox}</div></div><div class="kpi-value">${openReqs}</div><div class="kpi-sub">${urgentes?`<span style="color:var(--danger);font-weight:600">${urgentes} urgente${urgentes>1?'s':''}</span>`:'Ninguna urgente'}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">OT activas</div><div class="kpi-icon" style="background:var(--info-s);color:var(--info)">${I.clipboard}</div></div><div class="kpi-value">${otActivas}</div><div class="kpi-sub">${completadas} completada${completadas!==1?'s':''}</div></div>
+    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Ascensores</div><div class="kpi-icon" style="background:${ascFuera?'var(--danger-s)':'var(--success-s)'};color:${ascFuera?'var(--danger)':'var(--success)'}">${I.tool}</div></div><div class="kpi-value">${pctOp}%</div><div class="kpi-sub">${ascOperativos} operativos · ${ascReparacion} reparación · ${ascFuera} fuera</div></div>
+  </div>
+
+  ${urgentes?`<div class="notice notice-danger"><strong>${urgentes} solicitud${urgentes>1?'es':''} urgente${urgentes>1?'s':''}.</strong> Requiere${urgentes>1?'n':''} atención inmediata. <a href="#" onclick="event.preventDefault();switchRole('admin');go('recepcion')" style="color:inherit;font-weight:600;text-decoration:underline">Ver solicitudes</a></div>`:''}
+  ${ascFuera?`<div class="notice notice-warning"><strong>${ascFuera} ascensor${ascFuera>1?'es':''} fuera de servicio.</strong> <a href="#" onclick="event.preventDefault();go('edificios')" style="color:inherit;font-weight:600;text-decoration:underline">Ver edificios</a></div>`:''}
+
+  <div class="grid2">
+    <!-- Facturación por edificio -->
+    <div class="card"><div class="card-header"><span class="card-title">Facturación por edificio</span><button class="btn btn-secondary btn-sm" onclick="go('facturacion')">Ver todas</button></div>
+      <div class="card-body">${facBars}</div>
+    </div>
+
+    <!-- Morosos -->
+    <div class="card"><div class="card-header"><span class="card-title">Morosos</span><span class="chip chip-red">${morosos.length}</span></div>
+      ${morosos.length?`<div class="table-wrap"><table><thead><tr><th>Edificio</th><th>Estado</th><th>Días</th><th>Deuda</th></tr></thead><tbody>${morosoRows}</tbody></table></div>`:'<div class="card-body" style="text-align:center;color:var(--success);padding:20px;font-weight:600">Sin morosos — todos al día</div>'}
+    </div>
+  </div>
+
+  <div class="grid2">
+    <!-- Personal y turnos hoy -->
+    <div class="card"><div class="card-header"><span class="card-title">Personal hoy</span></div>
+      <div class="card-body">
+        <div style="display:flex;gap:16px;margin-bottom:12px">
+          <div style="text-align:center"><div style="font-size:24px;font-weight:700;color:var(--primary)">${tecnicosActivos}</div><div style="font-size:11px;color:var(--text-3)">Técnicos activos</div></div>
+          <div style="text-align:center"><div style="font-size:24px;font-weight:700;color:var(--success)">${turnosHoy.length}</div><div style="font-size:11px;color:var(--text-3)">En turno hoy</div></div>
+          <div style="text-align:center"><div style="font-size:24px;font-weight:700;color:var(--text-3)">${francoHoy.length}</div><div style="font-size:11px;color:var(--text-3)">Franco</div></div>
+        </div>
+        ${turnosHoy.length?turnosHoy.map(t=>{const s=staffOf(t.staff_id);return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)">
+          <span class="avatar-sm">${s?s.full_name.split(' ').map(w=>w[0]).slice(0,2).join(''):''}</span>
+          <div><div class="fw600" style="font-size:13px">${s?s.full_name:'—'}</div><div style="font-size:11px;color:var(--text-3)">${s?s.specialization:''}</div></div>
+          <span class="chip chip-blue" style="margin-left:auto">${t.shift_type}</span>
+        </div>`;}).join(''):'<div style="color:var(--text-3);font-size:13px">Sin datos de turnos para hoy</div>'}
+      </div>
+    </div>
+
+    <!-- Presupuestos y Stock -->
+    <div class="card"><div class="card-header"><span class="card-title">Presupuestos y stock</span></div>
+      <div class="card-body">
+        <div style="display:flex;gap:16px;margin-bottom:16px">
+          <div style="text-align:center;flex:1;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--warning)">${presEnviados}</div><div style="font-size:11px;color:var(--text-3)">Esperando cliente</div></div>
+          <div style="text-align:center;flex:1;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--success)">${presAprobados}</div><div style="font-size:11px;color:var(--text-3)">Aprobados</div></div>
+          <div style="text-align:center;flex:1;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--primary)">${fmt(totalPresAprobado)}</div><div style="font-size:11px;color:var(--text-3)">Monto aprobado</div></div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:8px">Stock crítico</div>
+        ${stockBajo.length?stockBajo.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid var(--border)">
+          <span style="font-size:12px">${i.name}</span>
+          <span class="chip ${i.quantity===0?'chip-red':'chip-amber'}">${i.quantity===0?'Agotado':i.quantity+' uds'}</span>
+        </div>`).join(''):'<div style="color:var(--success);font-size:12px;padding:8px 0">Todo el stock por encima del mínimo</div>'}
+        <div style="font-size:11px;color:var(--text-3);margin-top:8px">${pedidosPend} pedido${pedidosPend!==1?'s':''} de repuestos en curso</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alertas -->
+  <div class="card"><div class="card-header"><span class="card-title">Alertas del sistema</span><span class="chip chip-red">${d.alerts.length}</span><button class="btn btn-secondary btn-sm" onclick="go('alertas')" style="margin-left:auto">Ver todas</button></div>${alertRows}</div>
+
+  <div style="text-align:center;padding:16px;font-size:11px;color:var(--text-3)">Última actualización: ${horaHoy} — Los datos se actualizan cada vez que abrís esta pantalla</div>
+  `;
+}
+
 /* ═══════════════ VIEW: DASHBOARD ═══════════════ */
 function viewDashboard(){
   const d=S.data;
@@ -866,42 +1069,45 @@ function viewDashboard(){
 function viewPersonal(){
   const filter=S.tab.personalFilter||'all';
   const list=S.data.staff.filter(s=>filter==='all'||s.role===filter);
-  const filters=[['all','Todos'],['tecnico','Técnicos'],['jefe_tecnico','Jefe Técnico'],['admin_general','Admin. General'],['administrativo','Administrativo']];
+  const filters=[['all','Todos'],['tecnico','Técnicos'],['supervisor','Supervisores'],['jefe_tecnico','Jefe Técnico'],['admin_general','Admin. General'],['administrativo','Administrativo'],['deposito','Depósito'],['compras','Compras']];
   return `
   <div class="card">
     <div class="card-header">
       <div class="tabs" style="border:none;margin:0">${filters.map(([k,l])=>`<button class="tab ${filter===k?'active':''}" onclick="S.tab.personalFilter='${k}';renderApp()">${l}</button>`).join('')}</div>
       <button class="btn btn-primary btn-sm" onclick="openStaffModal()">${I.plus} Nuevo</button>
     </div>
-    <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Rol</th><th>Teléfono</th><th>Email</th><th>Especialización</th><th>Estado</th><th></th></tr></thead><tbody>
+    <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Rol</th><th>Teléfono</th><th>Contacto / Emerg.</th><th>Email</th><th>Especialización</th><th>Estado</th><th></th></tr></thead><tbody>
     ${list.map(s=>`<tr>
       <td class="fw600" style="color:var(--text-1)"><span class="avatar-sm" style="margin-right:8px">${s.full_name.split(' ').map(w=>w[0]).slice(0,2).join('')}</span>${s.full_name}</td>
-      <td><span class="chip ${ROLE_CHIP[s.role]}">${ROLE_LABEL[s.role]}</span></td>
-      <td>${s.phone}</td><td>${s.email}</td><td>${s.specialization}</td>
+      <td><span class="chip ${ROLE_CHIP[s.role]}">${ROLE_LABEL[s.role]||s.role}</span></td>
+      <td>${s.phone}</td><td>${s.phone2||'—'}</td><td>${s.email}</td><td>${s.specialization}</td>
       <td>${s.active?'<span class="chip chip-green">Activo</span>':'<span class="chip chip-grey">Inactivo</span>'}</td>
       <td><div class="flex gap-2"><button class="btn btn-secondary btn-sm" onclick="openStaffModal(${s.id})">${I.edit}</button><button class="btn btn-secondary btn-sm" onclick="deleteStaff(${s.id})">${I.trash}</button></div></td>
     </tr>`).join('')}
-    ${list.length===0?'<tr><td colspan="7" style="text-align:center;color:var(--text-3);padding:24px">Sin resultados</td></tr>':''}
+    ${list.length===0?'<tr><td colspan="8" style="text-align:center;color:var(--text-3);padding:24px">Sin resultados</td></tr>':''}
     </tbody></table></div>
   </div>`;
 }
 function openStaffModal(id){
-  const s=id?S.data.staff.find(x=>x.id===id):{full_name:'',role:'tecnico',phone:'',email:'',specialization:'',active:true};
+  const s=id?S.data.staff.find(x=>x.id===id):{full_name:'',role:'tecnico',phone:'',phone2:'',email:'',specialization:'',active:true};
   openModal(id?'Editar Personal':'Nuevo Miembro del Personal',`
-    <div class="form-group"><label class="form-label">Nombre completo</label><input class="form-input" id="f_name" value="${s.full_name}"></div>
+    <div class="form-group"><label class="form-label">Nombre completo</label><input class="form-input" id="f_name" value="${s.full_name}" placeholder="Nombre y apellido"></div>
     <div class="form-grid2">
       <div class="form-group"><label class="form-label">Rol</label><select class="form-select" id="f_role">
-        ${Object.keys(ROLE_LABEL).map(r=>`<option value="${r}" ${s.role===r?'selected':''}>${ROLE_LABEL[r]}</option>`).join('')}
+        ${STAFF_ROLES.map(r=>`<option value="${r}" ${s.role===r?'selected':''}>${ROLE_LABEL[r]}</option>`).join('')}
       </select></div>
-      <div class="form-group"><label class="form-label">Teléfono</label><input class="form-input" id="f_phone" value="${s.phone}"></div>
+      <div class="form-group"><label class="form-label">Especialización</label><input class="form-input" id="f_spec" value="${s.specialization}" placeholder="Ej: Electromecánica, Puertas, MRL..."></div>
     </div>
-    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="f_email" value="${s.email}"></div>
-    <div class="form-group"><label class="form-label">Especialización</label><input class="form-input" id="f_spec" value="${s.specialization}"></div>
+    <div class="form-grid2">
+      <div class="form-group"><label class="form-label">Teléfono principal</label><input class="form-input" id="f_phone" value="${s.phone}" placeholder="Ej: 11-2001-0001"></div>
+      <div class="form-group"><label class="form-label">Teléfono contacto / emergencia</label><input class="form-input" id="f_phone2" value="${s.phone2||''}" placeholder="Familiar o contacto alternativo"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="f_email" value="${s.email}" placeholder="correo@ejemplo.com"></div>
     <div class="flex items-center gap-2"><label class="switch"><input type="checkbox" id="f_active" ${s.active?'checked':''}><span class="switch-slider"></span></label><span class="text-sm">Activo</span></div>
   `,`<button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveStaff(${id||'null'})">Guardar</button>`);
 }
 function saveStaff(id){
-  const v={full_name:document.getElementById('f_name').value.trim(),role:document.getElementById('f_role').value,phone:document.getElementById('f_phone').value,email:document.getElementById('f_email').value,specialization:document.getElementById('f_spec').value,active:document.getElementById('f_active').checked};
+  const v={full_name:document.getElementById('f_name').value.trim(),role:document.getElementById('f_role').value,phone:document.getElementById('f_phone').value,phone2:document.getElementById('f_phone2').value,email:document.getElementById('f_email').value,specialization:document.getElementById('f_spec').value,active:document.getElementById('f_active').checked};
   if(!v.full_name){toast('Ingrese un nombre');return;}
   if(id){ Object.assign(S.data.staff.find(s=>s.id===id),v); toast('Personal actualizado'); }
   else { v.id=S.data.nextIds.staff++; S.data.staff.push(v); toast('Personal agregado'); }
@@ -1305,15 +1511,26 @@ function viewTechReportForm(r){
       <div class="section-label">Repuestos necesarios</div>
       <div id="tr_parts">
         <div class="parts-row" style="font-size:11px;font-weight:600;color:var(--text-3)"><span>Descripción</span><span>Cant.</span><span>Precio unit.</span><span>Subtotal</span><span></span></div>
-        ${parts.map((p,i)=>`<div class="parts-row" data-idx="${i}">
-          <input placeholder="Nombre del repuesto" value="${p.description}" onchange="S.tab.partsBuf[${i}].description=this.value">
-          <input type="number" value="${p.quantity}" onchange="S.tab.partsBuf[${i}].quantity=+this.value;renderApp()">
-          <input type="number" value="${p.unit_price}" onchange="S.tab.partsBuf[${i}].unit_price=+this.value;renderApp()">
-          <span class="text-sm fw600">${fmt(p.quantity*p.unit_price)}</span>
-          <button class="del-btn" onclick="S.tab.partsBuf.splice(${i},1);renderApp()">×</button>
+        ${parts.map((p,i)=>`<div style="border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:6px">
+          <div class="parts-row" data-idx="${i}">
+            <input placeholder="Nombre del repuesto" value="${p.description}" onchange="S.tab.partsBuf[${i}].description=this.value">
+            <input type="number" value="${p.quantity}" onchange="S.tab.partsBuf[${i}].quantity=+this.value;renderApp()">
+            <input type="number" value="${p.unit_price}" onchange="S.tab.partsBuf[${i}].unit_price=+this.value;renderApp()">
+            <span class="text-sm fw600">${fmt(p.quantity*p.unit_price)}</span>
+            <button class="del-btn" onclick="S.tab.partsBuf.splice(${i},1);renderApp()">×</button>
+          </div>
+          <details style="margin-top:6px"><summary style="font-size:11px;font-weight:600;color:var(--primary);cursor:pointer">Especificaciones técnicas</summary>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
+            <div class="form-group"><label class="form-label" style="font-size:10px">Marca / Modelo compatible</label><input class="form-input" style="font-size:11px;padding:5px 8px" value="${p.brand_model||''}" onchange="S.tab.partsBuf[${i}].brand_model=this.value" placeholder="Ej: Otis / Gen2"></div>
+            <div class="form-group"><label class="form-label" style="font-size:10px">Especificaciones técnicas</label><input class="form-input" style="font-size:11px;padding:5px 8px" value="${p.tech_specs||''}" onchange="S.tab.partsBuf[${i}].tech_specs=this.value" placeholder="Ej: 8mm, acero galvanizado"></div>
+            <div class="form-group"><label class="form-label" style="font-size:10px">Urgencia</label><select class="form-select" style="font-size:11px;padding:5px 8px" onchange="S.tab.partsBuf[${i}].part_urgency=this.value"><option value="normal" ${(p.part_urgency||'normal')==='normal'?'selected':''}>Normal</option><option value="urgente" ${p.part_urgency==='urgente'?'selected':''}>Urgente</option><option value="critico" ${p.part_urgency==='critico'?'selected':''}>Crítico</option></select></div>
+            <div class="form-group"><label class="form-label" style="font-size:10px">Proveedor sugerido</label><input class="form-input" style="font-size:11px;padding:5px 8px" value="${p.supplier||''}" onchange="S.tab.partsBuf[${i}].supplier=this.value" placeholder="Ej: Cablesur SA"></div>
+          </div>
+          <div class="form-group" style="margin-top:6px"><label class="form-label" style="font-size:10px">Notas adicionales para compras</label><input class="form-input" style="font-size:11px;padding:5px 8px" value="${p.purchase_notes||''}" onchange="S.tab.partsBuf[${i}].purchase_notes=this.value" placeholder="Compatibilidad, alternativas aceptables, etc."></div>
+          </details>
         </div>`).join('')}
       </div>
-      <button class="btn btn-secondary btn-sm" style="align-self:flex-start" onclick="S.tab.partsBuf.push({description:'',quantity:1,unit_price:0});renderApp()">${I.plus} Agregar repuesto</button>
+      <button class="btn btn-secondary btn-sm" style="align-self:flex-start" onclick="S.tab.partsBuf.push({description:'',quantity:1,unit_price:0,brand_model:'',tech_specs:'',part_urgency:'normal',supplier:'',purchase_notes:''});renderApp()">${I.plus} Agregar repuesto</button>
       <div class="form-grid2">
         <div class="form-group"><label class="form-label">Horas de mano de obra</label><input class="form-input" type="number" id="tr_hours" value="2"></div>
         <div class="form-group"><label class="form-label">Tarifa por hora</label><input class="form-input" type="number" id="tr_rate" value="4500"></div>
@@ -1340,7 +1557,7 @@ function submitTechReport(id){
   // create parts request if there are parts — goes to jefe_tecnico for approval
   if(parts.length){
     const prId=S.data.nextIds.partsreq++;
-    S.data.parts_requests.push({id:prId,request_id:id,tech_report_id:tr.id,items:parts.map(p=>({description:p.description,quantity:p.quantity,unit_price:p.unit_price,source:null,status:'pendiente_aprobacion'})),status:'pendiente_aprobacion',created_at:new Date().toISOString().slice(0,10)});
+    S.data.parts_requests.push({id:prId,request_id:id,tech_report_id:tr.id,items:parts.map(p=>({description:p.description,quantity:p.quantity,unit_price:p.unit_price,brand_model:p.brand_model||'',tech_specs:p.tech_specs||'',part_urgency:p.part_urgency||'normal',supplier:p.supplier||'',purchase_notes:p.purchase_notes||'',source:null,status:'pendiente_aprobacion'})),status:'pendiente_aprobacion',created_at:new Date().toISOString().slice(0,10)});
     S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'warning',title:'Nuevo pedido de repuestos requiere aprobación',description:`Pedido #${prId} — ${r.display_id} · ${bld(r.building_id).name} — ${parts.length} ítem(s)`,time_label:'Ahora'});
   }
   S.data.maintenance_log.push({id:S.data.nextIds.log++,elevator_id:r.elevator_id,request_id:r.id,tech_id:r.assigned_tech_id,log_date:new Date().toISOString().slice(0,10),log_type:'correctivo',description:tr.repair_type,equipment_status:'en_reparacion',observations:tr.observations});
@@ -1605,28 +1822,62 @@ function saveMovement(invId){
 function viewPedidosRepuestos(){
   const all=S.data.parts_requests.slice().sort((a,b)=>b.id-a.id);
   const isTech=S.role==='tecnico';
-  const isJefe=S.role==='jefe_tecnico';
+  const isJefe=S.role==='jefe_tecnico'||S.role==='dueno'||S.role==='admin';
+  const isDeposito=S.role==='deposito'||S.role==='dueno'||S.role==='admin';
+  const isCompras=S.role==='compras'||S.role==='dueno'||S.role==='admin';
   const pendingApproval=all.filter(p=>p.status==='pendiente_aprobacion');
+  const pendingDepot=all.filter(p=>p.status==='en_revision_deposito');
+  const pendingCompras=all.filter(p=>p.items.some(it=>['derivado_compras','en_compras'].includes(it.status)));
   const active=all.filter(p=>!['pendiente_aprobacion','entregado','presupuesto_rechazado'].includes(p.status));
   const completed=all.filter(p=>['entregado','presupuesto_rechazado'].includes(p.status));
 
-  function renderPrCard(pr){
+  function renderSpecsDetail(it){
+    const hasSpecs=it.brand_model||it.tech_specs||it.supplier||it.purchase_notes||(it.part_urgency&&it.part_urgency!=='normal');
+    if(!hasSpecs) return '';
+    return `<div style="font-size:11px;color:var(--text-2);margin-top:4px;padding:6px 8px;background:var(--surface2);border-radius:6px;display:flex;flex-wrap:wrap;gap:6px 14px">
+      ${it.brand_model?`<span><strong>Marca/Modelo:</strong> ${it.brand_model}</span>`:''}
+      ${it.tech_specs?`<span><strong>Especif.:</strong> ${it.tech_specs}</span>`:''}
+      ${it.part_urgency&&it.part_urgency!=='normal'?`<span class="chip ${it.part_urgency==='critico'?'chip-red':'chip-amber'}" style="font-size:10px">${it.part_urgency.toUpperCase()}</span>`:''}
+      ${it.supplier?`<span><strong>Proveedor:</strong> ${it.supplier}</span>`:''}
+      ${it.purchase_notes?`<span><strong>Notas:</strong> ${it.purchase_notes}</span>`:''}
+    </div>`;
+  }
+
+  function renderPrCard(pr,context){
     const r=req(pr.request_id);
     const isPending=pr.status==='pendiente_aprobacion';
-    const canManageItems=!isTech && !isPending;
+    const isDepotReview=pr.status==='en_revision_deposito';
+    const canManageItems=!isTech && !isPending && !isDepotReview;
+    const showDepotActions=isDeposito && isDepotReview;
+    const showComprasActions=isCompras && context==='compras';
     return `<div class="alert-row" style="align-items:stretch;flex-wrap:wrap">
       <div class="alert-ico" style="background:var(--surface2)">${I.truck}</div>
       <div class="alert-body" style="min-width:0">
-        <div class="flex items-center gap-2" style="flex-wrap:wrap"><span class="alert-title">Pedido #${pr.id} — ${r?r.display_id:'—'} · ${r?bld(r.building_id).name:''}</span><span class="chip ${PR_STATUS[pr.status]?.chip||'chip-grey'}">${PR_STATUS[pr.status]?.label||pr.status}</span>
-        ${pr.status==='entregado'?`<button class="btn btn-secondary btn-sm" onclick="printReport('remito',${pr.id})" title="Imprimir remito">${I.file} Remito</button>`:''}
-        ${isPending && isJefe?`<button class="btn btn-success btn-sm" onclick="approvePartsRequest(${pr.id})">Aprobar</button><button class="btn btn-danger btn-sm" onclick="rejectPartsRequest(${pr.id})">Rechazar</button>`:''}
+        <div class="flex items-center gap-2" style="flex-wrap:wrap">
+          <span class="alert-title">Pedido #${pr.id} — ${r?r.display_id:'—'} · ${r?bld(r.building_id).name:''}</span>
+          <span class="chip ${PR_STATUS[pr.status]?.chip||'chip-grey'}">${PR_STATUS[pr.status]?.label||pr.status}</span>
+          ${pr.status==='entregado'?`<button class="btn btn-secondary btn-sm" onclick="printReport('remito',${pr.id})" title="Imprimir remito">${I.file} Remito</button>`:''}
+          ${isPending && isJefe?`<button class="btn btn-success btn-sm" onclick="approvePartsRequest(${pr.id})">Aprobar</button><button class="btn btn-danger btn-sm" onclick="rejectPartsRequest(${pr.id})">Rechazar</button>`:''}
+          ${showDepotActions?`<button class="btn btn-primary btn-sm" onclick="depotVerifyAll(${pr.id})">${I.check} Verificar stock completo</button>`:''}
         </div>
-        <div class="table-wrap" style="margin-top:8px"><table><thead><tr><th>Repuesto</th><th>Cant.</th><th>Origen</th><th>Estado</th>${canManageItems?'<th></th>':''}</tr></thead><tbody>
+        ${r?`<div style="font-size:11px;color:var(--text-3);margin-top:4px">${I.building} ${bld(r.building_id).name} · Asc. #${elv(r.elevator_id).number||'—'} · ${r.description}</div>`:''}
+        <div class="table-wrap" style="margin-top:8px"><table><thead><tr><th>Repuesto</th><th>Cant.</th><th>P.Unit.</th><th>Origen</th><th>Estado</th>${showDepotActions||showComprasActions||canManageItems?'<th>Acciones</th>':''}</tr></thead><tbody>
         ${pr.items.map((it,i)=>`<tr>
-          <td>${it.description}</td><td>${it.quantity}</td>
-          <td>${it.source?`<span class="chip ${it.source==='deposito'?'chip-blue':'chip-amber'}">${it.source}</span>`:'<span class="text-xs text-muted">Pendiente</span>'}</td>
+          <td><div>${it.description}</div>${renderSpecsDetail(it)}</td>
+          <td>${it.quantity}</td>
+          <td>${fmt(it.unit_price)}</td>
+          <td>${it.source?`<span class="chip ${it.source==='deposito'?'chip-blue':'chip-amber'}">${it.source==='deposito'?'Depósito':'Compras'}</span>`:'<span class="text-xs text-muted">Pendiente</span>'}</td>
           <td><span class="chip ${PR_STATUS[it.status]?.chip||'chip-grey'}">${PR_STATUS[it.status]?.label||it.status}</span></td>
-          ${canManageItems?`<td><select class="form-select" style="font-size:11px;padding:4px 8px" onchange="updatePartsItemStatus(${pr.id},${i},this.value)">
+          ${showDepotActions?`<td><div class="flex gap-2">
+            ${it.status==='en_revision_deposito'?`<button class="btn btn-success btn-sm" onclick="depotVerifyItem(${pr.id},${i},'entregar')" title="Hay stock, entregar">${I.check} Entregar</button><button class="btn btn-warning btn-sm" onclick="depotVerifyItem(${pr.id},${i},'derivar')" title="Sin stock, derivar a compras">${I.truck} A Compras</button>`:'-'}
+          </div></td>`:''}
+          ${showComprasActions?`<td><div class="flex gap-2">
+            ${it.status==='derivado_compras'?`<button class="btn btn-primary btn-sm" onclick="comprasReceiveItem(${pr.id},${i})">Recibir</button>`:''}
+            ${it.status==='en_compras'?`<button class="btn btn-success btn-sm" onclick="comprasCompletePurchase(${pr.id},${i})">Comprado</button>`:''}
+            ${it.status==='comprado'?`<button class="btn btn-success btn-sm" onclick="comprasDeliverItem(${pr.id},${i})">Entregar</button>`:''}
+            ${!['derivado_compras','en_compras','comprado'].includes(it.status)?'-':''}
+          </div></td>`:''}
+          ${canManageItems && !showDepotActions && !showComprasActions?`<td><select class="form-select" style="font-size:11px;padding:4px 8px" onchange="updatePartsItemStatus(${pr.id},${i},this.value)">
             ${Object.keys(PR_STATUS).map(s=>`<option value="${s}" ${it.status===s?'selected':''}>${PR_STATUS[s].label}</option>`).join('')}
           </select></td>`:''}
         </tr>`).join('')}
@@ -1639,41 +1890,38 @@ function viewPedidosRepuestos(){
 
   return `
   ${pendingApproval.length?`<div class="card" style="border-left:4px solid var(--warning)">
-    <div class="card-header"><span class="card-title">Pendientes de aprobación (${pendingApproval.length})</span><span class="chip chip-amber">${pendingApproval.length}</span></div>
-    ${pendingApproval.map(renderPrCard).join('')}
+    <div class="card-header"><span class="card-title">Pendientes de aprobación JT (${pendingApproval.length})</span><span class="chip chip-amber">${pendingApproval.length}</span></div>
+    ${pendingApproval.map(p=>renderPrCard(p,'approval')).join('')}
   </div>`:''}
-  ${active.length?`<div class="card">
+  ${pendingDepot.length?`<div class="card" style="border-left:4px solid var(--info)">
+    <div class="card-header"><span class="card-title">${I.box} Pendientes en Depósito (${pendingDepot.length})</span><span class="chip chip-blue">${pendingDepot.length}</span></div>
+    <div style="padding:0 16px 8px"><div class="notice notice-info"><strong>Responsable:</strong> ${S.data.staff.find(s=>s.role==='deposito'&&s.active)?.full_name||'Sin asignar'} — Verificar disponibilidad de stock y entregar o derivar a Compras</div></div>
+    ${pendingDepot.map(p=>renderPrCard(p,'depot')).join('')}
+  </div>`:''}
+  ${pendingCompras.length?`<div class="card" style="border-left:4px solid var(--warning)">
+    <div class="card-header"><span class="card-title">${I.truck} En Compras (${pendingCompras.length})</span><span class="chip chip-amber">${pendingCompras.length}</span></div>
+    <div style="padding:0 16px 8px"><div class="notice notice-warning"><strong>Responsable:</strong> ${S.data.staff.find(s=>s.role==='compras'&&s.active)?.full_name||'Sin asignar'} — Gestionar compras con especificaciones técnicas</div></div>
+    ${pendingCompras.map(p=>renderPrCard(p,'compras')).join('')}
+  </div>`:''}
+  ${active.length && !pendingDepot.length && !pendingCompras.length?`<div class="card">
     <div class="card-header"><span class="card-title">En proceso (${active.length})</span></div>
-    ${active.map(renderPrCard).join('')}
+    ${active.map(p=>renderPrCard(p,'active')).join('')}
+  </div>`:''}
+  ${active.length && (pendingDepot.length || pendingCompras.length)?`<div class="card">
+    <div class="card-header"><span class="card-title">Otros en proceso (${active.filter(p=>p.status!=='en_revision_deposito'&&!p.items.some(it=>['derivado_compras','en_compras'].includes(it.status))).length})</span></div>
+    ${active.filter(p=>p.status!=='en_revision_deposito'&&!p.items.some(it=>['derivado_compras','en_compras'].includes(it.status))).map(p=>renderPrCard(p,'active')).join('')}
   </div>`:''}
   ${completed.length?`<div class="card">
     <div class="card-header"><span class="card-title">Finalizados (${completed.length})</span></div>
-    ${completed.map(renderPrCard).join('')}
+    ${completed.map(p=>renderPrCard(p,'done')).join('')}
   </div>`:''}
   ${all.length===0?'<div class="card"><div class="card-body" style="text-align:center;color:var(--text-3);padding:32px">Sin pedidos de repuestos.</div></div>':''}`;
 }
 function updatePartsItemStatus(prId,itemIdx,status){
   const pr=S.data.parts_requests.find(x=>x.id===prId);
   const item=pr.items[itemIdx];
-  const wasDelivered=item.status==='entregado';
   item.status=status;
-  if(status==='entregado' && !wasDelivered && item.source==='deposito'){
-    const inv=S.data.inventory.find(i=>i.name===item.description);
-    if(inv){ inv.quantity=Math.max(0,inv.quantity-item.quantity); S.data.inventory_movements.push({id:S.data.nextIds.mov++,inventory_id:inv.id,type:'salida',quantity:item.quantity,date:new Date().toISOString().slice(0,10),tech_id:null,request_id:pr.request_id,building_id:req(pr.request_id)?.building_id||null,notes:'Entrega de pedido #'+pr.id}); }
-  }
-  // Derive overall PR status considering new workflow statuses
-  if(pr.items.every(i=>i.status==='entregado')){
-    pr.status = (pr.status==='presupuesto_aprobado'||pr.status==='entregado') ? 'entregado' : 'entregado';
-  } else if(pr.items.some(i=>i.status==='en_compras')){
-    pr.status = pr.status==='presupuesto_aprobado'?'presupuesto_aprobado':'en_compras';
-  } else if(pr.items.some(i=>i.status==='en_deposito')){
-    pr.status = pr.status==='presupuesto_aprobado'?'presupuesto_aprobado':'en_deposito';
-  } else {
-    // keep current higher-level status if applicable
-    if(!['presupuesto_aprobado','presupuesto_enviado','presupuesto_rechazado','aprobado_jefe'].includes(pr.status)){
-      pr.status='solicitado';
-    }
-  }
+  derivePartsRequestStatus(pr);
   persist(); renderApp(); toast('Estado del pedido actualizado');
 }
 
@@ -1682,31 +1930,115 @@ function approvePartsRequest(prId){
   const pr=S.data.parts_requests.find(x=>x.id===prId);
   if(!pr) return;
   const r=req(pr.request_id);
-  // Check inventory for each item and set source
+  // JT approves → route to depot for stock verification
+  pr.items.forEach(item=>{ item.status='en_revision_deposito'; });
+  pr.status='en_revision_deposito';
+  const depResp=S.data.staff.find(s=>s.role==='deposito'&&s.active);
+  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Pedido aprobado — enviado a Depósito',description:`Pedido #${prId} aprobado por Jefe Técnico — ${depResp?'Responsable: '+depResp.full_name:'Sin responsable asignado'} · ${pr.items.length} ítem(s) para verificar stock`,time_label:'Ahora'});
+  persist(); renderApp(); toast('Pedido aprobado — enviado a Depósito para verificación de stock');
+}
+/* ═══════════════ DEPOT VERIFICATION WORKFLOW ═══════════════ */
+function depotVerifyItem(prId,itemIdx,action){
+  // action: 'entregar' (deliver from stock) or 'derivar' (forward to compras)
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  const item=pr.items[itemIdx];
+  const r=req(pr.request_id);
+  if(action==='entregar'){
+    // Deliver from stock — deduct inventory
+    item.source='deposito';
+    item.status='entregado';
+    const inv=S.data.inventory.find(i=>i.name===item.description);
+    if(inv){
+      inv.quantity=Math.max(0,inv.quantity-item.quantity);
+      S.data.inventory_movements.push({id:S.data.nextIds.mov++,inventory_id:inv.id,type:'salida',quantity:item.quantity,date:new Date().toISOString().slice(0,10),tech_id:null,request_id:pr.request_id,building_id:r?r.building_id:null,notes:'Entrega depósito — Pedido #'+pr.id});
+    }
+    toast('Ítem entregado desde depósito');
+  } else if(action==='derivar'){
+    // Forward to compras with full specs
+    item.source='compras';
+    item.status='derivado_compras';
+    toast('Ítem derivado a Compras con especificaciones');
+  }
+  // Derive overall PR status
+  derivePartsRequestStatus(pr);
+  persist(); renderApp();
+}
+function depotVerifyAll(prId){
+  // Depot verifies all items at once: stock available → deliver, not → forward to compras
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  const r=req(pr.request_id);
+  let delivered=0, forwarded=0;
   pr.items.forEach(item=>{
+    if(item.status!=='en_revision_deposito') return;
     const inv=S.data.inventory.find(i=>i.name===item.description && i.quantity>=item.quantity);
     if(inv){
       item.source='deposito';
-      item.status='en_deposito';
+      item.status='entregado';
+      inv.quantity=Math.max(0,inv.quantity-item.quantity);
+      S.data.inventory_movements.push({id:S.data.nextIds.mov++,inventory_id:inv.id,type:'salida',quantity:item.quantity,date:new Date().toISOString().slice(0,10),tech_id:null,request_id:pr.request_id,building_id:r?r.building_id:null,notes:'Entrega depósito — Pedido #'+pr.id});
+      delivered++;
     } else {
       item.source='compras';
-      item.status='en_compras';
+      item.status='derivado_compras';
+      forwarded++;
     }
   });
-  pr.status='aprobado_jefe';
-  // Auto-generate budget for the related request
-  if(r && !r.in_abono){
-    const tr=S.data.tech_reports.find(t=>t.request_id===r.id);
-    if(tr){
-      const materials=tr.parts.reduce((a,p)=>a+p.quantity*p.unit_price,0);
-      const labor=tr.hours*tr.rate;
-      r.budget_amount=Math.round((materials+labor)*1.22);
-      r.status='budget_sent';
-      pr.status='presupuesto_enviado';
+  derivePartsRequestStatus(pr);
+  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Depósito procesó pedido #'+prId,description:`${delivered} ítem(s) entregados desde stock, ${forwarded} derivado(s) a Compras`,time_label:'Ahora'});
+  persist(); renderApp(); toast(`Verificación completa — ${delivered} entregados, ${forwarded} a compras`);
+}
+function comprasReceiveItem(prId,itemIdx){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  pr.items[itemIdx].status='en_compras';
+  derivePartsRequestStatus(pr);
+  persist(); renderApp(); toast('Ítem en proceso de compra');
+}
+function comprasCompletePurchase(prId,itemIdx){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  pr.items[itemIdx].status='comprado';
+  derivePartsRequestStatus(pr);
+  persist(); renderApp(); toast('Compra realizada — pendiente entrega');
+}
+function comprasDeliverItem(prId,itemIdx){
+  const pr=S.data.parts_requests.find(x=>x.id===prId);
+  if(!pr) return;
+  pr.items[itemIdx].status='entregado';
+  derivePartsRequestStatus(pr);
+  persist(); renderApp(); toast('Ítem entregado');
+}
+function derivePartsRequestStatus(pr){
+  const r=req(pr.request_id);
+  if(pr.items.every(i=>i.status==='entregado')){
+    pr.status='entregado';
+    // Auto-generate budget when all items delivered
+    if(r && !r.in_abono && r.status!=='budget_sent' && r.status!=='approved'){
+      const tr=S.data.tech_reports.find(t=>t.request_id===r.id);
+      if(tr){
+        const materials=tr.parts.reduce((a,p)=>a+p.quantity*p.unit_price,0);
+        const labor=tr.hours*tr.rate;
+        r.budget_amount=Math.round((materials+labor)*1.22);
+        r.status='budget_sent';
+        pr.status='presupuesto_enviado';
+        S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Presupuesto generado automáticamente',description:`${r.display_id} · ${bld(r.building_id).name} — ${fmt(r.budget_amount)} — Enviado al cliente`,time_label:'Ahora'});
+      }
+    }
+  } else if(pr.items.some(i=>i.status==='derivado_compras'||i.status==='en_compras')){
+    if(!['presupuesto_aprobado','presupuesto_enviado'].includes(pr.status)) pr.status='en_compras';
+  } else if(pr.items.some(i=>i.status==='comprado')){
+    if(!['presupuesto_aprobado','presupuesto_enviado'].includes(pr.status)) pr.status='en_compras';
+  } else if(pr.items.some(i=>i.status==='en_revision_deposito')){
+    pr.status='en_revision_deposito';
+  } else if(pr.items.some(i=>i.status==='en_deposito')){
+    if(!['presupuesto_aprobado','presupuesto_enviado'].includes(pr.status)) pr.status='en_deposito';
+  } else {
+    if(!['presupuesto_aprobado','presupuesto_enviado','presupuesto_rechazado','aprobado_jefe'].includes(pr.status)){
+      pr.status='aprobado_jefe';
     }
   }
-  S.data.alerts.unshift({id:Math.max(0,...S.data.alerts.map(a=>a.id))+1,type:'info',title:'Pedido de repuestos aprobado',description:`Pedido #${prId} aprobado por Jefe Técnico — ${pr.items.filter(i=>i.source==='deposito').length} de depósito, ${pr.items.filter(i=>i.source==='compras').length} a compras${r?' · Presupuesto enviado al cliente':''}`,time_label:'Ahora'});
-  persist(); renderApp(); toast('Pedido aprobado — presupuesto generado y enviado al cliente');
 }
 function rejectPartsRequest(prId){
   const pr=S.data.parts_requests.find(x=>x.id===prId);
