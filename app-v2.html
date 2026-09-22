@@ -256,6 +256,59 @@ tr:hover td{background:var(--surface2)}
 .text-primary{color:var(--primary)}.text-success{color:var(--success)}
 .text-danger{color:var(--danger)}.text-warning{color:var(--warning)}
 .text-muted{color:var(--text-3)}
+/* Notifications dropdown */
+.notif-bell{position:relative;cursor:pointer;background:none;border:none;color:var(--text-2);padding:4px;border-radius:6px;transition:all .15s}
+.notif-bell:hover{color:var(--primary);background:var(--primary-s)}
+.notif-badge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.notif-panel{position:absolute;top:calc(100% + 8px);right:0;width:360px;max-height:420px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18);z-index:200;padding:8px}
+.notif-item{display:flex;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border)}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:var(--primary-s)}
+.notif-item.unread{background:rgba(37,99,235,.06)}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:6px}
+.notif-dot.read{background:transparent}
+.notif-title{font-weight:600;font-size:12px;color:var(--text-1)}
+.notif-body{font-size:11px;color:var(--text-2);margin-top:2px}
+.notif-time{font-size:10px;color:var(--text-3);margin-top:3px}
+/* Messages */
+.msg-item{display:flex;gap:12px;padding:14px;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:all .15s;margin-bottom:8px}
+.msg-item:hover{border-color:var(--primary);background:var(--primary-s)}
+.msg-item.unread{background:rgba(37,99,235,.05);border-left:3px solid var(--primary)}
+.msg-avatar-sm{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0}
+/* Schedule calendar */
+.sched-card{padding:14px;border-radius:10px;border:1px solid var(--border);margin-bottom:8px;transition:all .15s}
+.sched-card:hover{border-color:var(--primary);background:var(--primary-s)}
+.sched-time{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--primary)}
+.sched-loc{font-weight:600;font-size:13px;color:var(--text-1);margin-top:2px}
+.sched-desc{font-size:12px;color:var(--text-2);margin-top:4px}
+
+/* ═══════════════ LOGIN SCREEN ═══════════════ */
+.login-overlay{position:fixed;inset:0;background:var(--sidebar);display:flex;align-items:center;justify-content:center;z-index:9999;overflow-y:auto;padding:20px}
+.login-box{background:var(--surface);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.25);max-width:440px;width:100%;padding:40px 32px 32px;text-align:center}
+.login-logo{width:56px;height:56px;background:var(--primary);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.login-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--text-1);margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--text-2);margin-bottom:24px}
+.login-section{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px;text-align:left}
+.login-list{display:flex;flex-direction:column;gap:6px}
+.login-group{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px}
+.login-group-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface2);cursor:pointer;width:100%;border:none;text-align:left;transition:all .15s;color:var(--text-1)}
+.login-group-header:hover{background:var(--primary-s)}
+.login-group-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.login-group-info{flex:1;min-width:0}
+.login-group-name{font-weight:600;font-size:13px}
+.login-group-count{font-size:11px;color:var(--text-3)}
+.login-group-arrow{color:var(--text-3);transition:transform .2s;flex-shrink:0}
+.login-group-arrow.open{transform:rotate(180deg)}
+.login-group-body{display:none;padding:6px}
+.login-group-body.open{display:flex;flex-direction:column;gap:4px}
+.login-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .15s;text-align:left;width:100%}
+.login-btn:hover{border-color:var(--primary);background:var(--primary-s);box-shadow:0 0 0 2px rgba(37,99,235,.15)}
+.login-avatar{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
+.login-info{flex:1;min-width:0}
+.login-name{font-weight:600;font-size:14px;color:var(--text-1)}
+.login-role{font-size:12px;color:var(--text-2)}
+.logout-btn{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;border:none;background:rgba(255,255,255,.06);color:#94A3B8;font-size:11px;cursor:pointer;transition:all .15s;margin-top:4px}
+.logout-btn:hover{background:rgba(255,255,255,.12);color:#CBD5E1}
 </style>
 
 <div class="app">
@@ -284,6 +337,7 @@ tr:hover td{background:var(--surface2)}
   </div>
   <nav class="mobile-nav" id="mobile-nav"></nav>
 </div>
+<div id="login-root"></div>
 <div id="toast"></div>
 <div id="modal-root"></div>
 
@@ -313,12 +367,13 @@ const I={
   edit:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
   trash:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`,
   bell:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`,
+  message:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
   x:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
 };
 
 /* ═══════════════ STATE / SEED DATA ═══════════════ */
 const S = {
-  view:'dashboard', role:'admin', clientBid:1, theme:'system', tab:{},
+  view:'dashboard', role:'admin', clientBid:1, theme:'system', tab:{}, staffId:null, loggedIn:false,
   data: {
     buildings:[
       {id:1,name:'Torre Palermo',address:'Av. Santa Fe 3200',units:24,admin_name:'Consorcio SP',email:'admin@tpalermo.com',phone:'11-4567-0001',abono:96000,created_at:'2019-03-01'},
@@ -453,7 +508,19 @@ const S = {
       {id:4,type:'info',title:'3 habilitaciones por vencer',description:'Vencen en menos de 60 días',time_label:'Esta sem.'},
       {id:5,type:'warning',title:'Stock crítico — Kit rodamientos motor',description:'0 unidades en depósito, reposición en curso',time_label:'Hace 1 día'},
     ],
-    nextReqId:16, nextOtId:892, nextFacId:1205, nextIds:{elevator:16,contract:4,staff:8,shift:29,report:4,log:6,partsreq:4,inv:13,mov:5},
+    messages:[
+      {id:1,from_role:'admin',from_name:'Gerente General',from_staff_id:null,to_staff_id:2,to_role:null,subject:'Demora en REQ-0013',body:'Diego, la solicitud REQ-0013 lleva 5 días sin informe. Necesito explicación urgente.',request_id:5,created_at:'2026-08-28T10:30:00',read:false},
+      {id:2,from_role:'jefe_tecnico',from_name:'Roberto Fernández',from_staff_id:1,to_staff_id:null,to_role:'deposito',subject:'Falta de stock Kit rodamientos',body:'Jorge, necesitamos urgente el kit de rodamientos para REQ-0011. ¿Cuándo llega la reposición?',request_id:3,created_at:'2026-08-27T14:15:00',read:true},
+      {id:3,from_role:'dueno',from_name:'Manolo Guevara',from_staff_id:null,to_staff_id:1,to_role:null,subject:'Revisión de tiempos de respuesta',body:'Roberto, los tiempos de respuesta del último mes superan lo acordado. Necesito un plan de mejora para la semana que viene.',request_id:null,created_at:'2026-08-26T09:00:00',read:true},
+    ],
+    notifications:[
+      {id:1,type:'assignment',title:'Nueva asignación',body:'Se te asignó la solicitud REQ-0013 — Corrientes 1240',staff_id_target:3,role_target:null,request_id:5,created_at:'2026-08-23T08:00:00',read:true},
+      {id:2,type:'message',title:'Mensaje del Gerente General',body:'Recibiste un mensaje sobre: Demora en REQ-0013',staff_id_target:2,role_target:null,request_id:null,created_at:'2026-08-28T10:30:00',read:false},
+      {id:3,type:'deadline',title:'Plazo vencido',body:'REQ-0013 lleva 5 días en estado técnico sin informe',staff_id_target:null,role_target:'jefe_tecnico',request_id:5,created_at:'2026-08-28T08:00:00',read:false},
+      {id:4,type:'stock',title:'Stock crítico',body:'Kit rodamientos motor — 0 unidades en depósito',staff_id_target:null,role_target:'deposito',request_id:null,created_at:'2026-08-27T07:00:00',read:false},
+      {id:5,type:'new_request',title:'Nueva solicitud',body:'REQ-0015 — Edificio Viamonte — Mantenimiento preventivo',staff_id_target:null,role_target:'admin',request_id:7,created_at:'2026-08-27T09:00:00',read:false},
+    ],
+    nextReqId:16, nextOtId:892, nextFacId:1205, nextIds:{elevator:16,contract:4,staff:8,shift:29,report:4,log:6,partsreq:4,inv:13,mov:5,message:4,notification:6},
   }
 };
 
@@ -465,11 +532,11 @@ function req(id){ return S.data.requests.find(r=>r.id===id); }
 function fmt(n){ return '$'+Math.round(n||0).toLocaleString('es-AR'); }
 function fmtDate(d){ if(!d) return '—'; const[y,m,day]=d.split('-'); return `${day}/${m}/${y}`; }
 function uid(){ return Math.random().toString(36).slice(2,9); }
-function persist(){ try{localStorage.setItem('at_v2',JSON.stringify({view:S.view,role:S.role,clientBid:S.clientBid,data:S.data,theme:S.theme,tab:S.tab}));}catch(e){} }
+function persist(){ try{localStorage.setItem('at_v2',JSON.stringify({view:S.view,role:S.role,clientBid:S.clientBid,data:S.data,theme:S.theme,tab:S.tab,staffId:S.staffId,loggedIn:S.loggedIn}));}catch(e){} }
 function restore(){
   try{
     const raw=localStorage.getItem('at_v2');
-    if(raw){const d=JSON.parse(raw);S.view=d.view||'dashboard';S.role=d.role||'admin';S.clientBid=d.clientBid||1;S.theme=d.theme||'system';S.tab=d.tab||{};if(d.data) Object.assign(S.data,d.data);}
+    if(raw){const d=JSON.parse(raw);S.view=d.view||'dashboard';S.role=d.role||'admin';S.clientBid=d.clientBid||1;S.theme=d.theme||'system';S.tab=d.tab||{};S.staffId=d.staffId||null;S.loggedIn=!!d.loggedIn;if(d.data) Object.assign(S.data,d.data);}
   }catch(e){}
 }
 function toast(msg){
@@ -484,6 +551,104 @@ function toggleTheme(){
 function applyTheme(){
   if(S.theme==='system') document.documentElement.removeAttribute('data-theme');
   else document.documentElement.setAttribute('data-theme',S.theme);
+}
+
+/* ═══════════════ MESSAGE & NOTIFICATION HELPERS ═══════════════ */
+function myUnreadMsgCount(){
+  return S.data.messages.filter(function(m){
+    if(S.staffId && m.to_staff_id===S.staffId) return !m.read;
+    if(!S.staffId && S.role==='dueno' && m.to_role==='dueno') return !m.read;
+    if(!S.staffId && S.role==='admin' && m.to_role==='admin') return !m.read;
+    if(S.staffId && m.to_role){
+      var person=staffOf(S.staffId);
+      if(person && person.role===m.to_role) return !m.read;
+    }
+    return false;
+  }).length;
+}
+function myNotifCount(){
+  return S.data.notifications.filter(function(n){
+    if(!n.read){
+      if(n.staff_id_target && n.staff_id_target===S.staffId) return true;
+      if(n.role_target===S.role) return true;
+      if(n.role_target==='admin' && S.role==='dueno') return true;
+    }
+    return false;
+  }).length;
+}
+function addNotification(type,title,body,opts){
+  opts=opts||{};
+  var n={id:S.data.nextIds.notification++,type:type,title:title,body:body,staff_id_target:opts.staff_id_target||null,role_target:opts.role_target||null,request_id:opts.request_id||null,created_at:new Date().toISOString(),read:false};
+  S.data.notifications.unshift(n);
+  persist();
+}
+function myMessages(){
+  return S.data.messages.filter(function(m){
+    if(S.staffId && m.to_staff_id===S.staffId) return true;
+    if(!S.staffId && S.role==='dueno' && m.to_role==='dueno') return true;
+    if(!S.staffId && S.role==='admin' && m.to_role==='admin') return true;
+    if(S.staffId && m.to_role){
+      var person=staffOf(S.staffId);
+      if(person && person.role===m.to_role) return true;
+    }
+    return false;
+  }).sort(function(a,b){return b.created_at.localeCompare(a.created_at);});
+}
+function myNotifications(){
+  return S.data.notifications.filter(function(n){
+    if(n.staff_id_target && n.staff_id_target===S.staffId) return true;
+    if(n.role_target===S.role) return true;
+    if(n.role_target==='admin' && S.role==='dueno') return true;
+    return false;
+  }).sort(function(a,b){return b.created_at.localeCompare(a.created_at);});
+}
+function timeAgo(iso){
+  var diff=Date.now()-new Date(iso).getTime();
+  var mins=Math.floor(diff/60000);
+  if(mins<60) return 'Hace '+mins+' min';
+  var hrs=Math.floor(mins/60);
+  if(hrs<24) return 'Hace '+hrs+'h';
+  var days=Math.floor(hrs/24);
+  return 'Hace '+days+' dia'+(days>1?'s':'');
+}
+function toggleNotifPanel(){
+  var panel=document.getElementById('notif-panel');
+  if(!panel) return;
+  if(panel.style.display==='none'){
+    var notifs=myNotifications().slice(0,15);
+    var html='<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border)"><span class="fw600" style="font-size:13px">Notificaciones</span>';
+    if(notifs.some(function(n){return !n.read;})) html+='<button class="btn btn-secondary btn-sm" onclick="markAllNotifsRead()" style="font-size:10px;padding:3px 8px">Marcar leidas</button>';
+    html+='</div>';
+    if(notifs.length){
+      notifs.forEach(function(n){
+        var ago=timeAgo(n.created_at);
+        html+='<div class="notif-item '+(n.read?'':'unread')+'" onclick="readNotif('+n.id+')"><div class="notif-dot '+(n.read?'read':'')+'"></div><div><div class="notif-title">'+n.title+'</div><div class="notif-body">'+n.body+'</div><div class="notif-time">'+ago+'</div></div></div>';
+      });
+    } else {
+      html+='<div style="text-align:center;padding:24px;color:var(--text-3);font-size:12px">Sin notificaciones</div>';
+    }
+    panel.innerHTML=html;
+    panel.style.display='block';
+    setTimeout(function(){document.addEventListener('click',closeNotifPanelOutside,{once:true});},10);
+  } else {
+    panel.style.display='none';
+  }
+}
+function closeNotifPanelOutside(e){
+  var panel=document.getElementById('notif-panel');
+  if(panel&&!panel.contains(e.target)&&!e.target.closest('.notif-bell')) panel.style.display='none';
+}
+function readNotif(id){
+  var n=S.data.notifications.find(function(x){return x.id===id;});
+  if(n){n.read=true;persist();}
+  var panel=document.getElementById('notif-panel');
+  if(panel) panel.style.display='none';
+  if(n&&n.request_id) go('recepcion',{reqDetail:n.request_id});
+  else renderApp();
+}
+function markAllNotifsRead(){
+  myNotifications().forEach(function(n){n.read=true;});
+  persist(); renderApp();
 }
 
 /* ═══════════════ MODAL SYSTEM ═══════════════ */
@@ -539,6 +704,7 @@ function NAV_ADMIN(){return [
   {id:'turnos',label:'Turnos',icon:'calendar'},
   {id:'recepcion',label:'Recepción',icon:'inbox',section:'Operaciones',badge:'r',badgeVal:()=>S.data.requests.filter(r=>r.status==='new'||r.status==='triaged').length},
   {id:'ordenes',label:'Órdenes de Trabajo',icon:'clipboard'},
+  {id:'calendario',label:'Calendario',icon:'calendar'},
   {id:'informes',label:'Informes Técnicos',icon:'tool',section:'Técnica',badge:'a',badgeVal:()=>S.data.requests.filter(r=>r.status==='technical').length},
   {id:'historial',label:'Historial Técnico',icon:'clock'},
   {id:'deposito',label:'Stock',icon:'box',section:'Depósito'},
@@ -548,6 +714,7 @@ function NAV_ADMIN(){return [
   {id:'cobros',label:'Cobros',icon:'wallet'},
   {id:'indices',label:'Índices',icon:'trend'},
   {id:'reportes',label:'Reportes',icon:'trend',section:'Reportes'},
+  {id:'mensajes',label:'Mensajes',icon:'message',section:'Comunicacion',badge:'a',badgeVal:()=>myUnreadMsgCount()},
   {id:'alertas',label:'Alertas',icon:'bell',section:'Sistema'},
 ];}
 function NAV_JEFE(){return [
@@ -559,17 +726,21 @@ function NAV_JEFE(){return [
   {id:'turnos',label:'Turnos',icon:'calendar'},
   {id:'edificios',label:'Edificios',icon:'building'},
   {id:'contratos',label:'Contratos',icon:'file'},
-  {id:'deposito',label:'Stock',icon:'box',section:'Depósito'},
+  {id:'calendario',label:'Calendario',icon:'calendar',section:'Programacion'},
+  {id:'deposito',label:'Stock',icon:'box',section:'Deposito'},
   {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'r',badgeVal:()=>S.data.parts_requests.filter(p=>p.status==='pendiente_aprobacion').length},
   {id:'reportes',label:'Reportes',icon:'trend',section:'Reportes'},
+  {id:'mensajes',label:'Mensajes',icon:'message',section:'Comunicacion',badge:'a',badgeVal:()=>myUnreadMsgCount()},
 ];}
 function NAV_TECNICO(){return [
   {id:'recepcion',label:'Mis Solicitudes',icon:'inbox',section:'Principal'},
   {id:'informes',label:'Mis Informes',icon:'tool'},
+  {id:'agenda',label:'Mi Agenda',icon:'calendar',section:'Programacion'},
   {id:'historial',label:'Historial',icon:'clock'},
   {id:'turnos',label:'Turnos',icon:'calendar'},
   {id:'edificios',label:'Edificios',icon:'building'},
   {id:'pedidos',label:'Pedidos de Repuestos',icon:'truck',badge:'a',badgeVal:()=>S.data.parts_requests.filter(p=>!['entregado','presupuesto_rechazado'].includes(p.status)).length},
+  {id:'mensajes',label:'Mensajes',icon:'message',badge:'a',badgeVal:()=>myUnreadMsgCount()},
 ];}
 function NAV_DUENO(){return [
   {id:'panel_dueno',label:'Panel Ejecutivo',icon:'grid',section:'Principal'},
@@ -588,6 +759,8 @@ function NAV_DUENO(){return [
   {id:'cobros',label:'Cobros',icon:'wallet'},
   {id:'indices',label:'Índices',icon:'trend'},
   {id:'reportes',label:'Reportes',icon:'trend',section:'Reportes'},
+  {id:'mensajes',label:'Mensajes',icon:'message',section:'Comunicacion',badge:'a',badgeVal:()=>myUnreadMsgCount()},
+  {id:'calendario',label:'Calendario',icon:'calendar'},
   {id:'alertas',label:'Alertas',icon:'bell',section:'Sistema',badge:'r',badgeVal:()=>S.data.alerts.length},
 ];}
 function NAV_CLIENT(){return [
@@ -625,14 +798,17 @@ const TITLES={
   indices:['Índices','Índices de actualización'],reportes:['Reportes','Reportes y estadísticas'],alertas:['Alertas','Notificaciones del sistema'],
   portal:['Mi Edificio','Panel de su edificio'],portal_contrato:['Mi Contrato','Detalle contractual'],
   portal_solicitudes:['Solicitudes','Sus pedidos de asistencia'],portal_cuenta:['Mi Cuenta','Facturas y pagos'],
+  calendario:['Calendario','Programacion de visitas tecnicas'],
+  agenda:['Mi Agenda','Tus proximas visitas programadas'],
+  mensajes:['Mensajes','Mensajes internos entre areas'],
 };
 
 /* ═══════════════ ROLE PERMISSIONS ═══════════════ */
 const ALLOWED_VIEWS={
   dueno:null,
   admin:null,
-  jefe_tecnico:['dashboard','recepcion','informes','historial','ordenes','turnos','edificios','contratos','deposito','pedidos','reportes'],
-  tecnico:['recepcion','informes','historial','turnos','edificios','pedidos'],
+  jefe_tecnico:['dashboard','recepcion','informes','historial','ordenes','turnos','edificios','contratos','deposito','pedidos','reportes','calendario','agenda','mensajes'],
+  tecnico:['recepcion','informes','historial','turnos','edificios','pedidos','agenda','mensajes'],
   deposito:['deposito','pedidos'],
   compras:['pedidos'],
   client:['portal','portal_contrato','portal_solicitudes','presupuestos','portal_cuenta'],
@@ -652,6 +828,115 @@ function switchRole(role){
   persist(); renderApp();
 }
 
+/* ═══════════════ LOGIN / LOGOUT ═══════════════ */
+const STAFF_TO_ROLE_MAP={tecnico:'tecnico',jefe_tecnico:'jefe_tecnico',admin_general:'admin',administrativo:'admin',deposito:'deposito',compras:'compras'};
+function toggleLoginGroup(el){
+  const body=el.nextElementSibling;
+  const arrow=el.querySelector('.login-group-arrow');
+  const isOpen=body.classList.contains('open');
+  /* close all others */
+  document.querySelectorAll('.login-group-body.open').forEach(b=>{b.classList.remove('open');b.previousElementSibling.querySelector('.login-group-arrow').classList.remove('open');});
+  if(!isOpen){ body.classList.add('open'); arrow.classList.add('open'); }
+}
+function renderLogin(){
+  const root=document.getElementById('login-root');
+  if(S.loggedIn){ root.innerHTML=''; return; }
+  const colors=['#2563EB','#059669','#D97706','#7C3AED','#DC2626','#0891B2','#4F46E5'];
+  const staff=S.data.staff.filter(s=>s.active);
+  const chevron='<svg class="login-group-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+
+  /* Group staff by role */
+  const roleGroups=[
+    {key:'direction',label:'Dirección',icon:'👤',color:'#1E3A6E',members:[
+      {name:'Manolo Guevara',sub:'Dueño — Panel ejecutivo',initials:'MG',onclick:"loginAs('dueno',null)"},
+      {name:'Gerente General',sub:'Dashboard en tiempo real — Acceso completo',initials:'GG',onclick:"loginAs('gerente',null)"},
+    ]},
+    {key:'jefe_tecnico',label:'Jefe Técnico',icon:'⚙️',color:'#059669'},
+    {key:'tecnico',label:'Técnicos',icon:'🔧',color:'#2563EB'},
+    {key:'administrativo',label:'Administrativo',icon:'📋',color:'#D97706'},
+    {key:'deposito',label:'Depósito',icon:'📦',color:'#0891B2'},
+    {key:'compras',label:'Compras',icon:'🛒',color:'#DC2626'},
+  ];
+  /* Fill staff into their groups */
+  roleGroups.forEach(g=>{
+    if(g.key==='direction') return;
+    g.members=staff.filter(s=>s.role===g.key).map((s,i)=>{
+      const initials=s.full_name.split(' ').map(w=>w[0]).slice(0,2).join('');
+      return {name:s.full_name,sub:(ROLE_LABEL[s.role]||s.role)+' — '+(s.specialization||''),initials,onclick:`loginAs('staff',${s.id})`};
+    });
+  });
+  /* Remove empty groups */
+  const activeGroups=roleGroups.filter(g=>g.members&&g.members.length>0);
+
+  let html=`<div class="login-overlay">
+    <div class="login-box">
+      <div class="login-logo"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="5" x2="12" y2="19"/><polyline points="8,9 12,5 16,9"/><polyline points="8,15 12,19 16,15"/></svg></div>
+      <div class="login-title">AscensorTech</div>
+      <div class="login-sub">Seleccioná tu usuario para ingresar</div>
+      <div class="login-section">🏢 Equipo</div>`;
+
+  activeGroups.forEach((g,gi)=>{
+    html+=`<div class="login-group">
+      <button class="login-group-header" onclick="toggleLoginGroup(this)">
+        <div class="login-group-icon" style="background:${g.color}20;font-size:18px">${g.icon}</div>
+        <div class="login-group-info"><div class="login-group-name">${g.label}</div><div class="login-group-count">${g.members.length} usuario${g.members.length>1?'s':''}</div></div>
+        ${chevron}
+      </button>
+      <div class="login-group-body">`;
+    g.members.forEach((m,mi)=>{
+      const col=colors[(gi*3+mi)%colors.length];
+      html+=`<button class="login-btn" onclick="${m.onclick}">
+        <div class="login-avatar" style="background:${col}">${m.initials}</div>
+        <div class="login-info"><div class="login-name">${m.name}</div><div class="login-role">${m.sub}</div></div>
+      </button>`;
+    });
+    html+=`</div></div>`;
+  });
+
+  /* Client accordion */
+  const blds=S.data.buildings;
+  html+=`<div class="login-section" style="margin-top:16px">🏢 Portal de Clientes</div>
+    <div class="login-group">
+      <button class="login-group-header" onclick="toggleLoginGroup(this)">
+        <div class="login-group-icon" style="background:#0B244720;font-size:18px">🏠</div>
+        <div class="login-group-info"><div class="login-group-name">Edificios</div><div class="login-group-count">${blds.length} edificio${blds.length>1?'s':''}</div></div>
+        ${chevron}
+      </button>
+      <div class="login-group-body">`;
+  blds.forEach((b,i)=>{
+    const init=b.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+    html+=`<button class="login-btn" onclick="loginAs('client',${b.id})">
+      <div class="login-avatar" style="background:#0B2447">${init}</div>
+      <div class="login-info"><div class="login-name">${b.name}</div><div class="login-role">${b.admin_name}</div></div>
+    </button>`;
+  });
+  html+=`</div></div>`;
+
+  html+=`</div></div>`;
+  root.innerHTML=html;
+}
+function loginAs(type,id){
+  S.loggedIn=true;
+  if(type==='dueno'){
+    S.staffId=null; S.role='dueno'; S.view='panel_dueno';
+  } else if(type==='gerente'){
+    S.staffId=null; S.role='admin'; S.view='dashboard';
+  } else if(type==='client'){
+    S.staffId=null; S.role='client'; S.clientBid=id; S.view='portal';
+  } else {
+    const person=staffOf(id);
+    S.staffId=id;
+    S.role=STAFF_TO_ROLE_MAP[person.role]||'admin';
+    S.view=ROLE_DEFAULT[S.role]||'dashboard';
+  }
+  S.tab={};
+  persist(); renderLogin(); renderApp();
+}
+function logout(){
+  S.loggedIn=false; S.staffId=null; S.role='admin'; S.view='dashboard'; S.tab={};
+  persist(); renderLogin();
+}
+
 function renderNav(){
   const nav=currentNav();
   let sb='',lastSec='';
@@ -664,13 +949,7 @@ function renderNav(){
   });
   document.getElementById('sb-nav').innerHTML=sb;
 
-  const roles=[
-    {id:'dueno',label:'Dueño'},{id:'admin',label:'Admin'},{id:'jefe_tecnico',label:'Jefe Técnico'},
-    {id:'tecnico',label:'Técnico'},{id:'deposito',label:'Depósito'},{id:'compras',label:'Compras'},{id:'client',label:'Cliente'},
-  ];
-  const visibleRoles=roles;
-  document.getElementById('role-switch').innerHTML=visibleRoles.map(r=>
-    `<button class="role-btn ${S.role===r.id?'active':''}" onclick="switchRole('${r.id}')">${r.label}</button>`).join('');
+  document.getElementById('role-switch').innerHTML=`<button class="logout-btn" onclick="logout()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Cerrar sesión</button>`;
 
   if(S.role==='client'){
     const b=bld(S.clientBid);
@@ -678,11 +957,26 @@ function renderNav(){
     document.getElementById('sb-uname').textContent=b.admin_name||'Cliente';
     document.getElementById('sb-urole').textContent=b.name||'Edificio';
   } else {
-    const names={dueno:['Manolo Guevara','Dueño'],admin:['Carlos García','Administrador'],jefe_tecnico:['Roberto Fernández','Jefe Técnico'],tecnico:['Diego Sosa','Técnico'],deposito:['Jorge Méndez','Resp. Depósito'],compras:['Patricia Ruiz','Resp. Compras']};
-    const[n,r]=names[S.role]||names.admin;
-    document.getElementById('sb-avatar').textContent=n.split(' ').map(w=>w[0]).slice(0,2).join('');
-    document.getElementById('sb-uname').textContent=n;
-    document.getElementById('sb-urole').textContent=r;
+    if(S.staffId){
+      const person=staffOf(S.staffId);
+      const n=person?person.full_name:'Usuario';
+      const r=person?ROLE_LABEL[person.role]||person.role:'Staff';
+      document.getElementById('sb-avatar').textContent=n.split(' ').map(w=>w[0]).slice(0,2).join('');
+      document.getElementById('sb-uname').textContent=n;
+      document.getElementById('sb-urole').textContent=r;
+    } else if(S.role==='dueno'){
+      document.getElementById('sb-avatar').textContent='MG';
+      document.getElementById('sb-uname').textContent='Manolo Guevara';
+      document.getElementById('sb-urole').textContent='Dueño';
+    } else if(S.role==='admin'){
+      document.getElementById('sb-avatar').textContent='GG';
+      document.getElementById('sb-uname').textContent='Gerente General';
+      document.getElementById('sb-urole').textContent='Dashboard en tiempo real';
+    } else {
+      document.getElementById('sb-avatar').textContent='AT';
+      document.getElementById('sb-uname').textContent='AscensorTech';
+      document.getElementById('sb-urole').textContent='Admin';
+    }
   }
 
   const mobItems=nav.slice(0,5);
@@ -834,9 +1128,11 @@ function VIEWS(){ return {
   facturacion:viewFacturacion, cobros:viewCobros, indices:viewIndices, alertas:viewAlertas,
   portal:viewPortal, portal_contrato:viewPortalContrato, portal_solicitudes:viewPortalSolicitudes, portal_cuenta:viewPortalCuenta,
   reportes:viewReportes,
+  calendario:viewCalendario, agenda:viewAgenda, mensajes:viewMensajes,
 };}
 function renderApp(){
   applyTheme();
+  if(!S.loggedIn){ renderLogin(); return; }
   /* ── Permission guard ── */
   const allowed=ALLOWED_VIEWS[S.role];
   if(allowed && !allowed.includes(S.view)){
@@ -846,7 +1142,8 @@ function renderApp(){
   const t=TITLES[S.view]||['AscensorTech',''];
   document.getElementById('topbar-title').textContent=t[0];
   document.getElementById('topbar-sub').textContent=t[1];
-  document.getElementById('topbar-actions').innerHTML='';
+  var nc=myNotifCount();
+  document.getElementById('topbar-actions').innerHTML='<div style="position:relative;display:inline-block"><button class="notif-bell" onclick="toggleNotifPanel()">'+I.bell+(nc?'<span class="notif-badge">'+nc+'</span>':'')+'</button><div id="notif-panel" style="display:none" class="notif-panel"></div></div>';
   const fn=VIEWS()[S.view]||viewDashboard;
   document.getElementById('content').innerHTML=fn();
 }
@@ -1024,7 +1321,7 @@ function viewDashboard(){
   const monthlyBilling=d.buildings.reduce((a,b)=>a+b.abono,0);
   const debtors=d.clients.filter(c=>c.status!=='active').length;
 
-  const scopeReqs = S.role==='tecnico' ? d.requests.filter(r=>r.assigned_tech_id===2) : d.requests;
+  const scopeReqs = S.role==='tecnico'&&S.staffId ? d.requests.filter(r=>r.assigned_tech_id===S.staffId) : d.requests;
   const recentReqs=scopeReqs.slice().sort((a,b)=>b.id-a.id).slice(0,6).map(r=>`<tr>
     <td class="fw600 text-primary">${r.display_id}</td>
     <td><div class="fw600">${bld(r.building_id).name}</div><div class="text-xs text-muted">${TYPE_LABEL[r.type]||r.type}</div></td>
@@ -1375,7 +1672,7 @@ function viewRecepcion(){
   const isTech=S.role==='tecnico';
   let pending=S.data.requests.filter(r=>r.status==='new'||r.status==='triaged');
   let inProgress=S.data.requests.filter(r=>r.status!=='new'&&r.status!=='triaged');
-  if(isTech){ pending=pending.filter(r=>r.assigned_tech_id===2); inProgress=inProgress.filter(r=>r.assigned_tech_id===2); }
+  if(isTech&&S.staffId){ pending=pending.filter(r=>r.assigned_tech_id===S.staffId); inProgress=inProgress.filter(r=>r.assigned_tech_id===S.staffId); }
   const techs=S.data.staff.filter(s=>s.role==='tecnico'&&s.active);
 
   return `
@@ -1425,8 +1722,31 @@ function assignTech(id,techId){
   req(id).assigned_tech_id=techId?+techId:null; persist(); renderApp();
 }
 function sendToTech(id){
-  const r=req(id); r.status='technical';
-  persist(); renderApp(); toast(`${r.display_id} derivada a técnica`);
+  const r=req(id);
+  const techs=S.data.staff.filter(s=>s.role==='tecnico'&&s.active);
+  const today=new Date().toISOString().slice(0,10);
+  openModal('Derivar a Tecnica — '+r.display_id,
+    '<div class="notice notice-info">'+r.description+'</div>'+
+    '<div class="form-group"><label class="form-label">Tecnico asignado</label>'+
+      '<select class="form-select" id="f_sched_tech">'+techs.map(t=>'<option value="'+t.id+'" '+(r.assigned_tech_id===t.id?'selected':'')+'>'+t.full_name+'</option>').join('')+'</select></div>'+
+    '<div class="form-grid2">'+
+      '<div class="form-group"><label class="form-label">Fecha programada</label><input class="form-input" type="date" id="f_sched_date" value="'+today+'" min="'+today+'"></div>'+
+      '<div class="form-group"><label class="form-label">Hora</label><input class="form-input" type="time" id="f_sched_time" value="09:00"></div>'+
+    '</div>',
+    '<button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="confirmSendToTech('+id+')">Derivar y Programar</button>');
+}
+function confirmSendToTech(id){
+  const r=req(id);
+  const techId=+document.getElementById('f_sched_tech').value;
+  const schedDate=document.getElementById('f_sched_date').value;
+  const schedTime=document.getElementById('f_sched_time').value;
+  r.status='technical';
+  r.assigned_tech_id=techId;
+  r.scheduled_date=schedDate||null;
+  r.scheduled_time=schedTime||null;
+  addNotification('assignment','Nueva asignacion','Se te asigno '+r.display_id+' — '+bld(r.building_id).name+(schedDate?' para el '+fmtDate(schedDate):''),{staff_id_target:techId,request_id:r.id});
+  addNotification('derivation','Solicitud derivada',r.display_id+' fue derivada a tecnica',{role_target:'admin',request_id:r.id});
+  closeModal(); persist(); renderApp(); toast(r.display_id+' derivada y programada');
 }
 function openNewRequestModal(){
   openModal('Nueva Solicitud',`
@@ -1455,13 +1775,15 @@ function saveNewRequest(){
   v.id=Math.max(0,...S.data.requests.map(r=>r.id))+1;
   v.display_id='REQ-'+String(S.data.nextReqId++).padStart(4,'0');
   S.data.requests.push(v);
-  closeModal(); persist(); renderApp(); toast(`${v.display_id} creada`);
+  addNotification('new_request','Nueva solicitud',v.display_id+' — '+bld(v.building_id).name,{role_target:'admin',request_id:v.id});
+  addNotification('new_request','Nueva solicitud',v.display_id+' — '+bld(v.building_id).name,{role_target:'jefe_tecnico',request_id:v.id});
+  closeModal(); persist(); renderApp(); toast(v.display_id+' creada');
 }
 
 /* ═══════════════ VIEW: INFORMES TÉCNICOS ═══════════════ */
 function viewInformesTecnicos(){
   const isTech=S.role==='tecnico';
-  const filterMine=r=>!isTech||r.assigned_tech_id===2;
+  const filterMine=r=>!isTech||r.assigned_tech_id===S.staffId;
   const pending=S.data.requests.filter(r=>r.status==='technical').filter(filterMine);
   const reported=S.data.requests.filter(r=>r.status==='reported').filter(filterMine);
   const detailId=S.tab.techDetail;
@@ -2518,7 +2840,196 @@ function viewReportes(){
   </div>`;
 }
 
+/* ═══════════════ VIEW: CALENDARIO ═══════════════ */
+function viewCalendario(){
+  var d=S.data;
+  var scheduled=d.requests.filter(function(r){return r.scheduled_date;}).sort(function(a,b){return (a.scheduled_date+(a.scheduled_time||'')).localeCompare(b.scheduled_date+(b.scheduled_time||''));});
+  var techs=d.staff.filter(function(s){return s.role==='tecnico'&&s.active;});
+  var today=new Date();
+  var todayStr=today.toISOString().slice(0,10);
+  var weekStart=new Date(today); weekStart.setDate(today.getDate()-today.getDay()+1);
+  var days=[];
+  for(var i=0;i<7;i++){var dd=new Date(weekStart);dd.setDate(weekStart.getDate()+i);days.push(dd.toISOString().slice(0,10));}
+  var dayNames=['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+
+  var calHtml='<div class="card"><div class="card-header"><span class="card-title">Semana actual</span></div><div class="card-body">';
+  calHtml+='<div style="display:grid;grid-template-columns:120px repeat(7,1fr);gap:1px;background:var(--border);border-radius:8px;overflow:hidden">';
+  calHtml+='<div style="background:var(--surface2);padding:8px;font-weight:600;font-size:12px">Tecnico</div>';
+  days.forEach(function(day,i){
+    var isToday=day===todayStr;
+    calHtml+='<div style="background:var(--surface2);padding:8px;text-align:center;font-size:11px;font-weight:600;'+(isToday?'color:var(--primary)':'')+'">'+dayNames[i]+'<br><span style="font-size:10px;font-weight:400">'+day.slice(8)+'/'+day.slice(5,7)+'</span></div>';
+  });
+  techs.forEach(function(t){
+    calHtml+='<div style="background:var(--surface);padding:8px;font-size:12px;font-weight:600">'+t.full_name.split(' ')[0]+'</div>';
+    days.forEach(function(day){
+      var dayReqs=scheduled.filter(function(r){return r.scheduled_date===day&&r.assigned_tech_id===t.id;});
+      calHtml+='<div style="background:var(--surface);padding:4px;min-height:60px">';
+      dayReqs.forEach(function(r){
+        var urg=r.urgency;
+        var urgColor=urg==='red'?'var(--danger)':urg==='yellow'?'var(--warning)':'var(--success)';
+        calHtml+='<div style="background:'+urgColor+'15;border-left:3px solid '+urgColor+';border-radius:4px;padding:4px 6px;margin-bottom:3px;font-size:10px;cursor:pointer" onclick="go(\'recepcion\',{reqDetail:'+r.id+'})" title="'+r.display_id+' — '+bld(r.building_id).name+'"><div style="font-weight:600;color:var(--text-1)">'+(r.scheduled_time||'--:--')+'</div><div style="color:var(--text-2)">'+bld(r.building_id).name.slice(0,15)+'</div></div>';
+      });
+      calHtml+='</div>';
+    });
+  });
+  calHtml+='</div></div></div>';
+
+  var upcoming=scheduled.filter(function(r){return r.scheduled_date>=todayStr;});
+  calHtml+='<div class="card"><div class="card-header"><span class="card-title">Proximas visitas programadas ('+upcoming.length+')</span></div>';
+  if(upcoming.length){
+    calHtml+='<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Hora</th><th>Solicitud</th><th>Edificio</th><th>Tecnico</th><th>Urgencia</th></tr></thead><tbody>';
+    upcoming.forEach(function(r){
+      calHtml+='<tr style="cursor:pointer" onclick="go(\'recepcion\',{reqDetail:'+r.id+'})"><td class="fw600">'+fmtDate(r.scheduled_date)+'</td><td>'+(r.scheduled_time||'\u2014')+'</td><td class="text-primary fw600">'+r.display_id+'</td><td>'+bld(r.building_id).name+'</td><td>'+(r.assigned_tech_id?(staffOf(r.assigned_tech_id)||{}).full_name||'\u2014':'\u2014')+'</td><td><span class="urg '+URG_CLS[r.urgency]+'">'+URG_LABEL[r.urgency]+'</span></td></tr>';
+    });
+    calHtml+='</tbody></table></div>';
+  } else {
+    calHtml+='<div class="card-body" style="text-align:center;color:var(--text-3);padding:32px">No hay visitas programadas.</div>';
+  }
+  calHtml+='</div>';
+  return calHtml;
+}
+
+/* ═══════════════ VIEW: AGENDA ═══════════════ */
+function viewAgenda(){
+  var d=S.data;
+  var myReqs=d.requests.filter(function(r){return r.scheduled_date&&r.assigned_tech_id===S.staffId;}).sort(function(a,b){return (a.scheduled_date+(a.scheduled_time||'')).localeCompare(b.scheduled_date+(b.scheduled_time||''));});
+  var todayStr=new Date().toISOString().slice(0,10);
+  var upcoming=myReqs.filter(function(r){return r.scheduled_date>=todayStr;});
+  var past=myReqs.filter(function(r){return r.scheduled_date<todayStr;});
+
+  var html='<div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">';
+  html+='<div class="kpi"><div class="kpi-top"><div class="kpi-label">Hoy</div><div class="kpi-icon" style="background:var(--primary-s);color:var(--primary)">'+I.calendar+'</div></div><div class="kpi-value">'+myReqs.filter(function(r){return r.scheduled_date===todayStr;}).length+'</div></div>';
+  html+='<div class="kpi"><div class="kpi-top"><div class="kpi-label">Esta semana</div><div class="kpi-icon" style="background:var(--info-s);color:var(--info)">'+I.clock+'</div></div><div class="kpi-value">'+upcoming.filter(function(r){var dd=new Date(r.scheduled_date);var now=new Date();var diff=(dd-now)/(1000*60*60*24);return diff<=7;}).length+'</div></div>';
+  html+='<div class="kpi"><div class="kpi-top"><div class="kpi-label">Pendientes</div><div class="kpi-icon" style="background:var(--warning-s);color:var(--warning)">'+I.alert+'</div></div><div class="kpi-value">'+upcoming.length+'</div></div>';
+  html+='</div>';
+
+  if(upcoming.length){
+    html+='<div class="card"><div class="card-header"><span class="card-title">Proximas visitas</span></div><div class="card-body" style="display:flex;flex-direction:column;gap:8px">';
+    var lastDate='';
+    upcoming.forEach(function(r){
+      if(r.scheduled_date!==lastDate){
+        lastDate=r.scheduled_date;
+        var isToday=r.scheduled_date===todayStr;
+        html+='<div style="font-weight:700;font-size:13px;color:'+(isToday?'var(--primary)':'var(--text-1)')+';margin-top:8px">'+(isToday?'HOY — ':'')+fmtDate(r.scheduled_date)+'</div>';
+      }
+      html+='<div class="sched-card" onclick="go(\'informes\',{techDetail:'+r.id+'})"><div style="display:flex;align-items:center;gap:12px"><div class="sched-time">'+(r.scheduled_time||'--:--')+'</div><div style="flex:1"><div class="sched-loc">'+bld(r.building_id).name+' — Asc. #'+((elv(r.elevator_id)||{}).number||'\u2014')+'</div><div class="sched-desc">'+r.display_id+' · '+r.description.slice(0,60)+(r.description.length>60?'\u2026':'')+'</div></div><span class="urg '+URG_CLS[r.urgency]+'">'+URG_LABEL[r.urgency]+'</span></div></div>';
+    });
+    html+='</div></div>';
+  } else {
+    html+='<div class="card"><div class="card-body" style="text-align:center;color:var(--text-3);padding:40px">'+I.calendar+'<div style="margin-top:8px">No tenes visitas programadas.</div></div></div>';
+  }
+
+  if(past.length){
+    html+='<div class="card"><div class="card-header"><span class="card-title">Visitas anteriores ('+past.length+')</span></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Hora</th><th>Solicitud</th><th>Edificio</th><th>Estado</th></tr></thead><tbody>';
+    past.slice(0,10).forEach(function(r){
+      html+='<tr><td>'+fmtDate(r.scheduled_date)+'</td><td>'+(r.scheduled_time||'\u2014')+'</td><td class="text-primary fw600">'+r.display_id+'</td><td>'+bld(r.building_id).name+'</td><td><span class="chip '+((REQ_STATUS[r.status]||{}).chip||'chip-grey')+'">'+((REQ_STATUS[r.status]||{}).label||r.status)+'</span></td></tr>';
+    });
+    html+='</tbody></table></div></div>';
+  }
+  return html;
+}
+
+/* ═══════════════ VIEW: MENSAJES ═══════════════ */
+function viewMensajes(){
+  var msgs=myMessages();
+  var canSend=['dueno','admin','jefe_tecnico'].indexOf(S.role)!==-1;
+  var detailId=S.tab.msgDetail;
+  if(detailId){
+    var m=S.data.messages.find(function(x){return x.id===detailId;});
+    if(m){
+      if(!m.read){m.read=true;persist();}
+      var initials=m.from_name.split(' ').map(function(w){return w[0];}).slice(0,2).join('');
+      var reqLink=m.request_id?('<div class="notice notice-info">Vinculado a solicitud: <strong>'+((req(m.request_id)||{}).display_id||('#'+m.request_id))+'</strong></div>'):'';
+      var replyBtn=canSend?('<button class="btn btn-primary btn-sm" onclick="openComposeModal('+(m.from_staff_id||'null')+',\'Re: '+m.subject.replace(/'/g,"\\'")+'\','+(m.request_id||'null')+')">'+I.send+' Responder</button>'):'';
+      return '<button class="btn btn-secondary btn-sm" style="align-self:flex-start" onclick="S.tab.msgDetail=null;renderApp()">\u2190 Volver a mensajes</button>'+
+        '<div class="card"><div class="card-body" style="display:flex;flex-direction:column;gap:14px">'+
+        '<div style="display:flex;align-items:center;gap:12px"><div class="msg-avatar-sm" style="background:var(--primary)">'+initials+'</div><div><div class="fw600" style="font-size:14px">'+m.from_name+'</div><div class="text-xs text-muted">'+m.from_role+' · '+new Date(m.created_at).toLocaleString('es-AR')+'</div></div></div>'+
+        '<div style="font-family:\'Space Grotesk\',sans-serif;font-weight:700;font-size:16px;color:var(--text-1)">'+m.subject+'</div>'+
+        reqLink+
+        '<div style="font-size:14px;line-height:1.7;color:var(--text-1);white-space:pre-wrap">'+m.body+'</div>'+
+        replyBtn+
+        '</div></div>';
+    }
+  }
+
+  var html='';
+  if(canSend){
+    html+='<div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button class="btn btn-primary" onclick="openComposeModal()">'+I.send+' Nuevo mensaje</button></div>';
+  }
+  html+='<div class="card"><div class="card-header"><span class="card-title">Bandeja de entrada ('+msgs.length+')</span></div>';
+  if(msgs.length){
+    html+='<div class="card-body" style="display:flex;flex-direction:column;gap:0">';
+    var colors=['#2563EB','#059669','#D97706','#7C3AED','#DC2626','#0891B2'];
+    msgs.forEach(function(m){
+      var c=colors[m.id%colors.length];
+      var initials=m.from_name.split(' ').map(function(w){return w[0];}).slice(0,2).join('');
+      html+='<div class="msg-item '+(m.read?'':'unread')+'" onclick="go(\'mensajes\',{msgDetail:'+m.id+'})"><div class="msg-avatar-sm" style="background:'+c+'">'+initials+'</div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;align-items:center"><span class="fw600" style="font-size:13px">'+m.from_name+'</span><span class="text-xs text-muted">'+fmtDate(m.created_at.slice(0,10))+'</span></div><div style="font-weight:600;font-size:12px;color:var(--text-1);margin-top:2px">'+m.subject+'</div><div class="text-xs text-muted" style="margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+m.body.slice(0,80)+(m.body.length>80?'\u2026':'')+'</div></div></div>';
+    });
+    html+='</div>';
+  } else {
+    html+='<div class="card-body" style="text-align:center;color:var(--text-3);padding:40px">'+I.inbox+'<div style="margin-top:8px">No tenes mensajes.</div></div>';
+  }
+  html+='</div>';
+
+  // Sent messages
+  var sent=S.data.messages.filter(function(m){
+    if(S.staffId && m.from_staff_id===S.staffId) return true;
+    if(!S.staffId && S.role==='dueno' && m.from_role==='dueno') return true;
+    if(!S.staffId && S.role==='admin' && m.from_role==='admin') return true;
+    return false;
+  }).sort(function(a,b){return b.created_at.localeCompare(a.created_at);});
+  if(sent.length){
+    html+='<div class="card"><div class="card-header"><span class="card-title">Enviados ('+sent.length+')</span></div><div class="card-body" style="display:flex;flex-direction:column;gap:0">';
+    sent.forEach(function(m){
+      var toName=m.to_staff_id?(staffOf(m.to_staff_id)||{}).full_name:(ROLE_LABEL[m.to_role]||m.to_role);
+      html+='<div class="msg-item" style="opacity:.8"><div class="msg-avatar-sm" style="background:#64748B">'+I.send+'</div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;align-items:center"><span class="fw600" style="font-size:13px">Para: '+(toName||'\u2014')+'</span><span class="text-xs text-muted">'+fmtDate(m.created_at.slice(0,10))+'</span></div><div style="font-weight:600;font-size:12px;color:var(--text-1);margin-top:2px">'+m.subject+'</div></div></div>';
+    });
+    html+='</div></div>';
+  }
+  return html;
+}
+
+function openComposeModal(toStaffId,subject,requestId){
+  var allStaff=S.data.staff.filter(function(s){return s.active;});
+  var roles=Object.keys(ROLE_LABEL).filter(function(k){return STAFF_ROLES.indexOf(k)!==-1;});
+  var reqs=S.data.requests.slice(-20).reverse();
+  var staffOpts=allStaff.map(function(s){return '<option value="staff_'+s.id+'" '+(toStaffId===s.id?'selected':'')+'>'+s.full_name+' \u2014 '+(ROLE_LABEL[s.role]||s.role)+'</option>';}).join('');
+  var roleOpts=roles.map(function(k){return '<option value="role_'+k+'">Area: '+(ROLE_LABEL[k]||k)+'</option>';}).join('');
+  var reqOpts=reqs.map(function(r){return '<option value="'+r.id+'" '+(requestId===r.id?'selected':'')+'>'+r.display_id+' \u2014 '+bld(r.building_id).name+'</option>';}).join('');
+  openModal('Nuevo Mensaje',
+    '<div class="form-group"><label class="form-label">Destinatario</label><select class="form-select" id="f_msg_to"><optgroup label="Personas">'+staffOpts+'</optgroup><optgroup label="Areas (todos)">'+roleOpts+'</optgroup></select></div>'+
+    '<div class="form-group"><label class="form-label">Asunto</label><input class="form-input" id="f_msg_subject" value="'+(subject||'')+'"></div>'+
+    '<div class="form-group"><label class="form-label">Vinculado a solicitud (opcional)</label><select class="form-select" id="f_msg_req"><option value="">\u2014 Ninguna \u2014</option>'+reqOpts+'</select></div>'+
+    '<div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-textarea" id="f_msg_body" rows="4" placeholder="Escribi tu mensaje..."></textarea></div>',
+    '<button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="sendMessage()">'+I.send+' Enviar</button>');
+}
+function sendMessage(){
+  var toVal=document.getElementById('f_msg_to').value;
+  var subject=document.getElementById('f_msg_subject').value;
+  var body=document.getElementById('f_msg_body').value;
+  var reqId=+document.getElementById('f_msg_req').value||null;
+  if(!subject||!body){toast('Completa asunto y mensaje');return;}
+
+  var toStaffId=null,toRole=null;
+  if(toVal.indexOf('staff_')===0) toStaffId=+toVal.split('_')[1];
+  else if(toVal.indexOf('role_')===0) toRole=toVal.split('_')[1];
+
+  var fromName=S.staffId?(staffOf(S.staffId)||{}).full_name:(S.role==='dueno'?'Manolo Guevara':'Gerente General');
+  var m={id:S.data.nextIds.message++,from_role:S.role,from_name:fromName||'Usuario',from_staff_id:S.staffId||null,to_staff_id:toStaffId,to_role:toRole,subject:subject,body:body,request_id:reqId,created_at:new Date().toISOString(),read:false};
+  S.data.messages.push(m);
+
+  if(toStaffId){
+    addNotification('message','Mensaje de '+m.from_name,'Asunto: '+subject,{staff_id_target:toStaffId});
+  } else if(toRole){
+    addNotification('message','Mensaje de '+m.from_name,'Asunto: '+subject,{role_target:toRole});
+  }
+  closeModal(); persist(); renderApp(); toast('Mensaje enviado');
+}
+
 /* ═══════════════ INIT ═══════════════ */
+/* Forzar reset al actualizar a versión con login (v3) */
+try{ const ver=localStorage.getItem('at_ver'); if(ver!=='4'){ localStorage.removeItem('at_v2'); localStorage.setItem('at_ver','4'); } }catch(e){}
 restore();
-renderApp();
+renderLogin();
+if(S.loggedIn) renderApp();
 </script>
