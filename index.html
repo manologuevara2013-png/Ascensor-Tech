@@ -973,6 +973,7 @@ function loginAs(type,id){
   persist(); renderLogin(); renderApp();
 }
 function logout(){
+  if(_urlLocked) return; // Bloqueado en modo URL directo
   S.loggedIn=false; S.staffId=null; S.role='admin'; S.view='dashboard'; S.tab={};
   persist(); renderLogin();
 }
@@ -989,7 +990,7 @@ function renderNav(){
   });
   document.getElementById('sb-nav').innerHTML=sb;
 
-  document.getElementById('role-switch').innerHTML=`<button class="logout-btn" onclick="logout()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Cerrar sesión</button>`;
+  document.getElementById('role-switch').innerHTML=_urlLocked?'':`<button class="logout-btn" onclick="logout()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Cerrar sesión</button>`;
 
   if(S.role==='client'){
     const b=bld(S.clientBid);
@@ -3119,6 +3120,65 @@ function ownerContactFromAlert(targetRole,alertTitle){
 /* Forzar reset al actualizar a versión 5 con nuevo login + dashboard + portal */
 try{ const ver=localStorage.getItem('at_ver'); if(ver!=='6'){ localStorage.removeItem('at_v2'); localStorage.setItem('at_ver','6'); } }catch(e){}
 restore();
+
+/* ═══════════════ AUTO-LOGIN POR URL ═══════════════ */
+/* Uso: app-v2.html?rol=tecnico | ?rol=client&edificio=1 */
+var _urlLocked=false;
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var rol=params.get('rol');
+  if(!rol) return;
+  rol=rol.toLowerCase().trim();
+  // Mapeo de nombres amigables a roles internos
+  var MAP={
+    dueno:'dueno', dueño:'dueno', owner:'dueno',
+    admin:'admin', gerente:'admin', administrador:'admin',
+    jefe_tecnico:'jefe_tecnico', jefetecnico:'jefe_tecnico', supervisor:'jefe_tecnico',
+    tecnico:'tecnico', técnico:'tecnico',
+    deposito:'deposito', depósito:'deposito',
+    compras:'compras',
+    cliente:'client', client:'client'
+  };
+  var mapped=MAP[rol];
+  if(!mapped) return;
+
+  _urlLocked=true; // Bloquear cambio de rol
+  S.loggedIn=true;
+  S.tab={};
+
+  if(mapped==='dueno'){
+    S.staffId=null; S.role='dueno'; S.view='panel_dueno';
+  } else if(mapped==='admin'){
+    S.staffId=null; S.role='admin'; S.view='dashboard';
+  } else if(mapped==='client'){
+    var edId=params.get('edificio');
+    if(edId){ S.clientBid=edId; } else {
+      // Usar el primer edificio disponible
+      var blds=(S.data&&S.data.buildings)?S.data.buildings:[];
+      S.clientBid=blds.length?blds[0].id:'b1';
+    }
+    S.staffId=null; S.role='client'; S.view='portal';
+  } else {
+    // Roles de staff: buscar la primera persona con ese rol
+    var staffRole={tecnico:'tecnico',jefe_tecnico:'jefe_tecnico',deposito:'deposito',compras:'compras'}[mapped]||mapped;
+    var found=null;
+    if(S.data&&S.data.staff){
+      for(var i=0;i<S.data.staff.length;i++){
+        if(S.data.staff[i].role===staffRole){ found=S.data.staff[i]; break; }
+      }
+    }
+    if(found){
+      S.staffId=found.id;
+      S.role=STAFF_TO_ROLE_MAP[found.role]||'admin';
+    } else {
+      S.staffId=null;
+      S.role=STAFF_TO_ROLE_MAP[staffRole]||'admin';
+    }
+    S.view=ROLE_DEFAULT[S.role]||'dashboard';
+  }
+  persist();
+})();
+
 renderLogin();
 if(S.loggedIn) renderApp();
 </script>
