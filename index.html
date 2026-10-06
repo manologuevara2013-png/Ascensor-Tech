@@ -219,6 +219,37 @@ tr:hover td{background:var(--surface2)}
 .mini-cal-day{padding:4px 2px;border-radius:4px;color:var(--text-3)}
 .mini-cal-day.has-activity{background:var(--primary-s);color:var(--primary);font-weight:700}
 .mini-cal-day.today{outline:2px solid var(--primary);outline-offset:-1px}
+/* Alert action cards for owner dashboard */
+.alert-action-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:flex-start;transition:all .15s}
+.alert-action-card:hover{border-color:var(--primary);box-shadow:var(--shadow-sm)}
+.alert-action-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-action-body{flex:1;min-width:0}
+.alert-action-title{font-weight:700;font-size:13px;color:var(--text-1);margin-bottom:2px}
+.alert-action-desc{font-size:12px;color:var(--text-2);margin-bottom:8px;line-height:1.4}
+.alert-action-meta{font-size:11px;color:var(--text-3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.alert-action-btns{display:flex;gap:6px;flex-wrap:wrap}
+.alert-action-btns .btn{font-size:11px;padding:4px 10px}
+.alert-action-responsible{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:2px 8px 2px 4px;font-size:11px;font-weight:600;color:var(--text-2)}
+.alert-action-responsible .avatar-sm{width:20px;height:20px;font-size:9px}
+/* Client portal enhancements */
+.quick-actions{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+.quick-action{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:12px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;text-align:center}
+.quick-action:hover{border-color:var(--primary);background:var(--primary-s);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.quick-action-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.quick-action-label{font-size:12px;font-weight:600;color:var(--text-1)}
+.quick-action-badge{font-size:10px;color:var(--text-3)}
+/* Timeline */
+.timeline-v{display:flex;flex-direction:column;gap:0}
+.timeline-item{display:flex;gap:14px;position:relative;padding-bottom:20px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot-col{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0}
+.timeline-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.timeline-line{width:2px;flex:1;background:var(--border);margin-top:4px}
+.timeline-content{flex:1;min-width:0;padding-top:4px}
+.timeline-content-title{font-weight:600;font-size:13px;color:var(--text-1);margin-bottom:2px}
+.timeline-content-desc{font-size:12px;color:var(--text-2);line-height:1.4}
+.timeline-content-date{font-size:11px;color:var(--text-3);margin-top:4px}
+.timeline-content-status{display:inline-block;margin-top:4px}
 @media print{
   .sidebar,.topbar,.mobile-nav,.role-switch,#toast,#modal-root,.btn,.no-print{display:none!important}
   .main{margin-left:0!important}
@@ -284,29 +315,31 @@ tr:hover td{background:var(--surface2)}
 
 /* ═══════════════ LOGIN SCREEN ═══════════════ */
 .login-overlay{position:fixed;inset:0;background:var(--sidebar);display:flex;align-items:center;justify-content:center;z-index:9999;overflow-y:auto;padding:20px}
-.login-box{background:var(--surface);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.25);max-width:440px;width:100%;padding:40px 32px 32px;text-align:center}
-.login-logo{width:56px;height:56px;background:var(--primary);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-.login-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--text-1);margin-bottom:4px}
-.login-sub{font-size:13px;color:var(--text-2);margin-bottom:24px}
-.login-section{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 8px;text-align:left}
-.login-list{display:flex;flex-direction:column;gap:6px}
-.login-group{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px}
-.login-group-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface2);cursor:pointer;width:100%;border:none;text-align:left;transition:all .15s;color:var(--text-1)}
-.login-group-header:hover{background:var(--primary-s)}
-.login-group-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.login-group-info{flex:1;min-width:0}
-.login-group-name{font-weight:600;font-size:13px}
-.login-group-count{font-size:11px;color:var(--text-3)}
-.login-group-arrow{color:var(--text-3);transition:transform .2s;flex-shrink:0}
-.login-group-arrow.open{transform:rotate(180deg)}
-.login-group-body{display:none;padding:6px}
-.login-group-body.open{display:flex;flex-direction:column;gap:4px}
-.login-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .15s;text-align:left;width:100%}
-.login-btn:hover{border-color:var(--primary);background:var(--primary-s);box-shadow:0 0 0 2px rgba(37,99,235,.15)}
-.login-avatar{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
-.login-info{flex:1;min-width:0}
-.login-name{font-weight:600;font-size:14px;color:var(--text-1)}
-.login-role{font-size:12px;color:var(--text-2)}
+.login-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.3);max-width:680px;width:100%;padding:36px 28px 28px;text-align:center}
+.login-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#fff;margin-bottom:4px}
+.login-sub{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
+.login-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.login-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:20px 10px 16px;cursor:pointer;transition:all .2s;text-align:center}
+.login-card:hover{border-color:var(--accent);background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.login-card-icon{font-size:32px;margin-bottom:8px;display:block}
+.login-card-name{font-weight:700;font-size:13px;color:#fff}
+.login-card-desc{font-size:10px;color:rgba(255,255,255,.6);margin-top:3px}
+.login-last-row{grid-column:1/-1;display:flex;justify-content:center;gap:10px;margin-top:0}
+.login-last-row .login-card{max-width:180px;width:100%}
+/* Client login */
+/* Tech picker modal on login */
+.login-picker{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-picker-box{background:var(--sidebar);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px;max-width:320px;width:100%;text-align:center}
+.login-picker-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#fff;margin-bottom:4px}
+.login-picker-sub{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:16px}
+.login-picker-list{display:flex;flex-direction:column;gap:6px}
+.login-picker-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);cursor:pointer;transition:all .15s;text-align:left}
+.login-picker-item:hover{border-color:var(--accent);background:rgba(255,255,255,.14)}
+.login-picker-avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;flex-shrink:0}
+.login-picker-name{font-size:13px;font-weight:600;color:#fff}
+.login-picker-spec{font-size:10px;color:rgba(255,255,255,.5)}
+.login-picker-back{margin-top:12px;font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none}
+.login-picker-back:hover{color:#fff}
 .logout-btn{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;border:none;background:rgba(255,255,255,.06);color:#94A3B8;font-size:11px;cursor:pointer;transition:all .15s;margin-top:4px}
 .logout-btn:hover{background:rgba(255,255,255,.12);color:#CBD5E1}
 </style>
@@ -404,9 +437,9 @@ const S = {
       {id:15,building_id:9,number:1,machine_type:'Sin sala (MRL)',brand:'Kone',model:'MonoSpace',capacity_kg:320,capacity_persons:4,stops:7,year_installed:2016,last_inspection:'2025-12-22',inspection_due:'2026-12-22',status:'operativo',notes:''},
     ],
     contracts:[
-      {id:1,building_id:1,contract_type:'abono',start_date:'2024-01-01',end_date:'2026-12-31',monthly_amount:96000,company_responsibilities:'Mantenimiento preventivo mensual, repuestos menores, guardia de emergencias 24hs, informes técnicos.',client_responsibilities:'Reportar fallas de inmediato, permitir acceso a sala de máquinas, mantener limpieza del cuarto técnico.',included_services:'Preventivo mensual, emergencias 24hs, repuestos menores (hasta $50.000/mes)',excluded_services:'Repuestos mayores (motores, cables de tracción), obras civiles, modernizaciones',status:'activo'},
-      {id:2,building_id:3,contract_type:'por_llamado',start_date:'2023-06-01',end_date:'2026-06-01',monthly_amount:0,company_responsibilities:'Atención de llamados dentro de las 24hs, presupuesto previo a toda reparación.',client_responsibilities:'Abonar cada intervención según presupuesto aprobado.',included_services:'Diagnóstico sin cargo, presupuesto',excluded_services:'Mantenimiento preventivo (no incluido)',status:'activo'},
-      {id:3,building_id:4,contract_type:'mixto',start_date:'2025-01-01',end_date:'2027-01-01',monthly_amount:144000,company_responsibilities:'Preventivo mensual de 3 ascensores, guardia 24hs, hasta 2 emergencias/mes sin cargo adicional.',client_responsibilities:'Comunicar novedades por el canal oficial, facilitar acceso.',included_services:'Preventivo, emergencias limitadas, informe mensual',excluded_services:'Modernización de cabina, repuestos importados mayores a USD 500',status:'activo'},
+      {id:1,building_id:1,contract_type:'abono',contract_number:'CT-2024-001',contract_file:null,start_date:'2024-01-01',end_date:'2026-12-31',monthly_amount:96000,company_responsibilities:'Mantenimiento preventivo mensual, repuestos menores, guardia de emergencias 24hs, informes técnicos.',client_responsibilities:'Reportar fallas de inmediato, permitir acceso a sala de máquinas, mantener limpieza del cuarto técnico.',included_services:'Preventivo mensual, emergencias 24hs, repuestos menores (hasta $50.000/mes)',excluded_services:'Repuestos mayores (motores, cables de tracción), obras civiles, modernizaciones',status:'activo'},
+      {id:2,building_id:3,contract_type:'por_llamado',contract_number:'CT-2023-002',contract_file:null,start_date:'2023-06-01',end_date:'2026-06-01',monthly_amount:0,company_responsibilities:'Atención de llamados dentro de las 24hs, presupuesto previo a toda reparación.',client_responsibilities:'Abonar cada intervención según presupuesto aprobado.',included_services:'Diagnóstico sin cargo, presupuesto',excluded_services:'Mantenimiento preventivo (no incluido)',status:'activo'},
+      {id:3,building_id:4,contract_type:'mixto',contract_number:'CT-2025-003',contract_file:null,start_date:'2025-01-01',end_date:'2027-01-01',monthly_amount:144000,company_responsibilities:'Preventivo mensual de 3 ascensores, guardia 24hs, hasta 2 emergencias/mes sin cargo adicional.',client_responsibilities:'Comunicar novedades por el canal oficial, facilitar acceso.',included_services:'Preventivo, emergencias limitadas, informe mensual',excluded_services:'Modernización de cabina, repuestos importados mayores a USD 500',status:'activo'},
     ],
     staff:[
       {id:1,full_name:'Roberto Fernández',role:'jefe_tecnico',phone:'11-2001-0001',email:'rfernandez@ascensortech.com',specialization:'Supervisión general / hidráulicos',active:true},
@@ -830,90 +863,97 @@ function switchRole(role){
 
 /* ═══════════════ LOGIN / LOGOUT ═══════════════ */
 const STAFF_TO_ROLE_MAP={tecnico:'tecnico',jefe_tecnico:'jefe_tecnico',admin_general:'admin',administrativo:'admin',deposito:'deposito',compras:'compras'};
-function toggleLoginGroup(el){
-  const body=el.nextElementSibling;
-  const arrow=el.querySelector('.login-group-arrow');
-  const isOpen=body.classList.contains('open');
-  /* close all others */
-  document.querySelectorAll('.login-group-body.open').forEach(b=>{b.classList.remove('open');b.previousElementSibling.querySelector('.login-group-arrow').classList.remove('open');});
-  if(!isOpen){ body.classList.add('open'); arrow.classList.add('open'); }
-}
 function renderLogin(){
   const root=document.getElementById('login-root');
   if(S.loggedIn){ root.innerHTML=''; return; }
-  const colors=['#2563EB','#059669','#D97706','#7C3AED','#DC2626','#0891B2','#4F46E5'];
-  const staff=S.data.staff.filter(s=>s.active);
-  const chevron='<svg class="login-group-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
 
-  /* Group staff by role */
-  const roleGroups=[
-    {key:'direction',label:'Dirección',icon:'👤',color:'#1E3A6E',members:[
-      {name:'Manolo Guevara',sub:'Dueño — Panel ejecutivo',initials:'MG',onclick:"loginAs('dueno',null)"},
-      {name:'Gerente General',sub:'Dashboard en tiempo real — Acceso completo',initials:'GG',onclick:"loginAs('gerente',null)"},
-    ]},
-    {key:'jefe_tecnico',label:'Jefe Técnico',icon:'⚙️',color:'#059669'},
-    {key:'tecnico',label:'Técnicos',icon:'🔧',color:'#2563EB'},
-    {key:'administrativo',label:'Administrativo',icon:'📋',color:'#D97706'},
-    {key:'deposito',label:'Depósito',icon:'📦',color:'#0891B2'},
-    {key:'compras',label:'Compras',icon:'🛒',color:'#DC2626'},
+  /* ── Simple card grid matching Mockup Option A ── */
+  /* 7 roles in 3x2 grid + Compras centered below. Click = login directly. */
+  /* For roles with multiple staff (e.g. Técnicos), clicking opens a picker overlay. */
+  /* 8 role cards: 4 rows of 2 = grid, matching mockup Option A exactly */
+  var roleCards=[
+    {icon:'👔',label:'Dueño',desc:'Visión ejecutiva',onclick:"loginAs('dueno',null)"},
+    {icon:'🏢',label:'Gerente',desc:'Control operativo',onclick:"loginAs('gerente',null)"},
+    {icon:'⚙️',label:'Jefe Técnico',desc:'Clasifica y asigna',onclick:"loginPickRole('jefe_tecnico')"},
+    {icon:'🔧',label:'Técnico',desc:'Agenda e informes',onclick:"loginPickRole('tecnico')"},
+    {icon:'📋',label:'Admin',desc:'Presupuestos y cobros',onclick:"loginPickRole('admin')"},
+    {icon:'📦',label:'Depósito',desc:'Stock y entregas',onclick:"loginPickRole('deposito')"},
+    {icon:'🛒',label:'Compras',desc:'Pedidos externos',onclick:"loginPickRole('compras')"},
+    {icon:'🏠',label:'Cliente',desc:'Portal de edificios',onclick:"loginPickBuilding()"},
   ];
-  /* Fill staff into their groups */
-  roleGroups.forEach(g=>{
-    if(g.key==='direction') return;
-    g.members=staff.filter(s=>s.role===g.key).map((s,i)=>{
-      const initials=s.full_name.split(' ').map(w=>w[0]).slice(0,2).join('');
-      return {name:s.full_name,sub:(ROLE_LABEL[s.role]||s.role)+' — '+(s.specialization||''),initials,onclick:`loginAs('staff',${s.id})`};
-    });
+
+  var html='<div class="login-overlay"><div class="login-box">';
+  html+='<div class="login-title">AscensorTech</div>';
+  html+='<div class="login-sub">Seleccioná tu rol para ingresar</div>';
+
+  /* Grid of cards — all roles including Cliente */
+  html+='<div class="login-grid" style="grid-template-columns:repeat(4,1fr)">';
+  roleCards.forEach(function(c){
+    html+='<div class="login-card" onclick="'+c.onclick+'">';
+    html+='<span class="login-card-icon">'+c.icon+'</span>';
+    html+='<div class="login-card-name">'+c.label+'</div>';
+    html+='<div class="login-card-desc">'+c.desc+'</div>';
+    html+='</div>';
   });
-  /* Remove empty groups */
-  const activeGroups=roleGroups.filter(g=>g.members&&g.members.length>0);
+  html+='</div>';
 
-  let html=`<div class="login-overlay">
-    <div class="login-box">
-      <div class="login-logo"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="5" x2="12" y2="19"/><polyline points="8,9 12,5 16,9"/><polyline points="8,15 12,19 16,15"/></svg></div>
-      <div class="login-title">AscensorTech</div>
-      <div class="login-sub">Seleccioná tu usuario para ingresar</div>
-      <div class="login-section">🏢 Equipo</div>`;
-
-  activeGroups.forEach((g,gi)=>{
-    html+=`<div class="login-group">
-      <button class="login-group-header" onclick="toggleLoginGroup(this)">
-        <div class="login-group-icon" style="background:${g.color}20;font-size:18px">${g.icon}</div>
-        <div class="login-group-info"><div class="login-group-name">${g.label}</div><div class="login-group-count">${g.members.length} usuario${g.members.length>1?'s':''}</div></div>
-        ${chevron}
-      </button>
-      <div class="login-group-body">`;
-    g.members.forEach((m,mi)=>{
-      const col=colors[(gi*3+mi)%colors.length];
-      html+=`<button class="login-btn" onclick="${m.onclick}">
-        <div class="login-avatar" style="background:${col}">${m.initials}</div>
-        <div class="login-info"><div class="login-name">${m.name}</div><div class="login-role">${m.sub}</div></div>
-      </button>`;
-    });
-    html+=`</div></div>`;
-  });
-
-  /* Client accordion */
-  const blds=S.data.buildings;
-  html+=`<div class="login-section" style="margin-top:16px">🏢 Portal de Clientes</div>
-    <div class="login-group">
-      <button class="login-group-header" onclick="toggleLoginGroup(this)">
-        <div class="login-group-icon" style="background:#0B244720;font-size:18px">🏠</div>
-        <div class="login-group-info"><div class="login-group-name">Edificios</div><div class="login-group-count">${blds.length} edificio${blds.length>1?'s':''}</div></div>
-        ${chevron}
-      </button>
-      <div class="login-group-body">`;
-  blds.forEach((b,i)=>{
-    const init=b.name.split(' ').map(w=>w[0]).slice(0,2).join('');
-    html+=`<button class="login-btn" onclick="loginAs('client',${b.id})">
-      <div class="login-avatar" style="background:#0B2447">${init}</div>
-      <div class="login-info"><div class="login-name">${b.name}</div><div class="login-role">${b.admin_name}</div></div>
-    </button>`;
-  });
-  html+=`</div></div>`;
-
-  html+=`</div></div>`;
+  html+='</div></div>'; /* end login-box, overlay */
   root.innerHTML=html;
+}
+/* Picker for roles with multiple staff members */
+function loginPickRole(roleKey){
+  var staff=S.data.staff.filter(function(s){return s.active;});
+  var ROLE_MAP_REVERSE={jefe_tecnico:'jefe_tecnico',tecnico:'tecnico',admin:'administrativo',deposito:'deposito',compras:'compras'};
+  var staffRole=ROLE_MAP_REVERSE[roleKey]||roleKey;
+  var members=staff.filter(function(s){return s.role===staffRole;});
+  /* If only one member (or zero), login directly */
+  if(members.length<=1){
+    if(members.length===1) loginAs('staff',members[0].id);
+    else{ /* fallback: admin roles without explicit staff match */
+      if(roleKey==='admin') loginAs('gerente',null);
+      else loginAs('dueno',null);
+    }
+    return;
+  }
+  /* Show picker overlay */
+  var ROLE_COLORS={jefe_tecnico:'#059669',tecnico:'#2563EB',admin:'#D97706',deposito:'#0891B2',compras:'#DC2626'};
+  var color=ROLE_COLORS[roleKey]||'var(--primary)';
+  var html='<div class="login-picker" onclick="if(event.target===this)this.remove()">';
+  html+='<div class="login-picker-box">';
+  html+='<div class="login-picker-title">Seleccioná tu usuario</div>';
+  html+='<div class="login-picker-sub">Rol: '+roleKey.replace('_',' ')+'</div>';
+  html+='<div class="login-picker-list">';
+  members.forEach(function(m){
+    var initials=m.full_name.split(' ').map(function(w){return w[0];}).slice(0,2).join('');
+    html+='<div class="login-picker-item" onclick="loginAs(\'staff\','+m.id+')">';
+    html+='<div class="login-picker-avatar" style="background:'+color+'">'+initials+'</div>';
+    html+='<div><div class="login-picker-name">'+m.full_name+'</div>'+(m.specialization?'<div class="login-picker-spec">'+m.specialization+'</div>':'')+'</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+  html+='<button class="login-picker-back" onclick="this.closest(\'.login-picker\').remove()">← Volver</button>';
+  html+='</div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+/* Picker for client building selection — reuses picker overlay style */
+function loginPickBuilding(){
+  var blds=S.data.buildings;
+  var html='<div class="login-picker" onclick="if(event.target===this)this.remove()">';
+  html+='<div class="login-picker-box" style="max-width:380px">';
+  html+='<div class="login-picker-title">Seleccioná tu edificio</div>';
+  html+='<div class="login-picker-sub">Portal de clientes</div>';
+  html+='<div class="login-picker-list">';
+  blds.forEach(function(b){
+    var init=b.name.split(' ').map(function(w){return w[0];}).slice(0,2).join('');
+    html+='<div class="login-picker-item" onclick="loginAs(\'client\','+b.id+')">';
+    html+='<div class="login-picker-avatar" style="background:#2563EB">'+init+'</div>';
+    html+='<div><div class="login-picker-name">'+b.name+'</div><div class="login-picker-spec">'+b.admin_name+'</div></div>';
+    html+='</div>';
+  });
+  html+='</div>';
+  html+='<button class="login-picker-back" onclick="this.closest(\'.login-picker\').remove()">← Volver</button>';
+  html+='</div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
 }
 function loginAs(type,id){
   S.loggedIn=true;
@@ -1087,6 +1127,33 @@ function printReport(type,id){
       </div>
       <div style="text-align:right;font-size:10px;color:#999;margin-top:20px">AscensorTech — Documento generado el ${today}</div>`;
   }
+  else if(type==='factura'){
+    const f=S.data.invoices.find(x=>x.id===id);
+    const b=bld(f.building_id);
+    const contract=S.data.contracts.find(c=>c.building_id===f.building_id);
+    title='Factura — '+f.display_id;
+    body=`${header}
+      <h2 style="font-size:16px;color:#1E3A6E">FACTURA ${f.display_id}</h2>
+      <table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px">
+        <tr><td style="padding:4px 8px;font-weight:bold;width:140px">Cliente:</td><td>${b.admin_name}</td></tr>
+        <tr><td style="padding:4px 8px;font-weight:bold">Edificio:</td><td>${b.name} — ${b.address}</td></tr>
+        <tr><td style="padding:4px 8px;font-weight:bold">Tipo:</td><td>${f.invoice_type==='abono'?'Abono mensual':'Reparación'}</td></tr>
+        <tr><td style="padding:4px 8px;font-weight:bold">Concepto:</td><td>${f.concept}</td></tr>
+        ${contract&&contract.contract_number?`<tr><td style="padding:4px 8px;font-weight:bold">Contrato N°:</td><td>${contract.contract_number}</td></tr>`:''}
+      </table>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin:20px 0">
+        <thead><tr style="background:#1E3A6E;color:white"><th style="padding:8px;text-align:left">Descripción</th><th style="padding:8px;text-align:right">Monto</th></tr></thead>
+        <tbody><tr><td style="padding:8px;border:1px solid #ddd">${f.concept}</td><td style="padding:8px;text-align:right;border:1px solid #ddd;font-weight:bold">${fmt(f.amount)}</td></tr></tbody>
+      </table>
+      <div style="text-align:right;margin:12px 0"><span style="font-size:16px;font-weight:bold;color:#1E3A6E">TOTAL: ${fmt(f.amount)}</span></div>
+      <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:12px">
+        <tr><td style="padding:4px 8px;font-weight:bold;width:140px">Fecha emisión:</td><td>${fmtDate(f.created_at)}</td></tr>
+        <tr><td style="padding:4px 8px;font-weight:bold">Vencimiento:</td><td>${fmtDate(f.due_date)}</td></tr>
+        <tr><td style="padding:4px 8px;font-weight:bold">Estado:</td><td style="font-weight:bold;color:${f.status==='paid'?'#16a34a':'#dc2626'}">${f.status==='paid'?'PAGADA':'PENDIENTE'}</td></tr>
+        ${f.paid_date?`<tr><td style="padding:4px 8px;font-weight:bold">Fecha de pago:</td><td>${fmtDate(f.paid_date)}</td></tr>`:''}
+      </table>
+      ${footer}`;
+  }
   const w=window.open('','_blank','width=800,height=600');
   w.document.write(`<!DOCTYPE html><html><head><title>${title}</title><style>body{font-family:'Inter',Arial,sans-serif;margin:40px;color:#222;line-height:1.6}@media print{body{margin:20px}}</style></head><body>${body}</body></html>`);
   w.document.close();
@@ -1153,162 +1220,41 @@ function renderApp(){
 function viewPanelDueno(){
   const d=S.data;
   const now=new Date();
-  const hh=now.getHours();
-  const saludo=hh<12?'Buenos días':hh<19?'Buenas tardes':'Buenas noches';
-  const fechaHoy=now.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   const horaHoy=now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
 
-  // ── FINANCIERO ──
-  const monthlyAbonos=d.buildings.reduce((a,b)=>a+b.abono,0);
-  const totalInvoiced=d.invoices.reduce((a,f)=>a+f.amount,0);
-  const totalPaid=d.invoices.filter(f=>f.status==='paid').reduce((a,f)=>a+f.amount,0);
-  const totalPending=d.invoices.filter(f=>f.status==='pending').reduce((a,f)=>a+f.amount,0);
-  const totalOverdue=d.invoices.filter(f=>f.status==='overdue').reduce((a,f)=>a+f.amount,0);
-  const totalDebt=d.clients.reduce((a,c)=>a+c.debt,0);
-  const morosos=d.clients.filter(c=>c.status==='warning'||c.status==='critical');
-  const cobrado_pct=totalInvoiced>0?Math.round(totalPaid/totalInvoiced*100):0;
-
-  // ── OPERATIVO ──
-  const totalEdificios=d.buildings.length;
-  const totalAscensores=d.elevators.length;
-  const ascOperativos=d.elevators.filter(e=>e.status==='operativo').length;
-  const ascReparacion=d.elevators.filter(e=>e.status==='en_reparacion').length;
-  const ascFuera=d.elevators.filter(e=>e.status==='fuera_servicio').length;
+  /* ── KPI data (Dashboard Option 2: Solicitudes, Facturado, Mora, En campo) ── */
   const openReqs=d.requests.filter(r=>!['completed','rejected'].includes(r.status)).length;
-  const urgentes=d.requests.filter(r=>r.urgency==='red'&&!['completed','rejected'].includes(r.status)).length;
-  const completadas=d.requests.filter(r=>r.status==='completed').length;
-  const otActivas=d.work_orders.filter(o=>o.status==='active'||o.status==='in_progress').length;
+  const totalPaid=d.invoices.filter(f=>f.status==='paid').reduce((a,f)=>a+f.amount,0);
+  const morosos=d.clients.filter(c=>c.status==='warning'||c.status==='critical');
+  const moraCount=morosos.length;
+  const tecEnCampo=d.work_orders.filter(o=>o.status==='in_progress'||o.status==='active').length;
 
-  // ── PRESUPUESTOS ──
-  const presEnviados=d.requests.filter(r=>r.status==='budget_sent').length;
-  const presAprobados=d.requests.filter(r=>r.status==='approved').length;
-  const presRechazados=d.requests.filter(r=>r.status==='rejected').length;
-  const totalPresAprobado=d.requests.filter(r=>r.status==='approved'||r.status==='completed').reduce((a,r)=>a+r.budget_amount,0);
-
-  // ── PERSONAL ──
-  const tecnicosActivos=d.staff.filter(s=>(s.role==='tecnico'||s.role==='jefe_tecnico')&&s.active).length;
-  const todayStr=now.toISOString().slice(0,10);
-  const turnosHoy=d.shifts.filter(s=>s.shift_date===todayStr&&s.shift_type!=='franco');
-  const francoHoy=d.shifts.filter(s=>s.shift_date===todayStr&&s.shift_type==='franco');
-
-  // ── STOCK ──
-  const stockBajo=d.inventory.filter(i=>i.quantity<i.min_stock);
-  const stockAgotado=d.inventory.filter(i=>i.quantity===0);
-  const pedidosPend=d.parts_requests.filter(p=>!['entregado','presupuesto_rechazado'].includes(p.status)).length;
-
-  // ── CHART: facturación por edificio ──
-  const facPorEdif={};
-  d.invoices.forEach(f=>{const n=bld(f.building_id).name||'?';facPorEdif[n]=(facPorEdif[n]||0)+f.amount;});
-  const facEntries=Object.entries(facPorEdif).sort((a,b)=>b[1]-a[1]);
-  const facMax=Math.max(1,...facEntries.map(e=>e[1]));
-  const facBars=facEntries.map(([n,v])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-    <div style="width:120px;font-size:11px;color:var(--text-2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${n}">${n}</div>
-    <div style="flex:1;background:var(--bg-3);border-radius:4px;height:18px;overflow:hidden"><div style="height:100%;width:${Math.round(v/facMax*100)}%;background:var(--primary);border-radius:4px"></div></div>
-    <div style="width:80px;font-size:11px;font-weight:600;color:var(--text-1)">${fmt(v)}</div>
-  </div>`).join('');
-
-  // ── CHART: estado ascensores (donut visual) ──
-  const ascTotal=totalAscensores;
-  const pctOp=Math.round(ascOperativos/ascTotal*100);
-  const pctRep=Math.round(ascReparacion/ascTotal*100);
-  const pctFS=Math.round(ascFuera/ascTotal*100);
-
-  // ── MOROSOS detalle ──
-  const morosoRows=morosos.map(c=>{
-    const b=bld(c.building_id);
-    return `<tr>
-      <td class="fw600">${b.name}</td>
-      <td><span class="chip ${c.status==='critical'?'chip-red':'chip-amber'}">${c.status==='critical'?'Crítico':'En mora'}</span></td>
-      <td class="fw600">${c.mora_days} días</td>
-      <td class="fw600" style="color:var(--danger)">${fmt(c.debt)}</td>
-    </tr>`;
+  /* ── Alert rows: ONLY dot + text + time (no buttons, matching mockup exactly) ── */
+  var alertDotColor={danger:'var(--danger)',warning:'var(--warning)',info:'var(--info)'};
+  var alertRows=d.alerts.map(function(a){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border)">'+
+      '<span style="width:10px;height:10px;border-radius:50%;flex-shrink:0;background:'+alertDotColor[a.type]+'"></span>'+
+      '<span style="flex:1;font-size:13px;color:var(--text-2)">'+a.title+(a.description?' — '+a.description:'')+'</span>'+
+      '<span style="font-size:11px;color:var(--text-3);white-space:nowrap">'+a.time_label+'</span>'+
+    '</div>';
   }).join('');
 
-  // ── Alertas resumen ──
-  const alertIcons={danger:I.alert,warning:I.alert,info:I.bell};
-  const alertColors={danger:'var(--danger-s)',warning:'var(--warning-s)',info:'var(--info-s)'};
-  const alertTextColors={danger:'var(--danger)',warning:'var(--warning)',info:'var(--info)'};
-  const alertRows=d.alerts.map(a=>`<div class="alert-row"><div class="alert-ico" style="background:${alertColors[a.type]};color:${alertTextColors[a.type]}">${alertIcons[a.type]}</div><div class="alert-body"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.description}</div></div><div class="alert-time">${a.time_label}</div></div>`).join('');
-
   return `
-  <div style="margin-bottom:20px">
-    <div style="font-size:13px;color:var(--text-3);margin-bottom:2px">${fechaHoy} — ${horaHoy}</div>
-    <div style="font-size:22px;font-weight:700;color:var(--text-1)">${saludo}, Manolo</div>
-    <div style="font-size:13px;color:var(--text-3);margin-top:2px">Resumen ejecutivo de AscensorTech</div>
-  </div>
-
-  <!-- FILA 1: KPIs financieros -->
-  <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px">Finanzas</div>
+  <!-- KPIs row — Dashboard Option 2: big centered number, label below, NO icons -->
   <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Facturación mensual</div><div class="kpi-icon" style="background:var(--success-s);color:var(--success)">${I.dollar}</div></div><div class="kpi-value" style="font-size:20px">${fmt(monthlyAbonos)}</div><div class="kpi-sub">Abonos activos</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Cobrado</div><div class="kpi-icon" style="background:var(--success-s);color:var(--success)">${I.check}</div></div><div class="kpi-value" style="font-size:20px;color:var(--success)">${fmt(totalPaid)}</div><div class="kpi-delta delta-up">${cobrado_pct}% del total</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Pendiente de cobro</div><div class="kpi-icon" style="background:var(--warning-s);color:var(--warning)">${I.clock}</div></div><div class="kpi-value" style="font-size:20px;color:var(--warning)">${fmt(totalPending)}</div><div class="kpi-sub">Sin vencer</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Deuda total morosos</div><div class="kpi-icon" style="background:var(--danger-s);color:var(--danger)">${I.alert}</div></div><div class="kpi-value" style="font-size:20px;color:var(--danger)">${fmt(totalDebt)}</div><div class="kpi-sub">${morosos.length} edificio${morosos.length!==1?'s':''} en mora</div></div>
+    <div class="kpi" style="text-align:center;padding:20px 16px"><div class="kpi-value" style="color:var(--info);font-size:32px;margin-bottom:6px">${openReqs}</div><div class="kpi-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em">Solicitudes</div></div>
+    <div class="kpi" style="text-align:center;padding:20px 16px"><div class="kpi-value" style="color:var(--success);font-size:26px;margin-bottom:6px">${fmt(totalPaid)}</div><div class="kpi-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em">Facturado</div></div>
+    <div class="kpi" style="text-align:center;padding:20px 16px"><div class="kpi-value" style="color:var(--danger);font-size:32px;margin-bottom:6px">${moraCount}</div><div class="kpi-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em">Mora +60d</div></div>
+    <div class="kpi" style="text-align:center;padding:20px 16px"><div class="kpi-value" style="color:var(--primary);font-size:32px;margin-bottom:6px">${tecEnCampo}</div><div class="kpi-label" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em">En campo</div></div>
   </div>
 
-  <!-- FILA 2: KPIs operativos -->
-  <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px">Operaciones</div>
-  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Edificios</div><div class="kpi-icon" style="background:var(--info-s);color:var(--info)">${I.building}</div></div><div class="kpi-value">${totalEdificios}</div><div class="kpi-sub">${totalAscensores} ascensores</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Solicitudes abiertas</div><div class="kpi-icon" style="background:var(--warning-s);color:var(--warning)">${I.inbox}</div></div><div class="kpi-value">${openReqs}</div><div class="kpi-sub">${urgentes?`<span style="color:var(--danger);font-weight:600">${urgentes} urgente${urgentes>1?'s':''}</span>`:'Ninguna urgente'}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">OT activas</div><div class="kpi-icon" style="background:var(--info-s);color:var(--info)">${I.clipboard}</div></div><div class="kpi-value">${otActivas}</div><div class="kpi-sub">${completadas} completada${completadas!==1?'s':''}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Ascensores</div><div class="kpi-icon" style="background:${ascFuera?'var(--danger-s)':'var(--success-s)'};color:${ascFuera?'var(--danger)':'var(--success)'}">${I.tool}</div></div><div class="kpi-value">${pctOp}%</div><div class="kpi-sub">${ascOperativos} operativos · ${ascReparacion} reparación · ${ascFuera} fuera</div></div>
+  <!-- Alertas — Requiere atención (simple title + rows, no card header) -->
+  <div class="card">
+    <div style="padding:14px 16px;font-size:12px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)">⚠ Requiere atención</div>
+    ${alertRows||'<div style="text-align:center;color:var(--success);padding:24px">Todo en orden — sin alertas pendientes</div>'}
   </div>
 
-  ${urgentes?`<div class="notice notice-danger"><strong>${urgentes} solicitud${urgentes>1?'es':''} urgente${urgentes>1?'s':''}.</strong> Requiere${urgentes>1?'n':''} atención inmediata. <a href="#" onclick="event.preventDefault();switchRole('admin');go('recepcion')" style="color:inherit;font-weight:600;text-decoration:underline">Ver solicitudes</a></div>`:''}
-  ${ascFuera?`<div class="notice notice-warning"><strong>${ascFuera} ascensor${ascFuera>1?'es':''} fuera de servicio.</strong> <a href="#" onclick="event.preventDefault();go('edificios')" style="color:inherit;font-weight:600;text-decoration:underline">Ver edificios</a></div>`:''}
-
-  <div class="grid2">
-    <!-- Facturación por edificio -->
-    <div class="card"><div class="card-header"><span class="card-title">Facturación por edificio</span><button class="btn btn-secondary btn-sm" onclick="go('facturacion')">Ver todas</button></div>
-      <div class="card-body">${facBars}</div>
-    </div>
-
-    <!-- Morosos -->
-    <div class="card"><div class="card-header"><span class="card-title">Morosos</span><span class="chip chip-red">${morosos.length}</span></div>
-      ${morosos.length?`<div class="table-wrap"><table><thead><tr><th>Edificio</th><th>Estado</th><th>Días</th><th>Deuda</th></tr></thead><tbody>${morosoRows}</tbody></table></div>`:'<div class="card-body" style="text-align:center;color:var(--success);padding:20px;font-weight:600">Sin morosos — todos al día</div>'}
-    </div>
-  </div>
-
-  <div class="grid2">
-    <!-- Personal y turnos hoy -->
-    <div class="card"><div class="card-header"><span class="card-title">Personal hoy</span></div>
-      <div class="card-body">
-        <div style="display:flex;gap:16px;margin-bottom:12px">
-          <div style="text-align:center"><div style="font-size:24px;font-weight:700;color:var(--primary)">${tecnicosActivos}</div><div style="font-size:11px;color:var(--text-3)">Técnicos activos</div></div>
-          <div style="text-align:center"><div style="font-size:24px;font-weight:700;color:var(--success)">${turnosHoy.length}</div><div style="font-size:11px;color:var(--text-3)">En turno hoy</div></div>
-          <div style="text-align:center"><div style="font-size:24px;font-weight:700;color:var(--text-3)">${francoHoy.length}</div><div style="font-size:11px;color:var(--text-3)">Franco</div></div>
-        </div>
-        ${turnosHoy.length?turnosHoy.map(t=>{const s=staffOf(t.staff_id);return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border)">
-          <span class="avatar-sm">${s?s.full_name.split(' ').map(w=>w[0]).slice(0,2).join(''):''}</span>
-          <div><div class="fw600" style="font-size:13px">${s?s.full_name:'—'}</div><div style="font-size:11px;color:var(--text-3)">${s?s.specialization:''}</div></div>
-          <span class="chip chip-blue" style="margin-left:auto">${t.shift_type}</span>
-        </div>`;}).join(''):'<div style="color:var(--text-3);font-size:13px">Sin datos de turnos para hoy</div>'}
-      </div>
-    </div>
-
-    <!-- Presupuestos y Stock -->
-    <div class="card"><div class="card-header"><span class="card-title">Presupuestos y stock</span></div>
-      <div class="card-body">
-        <div style="display:flex;gap:16px;margin-bottom:16px">
-          <div style="text-align:center;flex:1;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--warning)">${presEnviados}</div><div style="font-size:11px;color:var(--text-3)">Esperando cliente</div></div>
-          <div style="text-align:center;flex:1;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--success)">${presAprobados}</div><div style="font-size:11px;color:var(--text-3)">Aprobados</div></div>
-          <div style="text-align:center;flex:1;padding:10px;background:var(--bg-2);border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--primary)">${fmt(totalPresAprobado)}</div><div style="font-size:11px;color:var(--text-3)">Monto aprobado</div></div>
-        </div>
-        <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:8px">Stock crítico</div>
-        ${stockBajo.length?stockBajo.map(i=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid var(--border)">
-          <span style="font-size:12px">${i.name}</span>
-          <span class="chip ${i.quantity===0?'chip-red':'chip-amber'}">${i.quantity===0?'Agotado':i.quantity+' uds'}</span>
-        </div>`).join(''):'<div style="color:var(--success);font-size:12px;padding:8px 0">Todo el stock por encima del mínimo</div>'}
-        <div style="font-size:11px;color:var(--text-3);margin-top:8px">${pedidosPend} pedido${pedidosPend!==1?'s':''} de repuestos en curso</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Alertas -->
-  <div class="card"><div class="card-header"><span class="card-title">Alertas del sistema</span><span class="chip chip-red">${d.alerts.length}</span><button class="btn btn-secondary btn-sm" onclick="go('alertas')" style="margin-left:auto">Ver todas</button></div>${alertRows}</div>
-
-  <div style="text-align:center;padding:16px;font-size:11px;color:var(--text-3)">Última actualización: ${horaHoy} — Los datos se actualizan cada vez que abrís esta pantalla</div>
+  <div style="text-align:center;padding:12px;font-size:11px;color:var(--text-3)">Actualizado: ${horaHoy}</div>
   `;
 }
 
@@ -1423,13 +1369,17 @@ function viewEdificios(){
   return `
   <div class="card">
     <div class="card-header"><span class="card-title">Edificios (${S.data.buildings.length})</span><button class="btn btn-primary btn-sm" onclick="openBuildingModal()">${I.plus} Nuevo edificio</button></div>
-    <div class="table-wrap"><table><thead><tr><th>Edificio</th><th>Dirección</th><th>Unidades</th><th>Ascensores</th><th>Administrador</th><th>Abono</th><th></th></tr></thead><tbody>
+    <div class="table-wrap"><table><thead><tr><th>Edificio</th><th>Dirección</th><th>Ascensores</th><th>Administrador</th><th>Abono</th><th>Estado cuenta</th><th></th></tr></thead><tbody>
     ${S.data.buildings.map(b=>{
       const n=S.data.elevators.filter(e=>e.building_id===b.id).length;
+      const cl=S.data.clients.find(c=>c.building_id===b.id);
+      const stC={active:'chip-green',warning:'chip-amber',critical:'chip-red'};
+      const stL={active:'Al día',warning:'Advertencia',critical:'Crítico'};
       return `<tr style="cursor:pointer" onclick="go('edificios',{bldDetail:${b.id}})">
         <td class="fw600" style="color:var(--text-1)">${b.name}</td>
-        <td>${b.address}</td><td>${b.units}</td><td>${n}</td>
+        <td>${b.address}</td><td>${n}</td>
         <td>${b.admin_name}</td><td class="fw600">${fmt(b.abono)}</td>
+        <td>${cl?`<span class="chip ${stC[cl.status]}">${stL[cl.status]}</span>${cl.mora_days>0?' <span style="font-size:11px;color:var(--danger)">'+cl.mora_days+'d</span>':''}`:'—'}</td>
         <td onclick="event.stopPropagation()"><div class="flex gap-2"><button class="btn btn-secondary btn-sm" onclick="openBuildingModal(${b.id})">${I.edit}</button></div></td>
       </tr>`;
     }).join('')}
@@ -1440,6 +1390,9 @@ function viewEdificioDetail(id){
   const b=bld(id);
   const elevs=S.data.elevators.filter(e=>e.building_id===id);
   const contract=S.data.contracts.find(c=>c.building_id===id);
+  const cliente=S.data.clients.find(c=>c.building_id===id);
+  const stColor={active:'chip-green',warning:'chip-amber',critical:'chip-red'};
+  const stLabel={active:'Al día',warning:'Advertencia',critical:'Crítico'};
   return `
   <button class="btn btn-secondary btn-sm" style="align-self:flex-start" onclick="S.tab.bldDetail=null;renderApp()">← Volver a edificios</button>
   <div class="grid2">
@@ -1451,19 +1404,40 @@ function viewEdificioDetail(id){
         <div class="flex" style="justify-content:space-between"><span class="text-muted">Email</span><span>${b.email}</span></div>
         <div class="flex" style="justify-content:space-between"><span class="text-muted">Teléfono</span><span>${b.phone}</span></div>
         <div class="flex" style="justify-content:space-between"><span class="text-muted">Abono mensual</span><span class="fw600 text-primary">${fmt(b.abono)}</span></div>
+        ${cliente?`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+          <div class="flex" style="justify-content:space-between"><span class="text-muted">Estado de cuenta</span><span class="chip ${stColor[cliente.status]}">${stLabel[cliente.status]}</span></div>
+          ${cliente.mora_days>0?`<div class="flex" style="justify-content:space-between;margin-top:6px"><span class="text-muted">Días en mora</span><span class="fw600" style="color:var(--danger)">${cliente.mora_days} días</span></div>`:''}
+          ${cliente.debt>0?`<div class="flex" style="justify-content:space-between;margin-top:6px"><span class="text-muted">Deuda</span><span class="fw600" style="color:var(--danger)">${fmt(cliente.debt)}</span></div>`:''}
+        </div>`:''}
       </div>
     </div>
     <div class="card"><div class="card-header"><span class="card-title">Contrato</span></div>
       <div class="card-body">
         ${contract?`<div style="display:flex;flex-direction:column;gap:8px">
+          ${contract.contract_number?`<div class="flex" style="justify-content:space-between"><span class="text-muted">N° Contrato</span><span class="fw600">${contract.contract_number}</span></div>`:''}
           <div class="flex" style="justify-content:space-between"><span class="text-muted">Tipo</span><span class="chip chip-blue">${contract.contract_type}</span></div>
           <div class="flex" style="justify-content:space-between"><span class="text-muted">Vigencia</span><span>${fmtDate(contract.start_date)} — ${fmtDate(contract.end_date)}</span></div>
           <div class="flex" style="justify-content:space-between"><span class="text-muted">Estado</span><span class="chip chip-green">${contract.status}</span></div>
-          <button class="btn btn-secondary btn-sm" style="align-self:flex-start" onclick="go('contratos',{contratoDetail:${contract.id}})">Ver contrato completo</button>
+          ${contract.monthly_amount?`<div class="flex" style="justify-content:space-between"><span class="text-muted">Abono mensual</span><span class="fw600 text-primary">${fmt(contract.monthly_amount)}</span></div>`:''}
+          ${contract.included_services?`<div style="margin-top:4px;padding:8px;background:var(--bg-2);border-radius:6px"><div style="font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:4px">Cobertura del abono:</div><div style="font-size:12px;color:var(--text-1)">${contract.included_services}</div></div>`:''}
+          <div class="flex gap-2" style="margin-top:4px">
+            <button class="btn btn-secondary btn-sm" onclick="go('contratos',{contratoDetail:${contract.id}})">Ver contrato completo</button>
+            ${contract.contract_file?`<button class="btn btn-secondary btn-sm" onclick="viewContractFile(${contract.id})">${I.file} Ver PDF</button>`:''}
+          </div>
         </div>`:`<div style="text-align:center;color:var(--text-3);padding:16px">Sin contrato asociado.<br><button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="openContractModal(null,${b.id})">${I.plus} Crear contrato</button></div>`}
       </div>
     </div>
   </div>
+  ${S.role==='tecnico'?`<div class="card">
+    <div class="card-header"><span class="card-title">Generar Informe Técnico</span></div>
+    <div class="card-body">
+      <p class="text-sm text-muted" style="margin-bottom:12px">Seleccione el ascensor para generar un informe técnico para el supervisor.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${elevs.map(e=>`<button class="btn btn-primary btn-sm" onclick="createTechReportFromBuilding(${b.id},${e.id})">${I.file} Asc. #${e.number} — ${e.brand} ${e.model}</button>`).join('')}
+        ${elevs.length===0?'<span class="text-muted text-sm">No hay ascensores registrados</span>':''}
+      </div>
+    </div>
+  </div>`:''}
   <div class="card">
     <div class="card-header"><span class="card-title">Ascensores (${elevs.length})</span><button class="btn btn-primary btn-sm" onclick="openElevatorModal(null,${b.id})">${I.plus} Nuevo ascensor</button></div>
     <div class="table-wrap"><table><thead><tr><th>N°</th><th>Tipo máquina</th><th>Marca/Modelo</th><th>Capacidad</th><th>Paradas</th><th>Año</th><th>Últ. inspección</th><th>Próx. inspección</th><th>Estado</th><th></th></tr></thead><tbody>
@@ -1581,8 +1555,9 @@ function viewContractDetail(id){
   </div>`;
 }
 function openContractModal(id,bidFixed){
-  const c=id?S.data.contracts.find(x=>x.id===id):{building_id:bidFixed||S.data.buildings[0].id,contract_type:'abono',start_date:'2026-01-01',end_date:'2027-01-01',monthly_amount:0,company_responsibilities:'',client_responsibilities:'',included_services:'',excluded_services:'',status:'activo'};
+  const c=id?S.data.contracts.find(x=>x.id===id):{building_id:bidFixed||S.data.buildings[0].id,contract_type:'abono',contract_number:'',contract_file:null,start_date:'2026-01-01',end_date:'2027-01-01',monthly_amount:0,company_responsibilities:'',client_responsibilities:'',included_services:'',excluded_services:'',status:'activo'};
   openModal(id?'Editar Contrato':'Nuevo Contrato',`
+    <div class="form-group"><label class="form-label">Número de contrato</label><input class="form-input" id="f_cnum" value="${c.contract_number||''}" placeholder="Ej: CT-2026-004"></div>
     <div class="form-grid2">
       <div class="form-group"><label class="form-label">Edificio</label><select class="form-select" id="f_bid">${S.data.buildings.map(b=>`<option value="${b.id}" ${c.building_id===b.id?'selected':''}>${b.name}</option>`).join('')}</select></div>
       <div class="form-group"><label class="form-label">Tipo</label><select class="form-select" id="f_type">
@@ -1601,13 +1576,37 @@ function openContractModal(id,bidFixed){
     <div class="form-group"><label class="form-label">Estado</label><select class="form-select" id="f_st">
       ${['activo','vencido','cancelado'].map(s=>`<option value="${s}" ${c.status===s?'selected':''}>${s}</option>`).join('')}
     </select></div>
+    <div class="form-group"><label class="form-label">Archivo del contrato (PDF)</label>
+      ${c.contract_file?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="chip chip-green">PDF cargado</span><button class="btn btn-secondary btn-sm" onclick="viewContractFile(${id})">Ver contrato</button><button class="btn btn-secondary btn-sm" style="color:var(--danger)" onclick="document.getElementById('f_cfile_clear').value='1';this.parentElement.style.display='none';document.getElementById('f_cfile_zone').style.display='block'">Quitar</button></div><input type="hidden" id="f_cfile_clear" value="0"><div id="f_cfile_zone" style="display:none">`:''}<div class="photo-upload-zone" onclick="document.getElementById('f_cfile').click()" style="cursor:pointer">${I.plus} <span class="text-sm">Seleccionar PDF</span><input type="file" id="f_cfile" accept="application/pdf" style="display:none" onchange="if(this.files[0]){this.parentElement.querySelector('span').textContent=this.files[0].name}"></div>${c.contract_file?`</div>`:''}</div>
   `,`<button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveContract(${id||'null'})">Guardar</button>`);
 }
 function saveContract(id){
-  const v={building_id:+document.getElementById('f_bid').value,contract_type:document.getElementById('f_type').value,start_date:document.getElementById('f_start').value,end_date:document.getElementById('f_end').value,monthly_amount:+document.getElementById('f_amt').value||0,company_responsibilities:document.getElementById('f_cresp').value,client_responsibilities:document.getElementById('f_clresp').value,included_services:document.getElementById('f_inc').value,excluded_services:document.getElementById('f_exc').value,status:document.getElementById('f_st').value};
-  if(id){ Object.assign(S.data.contracts.find(x=>x.id===id),v); toast('Contrato actualizado'); }
-  else { v.id=S.data.nextIds.contract++; S.data.contracts.push(v); toast('Contrato creado'); }
+  const v={building_id:+document.getElementById('f_bid').value,contract_type:document.getElementById('f_type').value,contract_number:document.getElementById('f_cnum').value.trim(),start_date:document.getElementById('f_start').value,end_date:document.getElementById('f_end').value,monthly_amount:+document.getElementById('f_amt').value||0,company_responsibilities:document.getElementById('f_cresp').value,client_responsibilities:document.getElementById('f_clresp').value,included_services:document.getElementById('f_inc').value,excluded_services:document.getElementById('f_exc').value,status:document.getElementById('f_st').value};
+  const clearEl=document.getElementById('f_cfile_clear');
+  if(clearEl&&clearEl.value==='1') v.contract_file=null;
+  const fileInput=document.getElementById('f_cfile');
+  if(fileInput&&fileInput.files&&fileInput.files[0]){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      v.contract_file=e.target.result;
+      _finishSaveContract(id,v);
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+    return;
+  }
+  _finishSaveContract(id,v);
+}
+function _finishSaveContract(id,v){
+  if(id){ const existing=S.data.contracts.find(x=>x.id===id); if(!v.contract_file&&!('contract_file' in v)) v.contract_file=existing.contract_file; Object.assign(existing,v); toast('Contrato actualizado'); }
+  else { v.id=S.data.nextIds.contract++; if(!v.contract_file) v.contract_file=null; S.data.contracts.push(v); toast('Contrato creado'); }
   closeModal(); persist(); renderApp();
+}
+function viewContractFile(contractId){
+  const c=S.data.contracts.find(x=>x.id===contractId);
+  if(!c||!c.contract_file){toast('No hay archivo cargado');return;}
+  const w=window.open('','_blank');
+  w.document.write('<html><head><title>Contrato '+(c.contract_number||'#'+c.id)+'</title></head><body style="margin:0"><embed src="'+c.contract_file+'" type="application/pdf" width="100%" height="100%" style="position:absolute;top:0;left:0;right:0;bottom:0"></body></html>');
+  w.document.close();
 }
 
 /* ═══════════════ VIEW: TURNOS ═══════════════ */
@@ -1885,6 +1884,48 @@ function submitTechReport(id){
   S.data.maintenance_log.push({id:S.data.nextIds.log++,elevator_id:r.elevator_id,request_id:r.id,tech_id:r.assigned_tech_id,log_date:new Date().toISOString().slice(0,10),log_type:'correctivo',description:tr.repair_type,equipment_status:'en_reparacion',observations:tr.observations});
   S.tab.techDetail=null; S.tab.partsBuf=null; S.tab.photoBuf=null;
   persist(); renderApp(); toast('Informe técnico guardado');
+}
+function createTechReportFromBuilding(buildingId,elevatorId){
+  const b=bld(buildingId); const e=elv(elevatorId);
+  S.tab._quickPhotos=[];
+  openModal('Nuevo Informe Técnico',`
+    <div class="notice notice-info"><strong>${b.name}</strong> — Ascensor #${e.number} (${e.brand} ${e.model})</div>
+    <div class="form-group"><label class="form-label">Descripción del problema</label><textarea class="form-textarea" id="f_prob" placeholder="Describa el problema encontrado"></textarea></div>
+    <div class="form-group"><label class="form-label">Nombre de contacto</label><input class="form-input" id="f_contact" value="${b.admin_name}" placeholder="Nombre del contacto en el edificio"></div>
+    <div class="form-grid2">
+      <div class="form-group"><label class="form-label">Urgencia</label><select class="form-select" id="f_urg"><option value="normal">Normal</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div>
+      <div class="form-group"><label class="form-label">Fecha</label><input class="form-input" type="date" id="f_date" value="${new Date().toISOString().slice(0,10)}"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Fotografías</label>
+      <div class="photo-upload-zone" onclick="document.getElementById('f_qphotos').click()" style="cursor:pointer">
+        ${I.plus} <span class="text-sm">Subir o sacar fotos (máx. 5)</span>
+        <input type="file" id="f_qphotos" accept="image/*" capture="environment" multiple style="display:none" onchange="handlePhotoUpload('f_qphotos',function(photos){S.tab._quickPhotos=(S.tab._quickPhotos||[]).concat(photos).slice(0,5);_updateQuickPhotoPreview()})">
+      </div>
+      <div id="f_qphotos_gallery" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
+    </div>
+  `,`<button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="submitQuickTechRequest(${buildingId},${elevatorId})">Crear y cargar informe</button>`);
+}
+function _updateQuickPhotoPreview(){
+  const g=document.getElementById('f_qphotos_gallery');
+  if(!g) return;
+  const photos=S.tab._quickPhotos||[];
+  g.innerHTML=photos.map((p,i)=>`<div style="position:relative"><img src="${p}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--border)"><button style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--danger);color:white;border:none;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="S.tab._quickPhotos.splice(${i},1);_updateQuickPhotoPreview()">x</button></div>`).join('');
+}
+function submitQuickTechRequest(buildingId,elevatorId){
+  const desc=document.getElementById('f_prob').value.trim();
+  if(!desc){toast('Ingrese una descripción del problema');return;}
+  const contact=document.getElementById('f_contact').value.trim()||'—';
+  const urg=document.getElementById('f_urg').value;
+  const photos=S.tab._quickPhotos||[];
+  const reqId=Math.max(0,...S.data.requests.map(r=>r.id))+1;
+  const displayId='SOL-'+String(reqId).padStart(4,'0');
+  const newReq={id:reqId,display_id:displayId,building_id:buildingId,elevator_id:elevatorId,contact_name:contact,contact_phone:'',description:desc,urgency:urg,status:'technical',assigned_tech_id:S.staffId||null,created_at:new Date().toISOString().slice(0,10),budget_amount:null,budget_status:null};
+  S.data.requests.push(newReq);
+  persist();
+  closeModal();
+  S.tab.photoBuf=photos.length?photos:null;
+  go('informes',{techDetail:reqId});
+  toast('Solicitud creada — complete el informe técnico');
 }
 
 /* ═══════════════ VIEW: HISTORIAL TÉCNICO ═══════════════ */
@@ -2474,7 +2515,7 @@ function viewFacturacion(){
       ${!isClient?`<td>${bld(f.building_id).name}</td>`:''}
       <td>${f.concept}</td><td class="fw600">${fmt(f.amount)}</td>
       <td class="text-muted">${fmtDate(f.due_date)}</td><td>${stMap(f.status)}</td>
-      <td>${f.status!=='paid'&&!isClient?`<button class="btn btn-success btn-sm" onclick="markInvoicePaid(${f.id})">Marcar pagada</button>`:''}</td>
+      <td><div class="flex gap-2"><button class="btn btn-secondary btn-sm no-print" onclick="printReport('factura',${f.id})" title="Imprimir">${I.file}</button>${f.status!=='paid'&&!isClient?`<button class="btn btn-success btn-sm" onclick="markInvoicePaid(${f.id})">Marcar pagada</button>`:''}</div></td>
     </tr>`).join('')}
     ${list.length===0?`<tr><td colspan="${isClient?5:6}" style="text-align:center;color:var(--text-3);padding:24px">Sin facturas</td></tr>`:''}
     </tbody></table></div>
@@ -2601,32 +2642,58 @@ function dismissAlert(id){
 
 /* ═══════════════ VIEWS: PORTAL CLIENTE ═══════════════ */
 function viewPortal(){
-  const b=bld(S.clientBid);
-  const myElevs=S.data.elevators.filter(e=>e.building_id===S.clientBid);
-  const myReqs=S.data.requests.filter(r=>r.building_id===S.clientBid);
-  const active=myReqs.filter(r=>!['completed','rejected'].includes(r.status));
-  const waiting=myReqs.filter(r=>r.status==='budget_sent');
-  return `
-  <div class="portal-hero"><h2>Bienvenido, ${b.admin_name}</h2><p>${b.name} · ${b.address} · ${myElevs.length} ascensor${myElevs.length!==1?'es':''}</p></div>
-  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Solicitudes activas</div></div><div class="kpi-value">${active.length}</div><div class="kpi-sub">En proceso</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Esperan su aprobación</div></div><div class="kpi-value" style="color:var(--warning)">${waiting.length}</div><div class="kpi-sub">${waiting.length?'Presupuestos pendientes':'Todo al día'}</div></div>
-    <div class="kpi"><div class="kpi-top"><div class="kpi-label">Abono mensual</div></div><div class="kpi-value" style="font-size:20px">${fmt(b.abono)}</div><div class="kpi-sub">Incluye mantenimiento preventivo</div></div>
-  </div>
-  ${waiting.length?`<div class="notice notice-warning"><strong>Tiene ${waiting.length} presupuesto${waiting.length>1?'s':''} pendiente${waiting.length>1?'s':''} de aprobación.</strong> Vea <a href="#" onclick="go('portal_solicitudes');return false">Solicitudes</a>.</div>`:''}
-  <div class="card">
-    <div class="card-header"><span class="card-title">Estado de ascensores</span></div>
-    <div class="table-wrap"><table><thead><tr><th>N°</th><th>Marca/Modelo</th><th>Capacidad</th><th>Próx. inspección</th><th>Estado</th></tr></thead><tbody>
-    ${myElevs.map(e=>`<tr><td class="fw600">#${e.number}</td><td>${e.brand} ${e.model}</td><td>${e.capacity_kg}kg</td><td class="text-muted">${fmtDate(e.inspection_due)}</td><td><span class="chip ${ELV_STATUS[e.status]?.chip}">${ELV_STATUS[e.status]?.label}</span></td></tr>`).join('')}
-    </tbody></table></div>
-  </div>
-  <div class="card">
-    <div class="card-header"><span class="card-title">Últimas solicitudes</span><button class="btn btn-primary btn-sm" onclick="go('portal_solicitudes')">Ver todas</button></div>
-    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Descripción</th><th>Estado</th></tr></thead><tbody>
-    ${myReqs.slice(0,4).map(r=>`<tr><td class="fw600 text-primary">${r.display_id}</td><td><div class="fw600">${TYPE_LABEL[r.type]||r.type}</div><div class="text-xs text-muted">${r.description.slice(0,60)}</div></td><td><span class="chip ${REQ_STATUS[r.status]?.chip}">${REQ_STATUS[r.status]?.label}</span></td></tr>`).join('')}
-    ${myReqs.length===0?'<tr><td colspan="3" style="text-align:center;color:var(--text-3);padding:20px">Sin solicitudes</td></tr>':''}
-    </tbody></table></div>
-  </div>`;
+  var b=bld(S.clientBid);
+  var myElevs=S.data.elevators.filter(function(e){return e.building_id===S.clientBid;});
+  var myReqs=S.data.requests.filter(function(r){return r.building_id===S.clientBid;});
+  var active=myReqs.filter(function(r){return !['completed','rejected'].includes(r.status);});
+  var waiting=myReqs.filter(function(r){return r.status==='budget_sent';});
+  var myInv=S.data.invoices.filter(function(f){return f.building_id===S.clientBid;});
+  var pendingInv=myInv.filter(function(f){return f.status==='pending'||f.status==='overdue';});
+  var cl=S.data.clients.find(function(c){return c.building_id===S.clientBid;})||{};
+
+  /* Build timeline: merge all events (requests, invoices, budgets) sorted by date desc */
+  var events=[];
+  myReqs.forEach(function(r){
+    events.push({date:r.created_at,type:'solicitud',icon:'📩',color:'var(--info-s)',colorFg:'var(--info)',title:'Solicitud '+r.display_id,desc:(TYPE_LABEL[r.type]||r.type)+' — '+r.description.slice(0,80),status:REQ_STATUS[r.status]?.label||r.status,statusChip:REQ_STATUS[r.status]?.chip||'chip-grey'});
+    if(['budget_sent','approved','rejected','ot_created','completed'].includes(r.status)&&r.budget_amount){
+      events.push({date:r.created_at,type:'presupuesto',icon:'💰',color:'var(--warning-s)',colorFg:'var(--warning)',title:'Presupuesto '+r.display_id,desc:fmt(r.budget_amount)+' — '+(r.status==='budget_sent'?'Esperando tu aprobación':r.status==='approved'||r.status==='ot_created'||r.status==='completed'?'Aprobado':'Rechazado'),status:r.status==='budget_sent'?'Pendiente':(r.status==='rejected'?'Rechazado':'Aprobado'),statusChip:r.status==='budget_sent'?'chip-amber':(r.status==='rejected'?'chip-red':'chip-green')});
+    }
+  });
+  myInv.forEach(function(f){
+    events.push({date:f.created_at||f.due_date,type:'factura',icon:'🧾',color:f.status==='paid'?'var(--success-s)':f.status==='overdue'?'var(--danger-s)':'var(--warning-s)',colorFg:f.status==='paid'?'var(--success)':f.status==='overdue'?'var(--danger)':'var(--warning)',title:'Factura '+f.display_id,desc:f.concept+' — '+fmt(f.amount),status:INV_STATUS[f.status]?.label||f.status,statusChip:INV_STATUS[f.status]?.chip||'chip-grey'});
+  });
+  events.sort(function(a,b){return b.date>a.date?1:(b.date<a.date?-1:0);});
+
+  var timelineHtml=events.slice(0,10).map(function(ev,i){
+    var isLast=i===Math.min(events.length,10)-1;
+    return '<div class="timeline-item"><div class="timeline-dot-col"><div class="timeline-dot" style="background:'+ev.color+';color:'+ev.colorFg+'">'+ev.icon+'</div>'+(isLast?'':'<div class="timeline-line"></div>')+'</div><div class="timeline-content"><div class="timeline-content-title">'+ev.title+'</div><div class="timeline-content-desc">'+ev.desc+'</div><div class="timeline-content-date">'+fmtDate(ev.date)+'</div><span class="chip '+ev.statusChip+' timeline-content-status">'+ev.status+'</span></div></div>';
+  }).join('');
+
+  return '<div class="portal-hero"><h2>Hola, '+b.admin_name+'</h2><p>'+b.name+' · '+b.address+' · '+myElevs.length+' ascensor'+(myElevs.length!==1?'es':'')+'</p></div>'+
+  (waiting.length?'<div class="notice notice-warning"><strong>Tiene '+waiting.length+' presupuesto'+(waiting.length>1?'s':'')+' pendiente'+(waiting.length>1?'s':'')+' de aprobación.</strong> <a href="#" onclick="go(\'portal_solicitudes\');return false" style="color:inherit;font-weight:600;text-decoration:underline">Ver solicitudes</a></div>':'')+
+  /* Quick actions */
+  '<div class="quick-actions">'+
+    '<div class="quick-action" onclick="openClientRequestModal()"><div class="quick-action-icon" style="background:var(--primary-s);color:var(--primary)">📩</div><div class="quick-action-label">Nueva solicitud</div><div class="quick-action-badge">Reportar problema</div></div>'+
+    '<div class="quick-action" onclick="go(\'portal_solicitudes\')"><div class="quick-action-icon" style="background:var(--info-s);color:var(--info)">📋</div><div class="quick-action-label">Mis solicitudes</div><div class="quick-action-badge">'+active.length+' activa'+(active.length!==1?'s':'')+'</div></div>'+
+    '<div class="quick-action" onclick="go(\'presupuestos\')"><div class="quick-action-icon" style="background:var(--warning-s);color:var(--warning)">💰</div><div class="quick-action-label">Presupuestos</div><div class="quick-action-badge">'+(waiting.length?waiting.length+' pendiente'+(waiting.length>1?'s':''):'Al día')+'</div></div>'+
+    '<div class="quick-action" onclick="go(\'portal_cuenta\')"><div class="quick-action-icon" style="background:'+(pendingInv.length?'var(--danger-s)':'var(--success-s)')+';color:'+(pendingInv.length?'var(--danger)':'var(--success)')+'">🧾</div><div class="quick-action-label">Facturas</div><div class="quick-action-badge">'+(pendingInv.length?pendingInv.length+' pendiente'+(pendingInv.length>1?'s':''):'Todo pago')+'</div></div>'+
+    '<div class="quick-action" onclick="go(\'portal_contrato\')"><div class="quick-action-icon" style="background:var(--surface2);color:var(--text-2)">📄</div><div class="quick-action-label">Mi contrato</div><div class="quick-action-badge">Ver detalle</div></div>'+
+  '</div>'+
+  /* KPIs row */
+  '<div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">'+
+    '<div class="kpi"><div class="kpi-top"><div class="kpi-label">Solicitudes activas</div></div><div class="kpi-value">'+active.length+'</div><div class="kpi-sub">En proceso</div></div>'+
+    '<div class="kpi"><div class="kpi-top"><div class="kpi-label">Por aprobar</div></div><div class="kpi-value" style="color:var(--warning)">'+waiting.length+'</div><div class="kpi-sub">'+(waiting.length?'Presupuestos':'Todo al día')+'</div></div>'+
+    '<div class="kpi"><div class="kpi-top"><div class="kpi-label">Abono mensual</div></div><div class="kpi-value" style="font-size:18px">'+fmt(b.abono)+'</div><div class="kpi-sub">Preventivo incluido</div></div>'+
+    '<div class="kpi"><div class="kpi-top"><div class="kpi-label">Estado de cuenta</div></div><div class="kpi-value" style="font-size:16px;color:'+(cl.status==='active'?'var(--success)':cl.status==='warning'?'var(--warning)':'var(--danger)')+'">'+({active:'Al día',warning:'En mora',critical:'Mora crítica'}[cl.status]||'—')+'</div><div class="kpi-sub">'+(cl.debt?'Deuda: '+fmt(cl.debt):'Sin deuda')+'</div></div>'+
+  '</div>'+
+  /* Elevator status */
+  '<div class="card"><div class="card-header"><span class="card-title">Estado de ascensores</span></div>'+
+    '<div class="table-wrap"><table><thead><tr><th>N°</th><th>Marca/Modelo</th><th>Capacidad</th><th>Próx. inspección</th><th>Estado</th></tr></thead><tbody>'+
+    myElevs.map(function(e){return '<tr><td class="fw600">#'+e.number+'</td><td>'+e.brand+' '+e.model+'</td><td>'+e.capacity_kg+'kg</td><td class="text-muted">'+fmtDate(e.inspection_due)+'</td><td><span class="chip '+(ELV_STATUS[e.status]?.chip||'')+'">'+((ELV_STATUS[e.status]||{}).label||'')+'</span></td></tr>';}).join('')+
+    '</tbody></table></div></div>'+
+  /* Timeline */
+  '<div class="card"><div class="card-header"><span class="card-title">Línea de tiempo</span><span class="text-xs text-muted">Últimos movimientos de su edificio</span></div>'+
+    '<div class="card-body">'+(events.length?'<div class="timeline-v">'+timelineHtml+'</div>':'<div style="text-align:center;color:var(--text-3);padding:20px">Sin actividad reciente</div>')+'</div></div>';
 }
 function viewPortalContrato(){
   const c=S.data.contracts.find(x=>x.building_id===S.clientBid);
@@ -3026,9 +3093,31 @@ function sendMessage(){
   closeModal(); persist(); renderApp(); toast('Mensaje enviado');
 }
 
+/* ═══════════════ OWNER ALERT ACTIONS ═══════════════ */
+function ownerContactFromAlert(targetRole,alertTitle){
+  /* Find the responsible person for this role */
+  var targetPerson=S.data.staff.find(function(s){return s.role===targetRole&&s.active;});
+  var subject='Acción requerida: '+alertTitle;
+  if(targetPerson){
+    openComposeModal(targetPerson.id,subject,null);
+  } else {
+    /* Send to the role area */
+    openComposeModal(null,subject,null);
+    /* Pre-select the role in the dropdown */
+    setTimeout(function(){
+      var sel=document.getElementById('f_msg_to');
+      if(sel){
+        for(var i=0;i<sel.options.length;i++){
+          if(sel.options[i].value==='role_'+targetRole){sel.selectedIndex=i;break;}
+        }
+      }
+    },100);
+  }
+}
+
 /* ═══════════════ INIT ═══════════════ */
-/* Forzar reset al actualizar a versión con login (v3) */
-try{ const ver=localStorage.getItem('at_ver'); if(ver!=='4'){ localStorage.removeItem('at_v2'); localStorage.setItem('at_ver','4'); } }catch(e){}
+/* Forzar reset al actualizar a versión 5 con nuevo login + dashboard + portal */
+try{ const ver=localStorage.getItem('at_ver'); if(ver!=='6'){ localStorage.removeItem('at_v2'); localStorage.setItem('at_ver','6'); } }catch(e){}
 restore();
 renderLogin();
 if(S.loggedIn) renderApp();
