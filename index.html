@@ -29,6 +29,8 @@
   --shadow:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 12px rgba(0,0,0,.4);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+input,textarea,select,.editable{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-1);font-size:14px;line-height:1.5;min-height:100vh}
 a{color:var(--primary);text-decoration:none}
 button{font-family:inherit;cursor:pointer}
@@ -3181,4 +3183,14 @@ var _urlLocked=false;
 
 renderLogin();
 if(S.loggedIn) renderApp();
+
+/* ── Anti-copia ── */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  if(e.key==='F12') e.preventDefault();
+  if((e.ctrlKey||e.metaKey)&&['u','s','p'].includes(k)) e.preventDefault();
+  if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['i','j','c'].includes(k)) e.preventDefault();
+});
+document.addEventListener('dragstart',e=>e.preventDefault());
 </script>
